@@ -420,9 +420,14 @@ function getHistory() { return load(LS.history, []); }
 function setHistory(list) { save(LS.history, list); }
 function getFocusTasks() {
   const upcoming = getUpcomingIncomplete()[0];
-  const title = upcoming ? `Work on: ${upcoming.subject} — ${upcoming.title}` : 'Check the WA3 Board';
+  const title = upcoming ? `Complete next WA3 task: ${upcoming.subject} — ${upcoming.title}` : 'Check the WA3 Board';
   return [
-    { id: 'focus-deadline', text: title, sub: upcoming ? `Due ${formatLongDate(upcoming.date)}` : 'Everything is loaded' },
+    {
+      id: upcoming ? `focus-deadline-${upcoming.id}` : 'focus-deadline-clear',
+      text: title,
+      sub: upcoming ? `Due ${formatLongDate(upcoming.date)}` : 'Everything is loaded',
+      wa3Id: upcoming ? upcoming.id : ''
+    },
     { id: 'focus-practice', text: 'Complete one short Revision Lab round', sub: '5 questions is enough to start' },
     { id: 'focus-pack', text: 'Pack files for tomorrow', sub: `Use Timetable: ${getNextCycleDay(getSelectedCycleDay())}` }
   ];
@@ -470,7 +475,7 @@ function renderFocus() {
   const list = document.getElementById('todayFocusList');
   list.innerHTML = tasks.map(t => `
     <label class="task-row ${focusDone[t.id] ? 'done' : ''}">
-      <input type="checkbox" data-focus-id="${t.id}" ${focusDone[t.id] ? 'checked' : ''} />
+      <input type="checkbox" data-focus-id="${t.id}" ${t.wa3Id ? `data-focus-wa3-id="${t.wa3Id}"` : ''} ${focusDone[t.id] ? 'checked' : ''} />
       <span class="task-text"><strong>${t.text}</strong><span>${t.sub}</span></span>
     </label>
   `).join('');
@@ -974,9 +979,32 @@ function setupEvents() {
     if (e.target.matches('[data-focus-id]')) {
       const done = load(LS.focusDone, {});
       const task = getFocusTasks().find(t => t.id === e.target.dataset.focusId);
+      let proof = '';
+
+      // The first focus card is the current next WA3 task.
+      // Ticking it should complete the linked WA3 item too, so the deadline card moves on.
+      if (e.target.dataset.focusWa3Id) {
+        const wa3Task = WA3_TASKS.find(t => t.id === e.target.dataset.focusWa3Id);
+        const wa3Done = getWa3Done();
+        if (e.target.checked) {
+          proof = requestEvidence(wa3Task ? `${wa3Task.subject} — ${wa3Task.title}` : 'WA3 task');
+          if (!proof) { e.target.checked = false; toast('Add quick proof before ticking done'); return; }
+          saveEvidence('wa3', e.target.dataset.focusWa3Id, proof);
+        }
+        wa3Done[e.target.dataset.focusWa3Id] = e.target.checked;
+        setWa3Done(wa3Done);
+        recordAudit({
+          type: 'wa3',
+          id: e.target.dataset.focusWa3Id,
+          label: wa3Task ? `${wa3Task.subject}: ${wa3Task.title}` : 'WA3 task',
+          checked: e.target.checked,
+          evidence: proof
+        });
+      }
+
       done[e.target.dataset.focusId] = e.target.checked;
       save(LS.focusDone, done);
-      recordAudit({ type: 'focus', id: e.target.dataset.focusId, label: task?.text || 'Focus task', checked: e.target.checked });
+      recordAudit({ type: 'focus', id: e.target.dataset.focusId, label: task?.text || 'Focus task', checked: e.target.checked, evidence: proof });
       toast(e.target.checked ? 'Focus task done' : 'Focus task reopened');
       renderAll();
     }
