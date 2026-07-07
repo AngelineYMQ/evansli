@@ -13,6 +13,146 @@ const WA3_TASKS = [
   { id: 'msp-written', subject: 'MSP', title: 'Written Test', date: '2026-08-25', type: 'test', duration: '50 min', marks: '30 marks', detail: 'Topic: Unit 1–4 Grammar. Format: SLS Quiz. Basic sentence and blog writing.' }
 ];
 
+
+const TIMETABLE_DAYS = ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6','Day 7','Day 8','Day 9','Day 10'];
+const TIMETABLE = {
+  'Day 1': [
+    { time: '7:40–8:00', subject: 'DEAR time', teacher: '', venue: '' },
+    { time: '8:00–8:40', subject: 'CCE', teacher: 'Maizurah / Su Mei', venue: '' },
+    { time: '8:40–9:20', subject: 'Music', teacher: 'Gladys', venue: 'Music' },
+    { time: '9:20–10:00', subject: 'PE (LS)', teacher: 'Andrew', venue: 'School Hall 1' },
+    { time: '10:00–10:40', subject: 'Recess', teacher: '', venue: '' },
+    { time: '10:40–11:20', subject: 'HCL', teacher: 'JiW', venue: '' },
+    { time: '11:20–12:00', subject: 'Science', teacher: 'LeowSH', venue: '' },
+    { time: '12:00–12:40', subject: 'Mathematics', teacher: 'TohML', venue: '' },
+    { time: '12:40–14:00', subject: 'History', teacher: 'NeoCW', venue: '' },
+    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' }
+  ],
+  'Day 2': [
+    { time: '7:40–8:00', subject: 'DEAR time', teacher: '', venue: '' },
+    { time: '8:00–8:40', subject: 'HCL', teacher: 'JiW', venue: '' },
+    { time: '8:40–10:00', subject: 'FCE', teacher: 'LowZY / ChuaXF', venue: 'FN1' },
+    { time: '10:00–10:40', subject: 'Recess', teacher: '', venue: '' },
+    { time: '10:40–11:20', subject: 'Mathematics', teacher: 'TohML', venue: '' },
+    { time: '11:20–12:40', subject: 'Science', teacher: 'LeowSH', venue: '' },
+    { time: '12:40–14:00', subject: 'English', teacher: 'Su Mei', venue: '' },
+    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' },
+    { time: '15:00–17:20', subject: 'MSP', teacher: 'Maizurah', venue: '' }
+  ],
+  'Day 3': [
+    { time: '7:40–8:00', subject: 'DEAR time', teacher: '', venue: '' },
+    { time: '8:00–8:40', subject: 'AS', teacher: 'Maizurah / Su Mei', venue: '' },
+    { time: '8:40–9:20', subject: 'Mathematics', teacher: 'TohML', venue: '' },
+    { time: '9:20–10:00', subject: 'History', teacher: 'NeoCW', venue: '' },
+    { time: '10:00–10:40', subject: 'Recess', teacher: '', venue: '' },
+    { time: '10:40–12:00', subject: 'HCL', teacher: 'JiW', venue: '' },
+    { time: '12:00–13:20', subject: 'English', teacher: 'Su Mei', venue: '' },
+    { time: '13:20–14:00', subject: 'Art', teacher: 'Faizal / Insyirah', venue: 'ART2' },
+    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' }
+  ],
+  'Day 4': [
+    { time: '7:40–8:00', subject: 'DEAR time', teacher: '', venue: '' },
+    { time: '8:00–8:40', subject: 'Mathematics', teacher: 'TohML', venue: '' },
+    { time: '8:40–10:00', subject: 'CI', teacher: 'LiuZB', venue: '' },
+    { time: '10:00–10:40', subject: 'Recess', teacher: '', venue: '' },
+    { time: '10:40–11:20', subject: 'Geography', teacher: 'LokLM', venue: '' },
+    { time: '11:20–12:00', subject: 'HCL', teacher: 'JiW', venue: '' },
+    { time: '12:00–12:40', subject: 'PE (LS)', teacher: 'Andrew', venue: 'ISH L2' },
+    { time: '12:40–14:00', subject: 'English', teacher: 'Su Mei', venue: '' },
+    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' }
+  ],
+  'Day 5': [
+    { time: '7:40–8:00', subject: 'S/Love My Sch', teacher: '', venue: '' },
+    { time: '8:00–8:40', subject: 'TSI', teacher: 'Maizurah / Su Mei', venue: '' },
+    { time: '8:40–9:20', subject: 'MASSP', teacher: 'ChooSY / YarRM / Raffi / Andrew / CheanKX / TanYB', venue: 'ISH L1 / ISH L2' },
+    { time: '9:20–10:00', subject: 'HCL', teacher: 'JiW', venue: '' },
+    { time: '10:00–10:40', subject: 'Recess', teacher: '', venue: '' },
+    { time: '10:40–12:00', subject: 'Science', teacher: 'LeowSH', venue: 'BI2' },
+    { time: '12:00–13:20', subject: 'Literature', teacher: 'Shahnaaz', venue: '' },
+    { time: '13:20–14:00', subject: 'Mathematics', teacher: 'TohML', venue: '' },
+    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' }
+  ],
+  'Day 6': [
+    { time: '7:40–8:00', subject: 'DEAR time', teacher: '', venue: '' },
+    { time: '8:00–8:40', subject: 'CCE', teacher: 'Maizurah / Su Mei', venue: '' },
+    { time: '8:40–9:20', subject: 'PE (LS)', teacher: 'Andrew', venue: 'School Hall 1' },
+    { time: '9:20–10:00', subject: 'HCL', teacher: 'JiW', venue: '' },
+    { time: '10:00–10:40', subject: 'Mathematics', teacher: 'TohML', venue: '' },
+    { time: '10:40–11:20', subject: 'Recess', teacher: '', venue: '' },
+    { time: '11:20–12:40', subject: 'English', teacher: 'Su Mei', venue: '' },
+    { time: '12:40–13:20', subject: 'Science', teacher: 'LeowSH', venue: '' },
+    { time: '13:20–14:00', subject: 'Geography', teacher: 'LokLM', venue: '' },
+    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' }
+  ],
+  'Day 7': [
+    { time: '7:40–8:00', subject: 'DEAR time', teacher: '', venue: '' },
+    { time: '8:00–8:40', subject: 'Literature', teacher: 'Shahnaaz', venue: '' },
+    { time: '8:40–10:00', subject: 'FCE', teacher: 'LowZY / ChuaXF', venue: 'FN2' },
+    { time: '10:00–10:40', subject: 'Recess', teacher: '', venue: '' },
+    { time: '10:40–11:20', subject: 'Mathematics', teacher: 'TohML', venue: '' },
+    { time: '11:20–12:40', subject: 'Geography', teacher: 'LokLM', venue: '' },
+    { time: '12:40–14:00', subject: 'English', teacher: 'Su Mei', venue: '' },
+    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' },
+    { time: '15:00–17:20', subject: 'MSP', teacher: 'Maizurah', venue: '' }
+  ],
+  'Day 8': [
+    { time: '7:40–8:00', subject: 'DEAR time', teacher: '', venue: '' },
+    { time: '8:00–8:40', subject: 'AS', teacher: 'Maizurah / Su Mei', venue: '' },
+    { time: '8:40–9:20', subject: 'CI', teacher: 'LiuZB', venue: '' },
+    { time: '9:20–10:00', subject: 'Music', teacher: 'Gladys', venue: 'Music' },
+    { time: '10:00–10:40', subject: 'MASSP', teacher: 'ChooSY / YarRM / Raffi / Andrew / CheanKX / TanYB', venue: 'ISH L1 / School Hall 1' },
+    { time: '10:40–11:20', subject: 'Recess', teacher: '', venue: '' },
+    { time: '11:20–12:40', subject: 'ALP1', teacher: 'LeowSH / ALP', venue: 'LAB1' },
+    { time: '12:40–14:00', subject: 'HCL', teacher: 'JiW', venue: '' },
+    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' }
+  ],
+  'Day 9': [
+    { time: '7:40–8:00', subject: 'DEAR time', teacher: '', venue: '' },
+    { time: '8:00–8:40', subject: 'CI', teacher: 'LiuZB', venue: '' },
+    { time: '8:40–9:20', subject: 'Mathematics', teacher: 'TohML', venue: '' },
+    { time: '9:20–10:00', subject: 'PE (LS)', teacher: 'Andrew', venue: 'School Field' },
+    { time: '10:00–10:40', subject: 'Science', teacher: 'LeowSH', venue: '' },
+    { time: '10:40–11:20', subject: 'Recess', teacher: '', venue: '' },
+    { time: '11:20–12:40', subject: 'Art', teacher: 'Faizal / Insyirah', venue: 'ART2' },
+    { time: '12:40–13:20', subject: 'Literature', teacher: 'Shahnaaz', venue: '' },
+    { time: '13:20–14:00', subject: 'HCL', teacher: 'JiW', venue: '' },
+    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' }
+  ],
+  'Day 10': [
+    { time: '7:40–8:00', subject: 'S/Love My Sch', teacher: '', venue: '' },
+    { time: '8:00–8:40', subject: 'TSI', teacher: 'Maizurah / Su Mei', venue: '' },
+    { time: '8:40–10:00', subject: 'English', teacher: 'Su Mei', venue: '' },
+    { time: '10:00–10:40', subject: 'Recess', teacher: '', venue: '' },
+    { time: '10:40–12:00', subject: 'Science', teacher: 'LeowSH', venue: 'BI2' },
+    { time: '12:00–12:40', subject: 'HCL', teacher: 'JiW', venue: '' },
+    { time: '12:40–13:20', subject: 'Mathematics', teacher: 'TohML', venue: '' },
+    { time: '13:20–14:00', subject: 'History', teacher: 'NeoCW', venue: '' },
+    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' }
+  ]
+};
+
+const PACK_ITEMS = {
+  'DEAR time': ['reading book'],
+  'HCL': ['Higher Chinese textbook / file'],
+  'English': ['English file / worksheet'],
+  'Mathematics': ['Math textbook / worksheet', 'calculator', 'geometry set if needed'],
+  'Science': ['Science file / notes', 'lab book if needed'],
+  'History': ['History file'],
+  'Geography': ['Geography file'],
+  'Literature': ['Literature book / file'],
+  'FCE': ['FCE file', 'materials teacher requested'],
+  'Art': ['Art materials', 'visual journal / sketchbook'],
+  'Music': ['Music file / materials'],
+  'PE (LS)': ['PE attire', 'water bottle'],
+  'MASSP': ['sports attire', 'water bottle'],
+  'MSP': ['MSP file / worksheet'],
+  'ALP1': ['ALP notes / worksheet'],
+  'CI': ['CI file / materials'],
+  'CCE': ['school diary'],
+  'AS': ['AS materials if assigned'],
+  'TSI': ['TSI materials if assigned']
+};
+
 const QUESTION_BANK = {
   Mathematics: {
     'Algebra': [
@@ -68,7 +208,8 @@ const LS = {
   mistakes: 'eshq_v2_mistakes',
   mastered: 'eshq_v2_mastered',
   history: 'eshq_v2_history',
-  streak: 'eshq_v2_streak'
+  streak: 'eshq_v2_streak',
+  cycleDay: 'eshq_v3_cycle_day'
 };
 
 const state = {
@@ -135,7 +276,7 @@ function getFocusTasks() {
   return [
     { id: 'focus-deadline', text: title, sub: upcoming ? `Due ${formatLongDate(upcoming.date)}` : 'Everything is loaded' },
     { id: 'focus-practice', text: 'Complete one short Revision Lab round', sub: '5 questions is enough to start' },
-    { id: 'focus-pack', text: 'Pack files for tomorrow', sub: 'Check school diary and timetable' }
+    { id: 'focus-pack', text: 'Pack files for tomorrow', sub: `Use Timetable: ${getNextCycleDay(getSelectedCycleDay())}` }
   ];
 }
 function getUpcomingIncomplete() {
@@ -171,6 +312,7 @@ function renderDashboard() {
   renderUpcomingDeadlines();
   renderParentSummary();
   renderWeekPreview();
+  renderTimetableDashboard();
 }
 
 function renderFocus() {
@@ -471,10 +613,65 @@ function renderProgress() {
   `;
 }
 
+
+function getSelectedCycleDay() {
+  return load(LS.cycleDay, 'Day 1');
+}
+function getNextCycleDay(day) {
+  const idx = TIMETABLE_DAYS.indexOf(day);
+  return TIMETABLE_DAYS[(idx + 1) % TIMETABLE_DAYS.length];
+}
+function getPackItemsForDay(day) {
+  const classes = TIMETABLE[day] || [];
+  const items = new Set(['school diary', 'pencil case', 'water bottle']);
+  classes.forEach(c => {
+    (PACK_ITEMS[c.subject] || []).forEach(item => items.add(item));
+  });
+  return [...items];
+}
+function classRow(c) {
+  const extra = [c.teacher, c.venue].filter(Boolean).join(' · ');
+  return `<div class="class-row"><span class="class-time">${c.time}</span><div><strong>${c.subject}</strong>${extra ? `<span>${extra}</span>` : ''}</div></div>`;
+}
+function renderTimetableDashboard() {
+  const day = getSelectedCycleDay();
+  const classes = (TIMETABLE[day] || []).filter(c => !['Lunch', 'Recess'].includes(c.subject));
+  const nextDay = getNextCycleDay(day);
+  const preview = document.getElementById('dashboardTimetablePreview');
+  const pack = document.getElementById('dashboardPackPreview');
+  const badge = document.getElementById('tomorrowCycleBadge');
+  if (badge) badge.textContent = nextDay;
+  if (preview) {
+    preview.innerHTML = `<div class="cycle-chip">${day}</div>` + classes.slice(0, 6).map(classRow).join('') + (classes.length > 6 ? `<button class="text-btn" data-section="timetable">View ${classes.length - 6} more</button>` : '');
+  }
+  if (pack) {
+    pack.innerHTML = getPackItemsForDay(nextDay).slice(0, 7).map(item => `<label class="pack-item"><input type="checkbox"> <span>${item}</span></label>`).join('');
+  }
+}
+function renderTimetable() {
+  const selector = document.getElementById('cycleDaySelect');
+  if (!selector) return;
+  const selected = getSelectedCycleDay();
+  selector.innerHTML = TIMETABLE_DAYS.map(day => `<option value="${day}">${day}</option>`).join('');
+  selector.value = selected;
+  const classes = TIMETABLE[selected] || [];
+  const nextDay = getNextCycleDay(selected);
+  document.getElementById('selectedCycleTitle').textContent = `${selected} Classes`;
+  document.getElementById('selectedClassCount').textContent = `${classes.filter(c => !['Lunch', 'Recess'].includes(c.subject)).length} classes`;
+  document.getElementById('selectedDayClasses').innerHTML = classes.map(classRow).join('');
+  document.getElementById('packListTitle').textContent = `Pack for ${nextDay}`;
+  document.getElementById('tomorrowPackList').innerHTML = getPackItemsForDay(nextDay).map(item => `<label class="pack-item"><input type="checkbox"> <span>${item}</span></label>`).join('');
+  document.getElementById('fullTimetableGrid').innerHTML = TIMETABLE_DAYS.map(day => {
+    const dayClasses = (TIMETABLE[day] || []).filter(c => !['Lunch', 'Recess'].includes(c.subject));
+    return `<article class="timetable-day ${day === selected ? 'active' : ''}"><h3>${day}</h3>${dayClasses.map(c => `<p><strong>${c.time}</strong> ${c.subject}${c.venue ? ` · ${c.venue}` : ''}</p>`).join('')}</article>`;
+  }).join('');
+}
+
 function renderAll() {
   renderDashboard();
   renderWa3Board();
   renderPlanner();
+  renderTimetable();
   renderRevisionControls();
   renderMistakeBook();
   renderProgress();
@@ -537,6 +734,11 @@ function setupEvents() {
       renderAll();
     }
     if (e.target.id === 'subjectSelect') renderTopicOptions();
+    if (e.target.id === 'cycleDaySelect') {
+      save(LS.cycleDay, e.target.value);
+      toast(`Timetable set to ${e.target.value}`);
+      renderAll();
+    }
   });
 
   document.addEventListener('input', e => {

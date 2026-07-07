@@ -23,6 +23,7 @@
         <button class="nav-btn active" data-section="dashboard">Dashboard</button>
         <button class="nav-btn" data-section="wa3">WA3 Board</button>
         <button class="nav-btn" data-section="planner">Weekly Planner</button>
+        <button class="nav-btn" data-section="timetable">Timetable</button>
         <button class="nav-btn" data-section="revision">Revision Lab</button>
         <button class="nav-btn" data-section="mistakes">Mistake Book</button>
         <button class="nav-btn" data-section="progress">Progress</button>
@@ -89,6 +90,7 @@
           <div class="quick-actions">
             <button class="quick-card" data-section="wa3"><strong>WA3 Board</strong><span>Track tests, projects and submissions</span></button>
             <button class="quick-card" data-section="planner"><strong>Weekly Planner</strong><span>Plan homework and revision</span></button>
+            <button class="quick-card" data-section="timetable"><strong>Timetable</strong><span>Check classes and pack bag</span></button>
             <button class="quick-card" data-section="revision"><strong>Revision Lab</strong><span>Practise questions by topic</span></button>
             <button class="quick-card" data-section="mistakes"><strong>Mistake Book</strong><span>Review mistakes until mastered</span></button>
             <button class="quick-card" data-section="progress"><strong>Progress</strong><span>See what is improving</span></button>
@@ -115,6 +117,31 @@
               </div>
             </div>
             <div id="parentSummary" class="summary-grid"></div>
+          </section>
+        </div>
+
+
+        <div class="dashboard-grid two-cols">
+          <section class="card timetable-preview-card">
+            <div class="section-title-row">
+              <div>
+                <p class="eyebrow">School day</p>
+                <h3>Today’s Classes</h3>
+              </div>
+              <button class="text-btn" data-section="timetable">Open timetable</button>
+            </div>
+            <div id="dashboardTimetablePreview" class="today-classes"></div>
+          </section>
+
+          <section class="card pack-preview-card">
+            <div class="section-title-row">
+              <div>
+                <p class="eyebrow">Tomorrow</p>
+                <h3>Pack List</h3>
+              </div>
+              <span class="mini-badge" id="tomorrowCycleBadge">Next day</span>
+            </div>
+            <div id="dashboardPackPreview" class="pack-list compact"></div>
           </section>
         </div>
 
@@ -162,6 +189,55 @@
           <button id="addPlannerTaskBtn" class="primary-action small">+ Add task</button>
         </div>
         <div id="plannerGrid" class="planner-grid"></div>
+      </section>
+
+
+      <section id="timetable" class="section">
+        <div class="page-header">
+          <div>
+            <p class="eyebrow">NCHS Sec 1 Excellence · Semester 2</p>
+            <h2>My Timetable</h2>
+            <p class="muted">The school uses a 10-day cycle. Select today’s cycle day to see classes and tomorrow’s pack list.</p>
+          </div>
+          <div class="timetable-selector">
+            <label for="cycleDaySelect">Today is</label>
+            <select id="cycleDaySelect"></select>
+          </div>
+        </div>
+
+        <div class="dashboard-grid two-cols">
+          <section class="card">
+            <div class="section-title-row">
+              <div>
+                <p class="eyebrow">Selected day</p>
+                <h3 id="selectedCycleTitle">Day 1 Classes</h3>
+              </div>
+              <span class="mini-badge" id="selectedClassCount">0 classes</span>
+            </div>
+            <div id="selectedDayClasses" class="class-list"></div>
+          </section>
+
+          <section class="card">
+            <div class="section-title-row">
+              <div>
+                <p class="eyebrow">Bag check</p>
+                <h3 id="packListTitle">Pack for Tomorrow</h3>
+              </div>
+            </div>
+            <div id="tomorrowPackList" class="pack-list"></div>
+            <p class="helper-text">This is generated from tomorrow’s timetable. Add extra teacher instructions in Weekly Planner if needed.</p>
+          </section>
+        </div>
+
+        <section class="card">
+          <div class="section-title-row">
+            <div>
+              <p class="eyebrow">10-day cycle</p>
+              <h3>Full Timetable</h3>
+            </div>
+          </div>
+          <div id="fullTimetableGrid" class="timetable-grid"></div>
+        </section>
       </section>
 
       <section id="revision" class="section">
