@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evans Revision Lab | Sec 1</title>
+  <link rel="stylesheet" href="/style.css?v=6" />
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <div>
+        <p class="pill">EVANS LI'S WEBSITE</p>
+        <h1>Sec 1 Revision Lab</h1>
+        <p class="subtitle">Choose a subject, pick a topic, and practise with random syllabus-style questions.</p>
+      </div>
+      <div class="scoreBox"><span>Round Score</span><strong id="score">0</strong></div>
+    </section>
+
+    <section id="home" class="panel active">
+      <h2>Choose a subject</h2>
+      <p class="hint">All uploaded Sec 1-related syllabuses are included, including Humanities and languages.</p>
+      <div class="dashboardActions">
+        <button id="mistakesBtn" class="mainBtn">Review My Mistakes <span id="mistakeCount">0</span></button>
+        <button id="progressBtn" class="mainBtn secondaryMain">Weak Topics & Progress <span id="masteredCount">0</span> mastered</button>
+      </div>
+      <div id="subjectGrid" class="grid"></div>
+    </section>
+
+    <section id="topics" class="panel">
+      <button id="homeBtn" class="smallBtn">← Subjects</button>
+      <p id="topicSubjectPill" class="pill">SUBJECT</p>
+      <h2 id="topicSubjectTitle">Subject</h2>
+      <p id="topicSubjectHint" class="hint"></p>
+      <div id="topicGrid" class="grid topicGrid"></div>
+    </section>
+
+    <section id="quiz" class="panel quizPanel">
+      <div class="quizHeader">
+        <button id="topicBackBtn" class="smallBtn">← Topics</button>
+        <p id="subjectLabel" class="pill">SUBJECT</p>
+      </div>
+      <div class="metaRow">
+        <span id="topicLabel">Topic</span>
+        <span id="questionNo">Question 1 / 10</span>
+      </div>
+      <div class="questionBox">
+        <p class="questionLabel">Question</p>
+        <h3 id="questionText">Question text</h3>
+      </div>
+      <p id="feedbackMini" class="instruction">Choose the best answer.</p>
+      <div id="answers" class="answers"></div>
+      <p id="feedback" class="feedback"></p>
+    </section>
+
+    <section id="result" class="panel">
+      <div class="trophy">🏆</div>
+      <p class="pill">ROUND COMPLETE</p>
+      <h2 id="resultTitle">Great work</h2>
+      <p id="resultText" class="hint"></p>
+      <div id="reviewBox" class="review"></div>
+      <button id="againBtn" class="mainBtn">Choose another topic</button>
+    </section>
+
+    <section id="mistakes" class="panel">
+      <button id="backHomeFromMistakes" class="smallBtn">← Subjects</button>
+      <p class="pill">PRACTICE BOX</p>
+      <h2>Review My Mistakes</h2>
+      <p class="hint">Questions Evans misses are saved here automatically. If he answers a saved mistake correctly twice, it becomes Mastered.</p>
+      <div class="dashboardActions">
+        <button id="startReviewBtn" class="mainBtn">Start Mistake Review</button>
+        <button id="clearMistakesBtn" class="mainBtn dangerMain">Clear Saved Mistakes</button>
+      </div>
+      <div id="mistakeList" class="mistakeList"></div>
+    </section>
+
+    <section id="progress" class="panel">
+      <button id="backHomeFromProgress" class="smallBtn">← Subjects</button>
+      <p class="pill">LEARNING TRACKER</p>
+      <h2>Weak Topics & Progress</h2>
+      <p class="hint">This page shows which topics need review and which ones Evans has already mastered.</p>
+      <div class="dashboardActions">
+        <button id="startReviewBtn2" class="mainBtn">Review Active Mistakes</button>
+      </div>
+      <div id="progressList" class="progressList"></div>
+    </section>
+  </main>
+  <script src="/script.js?v=6"></script>
+</body>
+</html>
