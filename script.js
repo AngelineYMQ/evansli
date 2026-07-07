@@ -177,47 +177,2933 @@ const PACK_ITEMS = {
 };
 
 const QUESTION_BANK = {
-  Mathematics: {
-    'Algebra': [
-      { q: 'Simplify: 3x + 2x - x', options: ['4x', '5x', '6x', '3x'], answer: '4x', explain: 'Combine like terms: 3x + 2x - x = 4x.' },
-      { q: 'If 2x = 18, what is x?', options: ['6', '8', '9', '16'], answer: '9', explain: 'Divide both sides by 2.' },
-      { q: 'Expand: 2(a + 5)', options: ['2a + 5', '2a + 10', 'a + 10', '7a'], answer: '2a + 10', explain: 'Multiply 2 by both terms inside the bracket.' },
-      { q: 'Simplify: 7y - 3y + 2', options: ['4y + 2', '6y', '10y + 2', '4y - 2'], answer: '4y + 2', explain: '7y - 3y = 4y, then keep +2.' },
-      { q: 'If x + 7 = 15, what is x?', options: ['7', '8', '9', '22'], answer: '8', explain: 'Subtract 7 from both sides.' }
+  "Mathematics": {
+    "Numbers & Ratio": [
+      {
+        "q": "A value increases from 80 to 100. What is the percentage increase?",
+        "options": [
+          "25%",
+          "20%",
+          "30%",
+          "40%"
+        ],
+        "answer": "25%",
+        "explain": "The correct answer is 25%."
+      },
+      {
+        "q": "Share $72 in the ratio 5:7. What is the larger share?",
+        "options": [
+          "$42",
+          "$30",
+          "$36",
+          "$48"
+        ],
+        "answer": "$42",
+        "explain": "The correct answer is $42."
+      },
+      {
+        "q": "Write 0.00056 in standard form.",
+        "options": [
+          "5.6 × 10⁻⁴",
+          "5.6 × 10⁻³",
+          "56 × 10⁻⁵",
+          "0.56 × 10⁻³"
+        ],
+        "answer": "5.6 × 10⁻⁴",
+        "explain": "The correct answer is 5.6 × 10⁻⁴."
+      },
+      {
+        "q": "Simplify: a³ × a⁵",
+        "options": [
+          "a⁸",
+          "a¹⁵",
+          "2a⁸",
+          "a²"
+        ],
+        "answer": "a⁸",
+        "explain": "The correct answer is a⁸."
+      },
+      {
+        "q": "A cyclist travels 24 km in 1.5 h. Find the speed.",
+        "options": [
+          "16 km/h",
+          "12 km/h",
+          "18 km/h",
+          "24 km/h"
+        ],
+        "answer": "16 km/h",
+        "explain": "The correct answer is 16 km/h."
+      }
     ],
-    'Ratio & Percentage': [
-      { q: 'What is 25% of 80?', options: ['15', '20', '25', '40'], answer: '20', explain: '25% is one quarter. One quarter of 80 is 20.' },
-      { q: 'Simplify the ratio 12:18.', options: ['2:3', '3:2', '4:9', '6:9'], answer: '2:3', explain: 'Divide both numbers by 6.' },
-      { q: 'A shirt costs $40 after a 20% discount. What was the discount amount?', options: ['$5', '$8', '$10', '$20'], answer: '$10', explain: 'If $40 is 80%, original is $50, so discount is $10.' }
+    "Algebra": [
+      {
+        "q": "Simplify: 3x + 5x - 2x",
+        "options": [
+          "6x",
+          "8x",
+          "10x",
+          "6x²"
+        ],
+        "answer": "6x",
+        "explain": "The correct answer is 6x."
+      },
+      {
+        "q": "Expand: 4(2x - 3)",
+        "options": [
+          "8x - 12",
+          "8x - 3",
+          "6x - 12",
+          "8x + 12"
+        ],
+        "answer": "8x - 12",
+        "explain": "The correct answer is 8x - 12."
+      },
+      {
+        "q": "Factorise: 6x + 9",
+        "options": [
+          "3(2x + 3)",
+          "6(x + 3)",
+          "9(x + 1)",
+          "3(2x + 9)"
+        ],
+        "answer": "3(2x + 3)",
+        "explain": "The correct answer is 3(2x + 3)."
+      },
+      {
+        "q": "Solve: 5x - 7 = 18",
+        "options": [
+          "5",
+          "3",
+          "4",
+          "6"
+        ],
+        "answer": "5",
+        "explain": "The correct answer is 5."
+      },
+      {
+        "q": "Solve: 2x + 3 > 11",
+        "options": [
+          "x > 4",
+          "x < 4",
+          "x > 7",
+          "x < 7"
+        ],
+        "answer": "x > 4",
+        "explain": "The correct answer is x > 4."
+      }
+    ],
+    "Functions & Graphs": [
+      {
+        "q": "For y = 3x - 2, find y when x = 5.",
+        "options": [
+          "13",
+          "11",
+          "15",
+          "17"
+        ],
+        "answer": "13",
+        "explain": "The correct answer is 13."
+      },
+      {
+        "q": "What is the gradient of the line y = 4x + 7?",
+        "options": [
+          "4",
+          "7",
+          "11",
+          "-4"
+        ],
+        "answer": "4",
+        "explain": "The correct answer is 4."
+      },
+      {
+        "q": "Which point lies on y = 2x + 1?",
+        "options": [
+          "(2, 5)",
+          "(1, 2)",
+          "(3, 5)",
+          "(4, 7)"
+        ],
+        "answer": "(2, 5)",
+        "explain": "The correct answer is (2, 5)."
+      },
+      {
+        "q": "The graph y = x² - 4 cuts the y-axis at which point?",
+        "options": [
+          "(0, -4)",
+          "(0, 4)",
+          "(-4, 0)",
+          "(4, 0)"
+        ],
+        "answer": "(0, -4)",
+        "explain": "The correct answer is (0, -4)."
+      },
+      {
+        "q": "Distance between (0,0) and (3,4) is:",
+        "options": [
+          "5",
+          "3",
+          "4",
+          "7"
+        ],
+        "answer": "5",
+        "explain": "The correct answer is 5."
+      }
+    ],
+    "Geometry & Measurement": [
+      {
+        "q": "Angles on a straight line add up to:",
+        "options": [
+          "180°",
+          "90°",
+          "270°",
+          "360°"
+        ],
+        "answer": "180°",
+        "explain": "The correct answer is 180°."
+      },
+      {
+        "q": "Each interior angle of a regular hexagon is:",
+        "options": [
+          "120°",
+          "90°",
+          "108°",
+          "135°"
+        ],
+        "answer": "120°",
+        "explain": "The correct answer is 120°."
+      },
+      {
+        "q": "A right triangle has shorter sides 6 cm and 8 cm. Find the hypotenuse.",
+        "options": [
+          "10 cm",
+          "12 cm",
+          "14 cm",
+          "16 cm"
+        ],
+        "answer": "10 cm",
+        "explain": "The correct answer is 10 cm."
+      },
+      {
+        "q": "Two similar figures have scale factor 3. Their area ratio is:",
+        "options": [
+          "1:9",
+          "1:3",
+          "1:6",
+          "3:1"
+        ],
+        "answer": "1:9",
+        "explain": "The correct answer is 1:9."
+      },
+      {
+        "q": "Volume of a cylinder is:",
+        "options": [
+          "πr²h",
+          "2πrh",
+          "πrh²",
+          "4/3πr³"
+        ],
+        "answer": "πr²h",
+        "explain": "The correct answer is πr²h."
+      }
+    ],
+    "Statistics & Probability": [
+      {
+        "q": "The mean of 2, 4, 6, 8 is:",
+        "options": [
+          "5",
+          "4",
+          "6",
+          "7"
+        ],
+        "answer": "5",
+        "explain": "The correct answer is 5."
+      },
+      {
+        "q": "Which measure is most affected by an extreme outlier?",
+        "options": [
+          "Mean",
+          "Median",
+          "Mode",
+          "Range only"
+        ],
+        "answer": "Mean",
+        "explain": "The correct answer is Mean."
+      },
+      {
+        "q": "A fair die is rolled. Probability of getting an even number is:",
+        "options": [
+          "1/2",
+          "1/6",
+          "1/3",
+          "2/3"
+        ],
+        "answer": "1/2",
+        "explain": "The correct answer is 1/2."
+      },
+      {
+        "q": "Two fair coins are tossed. Probability of two heads is:",
+        "options": [
+          "1/4",
+          "1/2",
+          "1/3",
+          "1/8"
+        ],
+        "answer": "1/4",
+        "explain": "The correct answer is 1/4."
+      },
+      {
+        "q": "If A = {1,2,3} and B = {3,4}, what is A ∩ B?",
+        "options": [
+          "{3}",
+          "{1,2}",
+          "{1,2,3,4}",
+          "∅"
+        ],
+        "answer": "{3}",
+        "explain": "The correct answer is {3}."
+      }
     ]
   },
-  Science: {
-    'Cells & Systems': [
-      { q: 'Which part of the cell controls activities?', options: ['Nucleus', 'Cell wall', 'Vacuole', 'Cytoplasm'], answer: 'Nucleus', explain: 'The nucleus controls cell activities.' },
-      { q: 'Which cell part is found in plant cells but not animal cells?', options: ['Cell wall', 'Nucleus', 'Cytoplasm', 'Cell membrane'], answer: 'Cell wall', explain: 'Plant cells have cell walls; animal cells do not.' },
-      { q: 'What is the function of the cell membrane?', options: ['Controls what enters and leaves', 'Makes food', 'Stores water only', 'Controls the whole cell'], answer: 'Controls what enters and leaves', explain: 'The cell membrane controls movement of substances in and out.' }
+  "Science": {
+    "Scientific Endeavour": [
+      {
+        "q": "Which attitude means checking ideas using evidence instead of guessing?",
+        "options": [
+          "Objectivity",
+          "Creativity",
+          "Speed",
+          "Volume"
+        ],
+        "answer": "Objectivity",
+        "explain": "The correct answer is Objectivity."
+      },
+      {
+        "q": "A fair test should change:",
+        "options": [
+          "only one variable at a time",
+          "all variables at once",
+          "no variables",
+          "the result after recording"
+        ],
+        "answer": "only one variable at a time",
+        "explain": "The correct answer is only one variable at a time."
+      },
+      {
+        "q": "A hypothesis is best described as:",
+        "options": [
+          "a testable explanation",
+          "a final proven fact",
+          "a random guess",
+          "a measurement unit"
+        ],
+        "answer": "a testable explanation",
+        "explain": "The correct answer is a testable explanation."
+      },
+      {
+        "q": "Why should scientists repeat experiments?",
+        "options": [
+          "To improve reliability",
+          "To make results look nicer",
+          "To avoid data",
+          "To change the hypothesis"
+        ],
+        "answer": "To improve reliability",
+        "explain": "The correct answer is To improve reliability."
+      },
+      {
+        "q": "Which value means reporting results honestly?",
+        "options": [
+          "Integrity",
+          "Pitch",
+          "Texture",
+          "Discount"
+        ],
+        "answer": "Integrity",
+        "explain": "The correct answer is Integrity."
+      }
     ],
-    'Water & Mixtures': [
-      { q: 'Which method separates insoluble solid from liquid?', options: ['Filtration', 'Evaporation', 'Condensation', 'Freezing'], answer: 'Filtration', explain: 'Filtration separates an insoluble solid from a liquid.' },
-      { q: 'Which process changes water vapour to liquid water?', options: ['Condensation', 'Evaporation', 'Melting', 'Boiling'], answer: 'Condensation', explain: 'Condensation is gas to liquid.' },
-      { q: 'A clear liquid may still contain dissolved substances. True or false?', options: ['True', 'False'], answer: 'True', explain: 'Dissolved substances may not be visible.' }
+    "Diversity of Matter": [
+      {
+        "q": "Which property is best used to separate iron filings from sand?",
+        "options": [
+          "Magnetic attraction",
+          "Evaporation",
+          "Distillation",
+          "Chromatography"
+        ],
+        "answer": "Magnetic attraction",
+        "explain": "The correct answer is Magnetic attraction."
+      },
+      {
+        "q": "Which separation method is suitable for separating an insoluble solid from a liquid?",
+        "options": [
+          "Filtration",
+          "Melting",
+          "Freezing",
+          "Condensation"
+        ],
+        "answer": "Filtration",
+        "explain": "The correct answer is Filtration."
+      },
+      {
+        "q": "Which technique can separate coloured dyes in ink?",
+        "options": [
+          "Paper chromatography",
+          "Magnetism",
+          "Decanting",
+          "Boiling"
+        ],
+        "answer": "Paper chromatography",
+        "explain": "The correct answer is Paper chromatography."
+      },
+      {
+        "q": "A pure substance has:",
+        "options": [
+          "a fixed composition",
+          "many random components",
+          "no particles",
+          "no melting point"
+        ],
+        "answer": "a fixed composition",
+        "explain": "The correct answer is a fixed composition."
+      },
+      {
+        "q": "Which is a chemical change?",
+        "options": [
+          "Burning paper",
+          "Melting ice",
+          "Boiling water",
+          "Dissolving sugar"
+        ],
+        "answer": "Burning paper",
+        "explain": "The correct answer is Burning paper."
+      }
+    ],
+    "Models & Cells": [
+      {
+        "q": "Which structure controls what enters and leaves a cell?",
+        "options": [
+          "Cell membrane",
+          "Cell wall",
+          "Nucleus",
+          "Vacuole"
+        ],
+        "answer": "Cell membrane",
+        "explain": "The correct answer is Cell membrane."
+      },
+      {
+        "q": "Which cell structure contains genetic material?",
+        "options": [
+          "Nucleus",
+          "Cytoplasm",
+          "Cell wall",
+          "Chloroplast"
+        ],
+        "answer": "Nucleus",
+        "explain": "The correct answer is Nucleus."
+      },
+      {
+        "q": "A model is useful because it helps us:",
+        "options": [
+          "represent and explain ideas",
+          "avoid evidence",
+          "replace all experiments",
+          "make facts disappear"
+        ],
+        "answer": "represent and explain ideas",
+        "explain": "The correct answer is represent and explain ideas."
+      },
+      {
+        "q": "Which is found in plant cells but not animal cells?",
+        "options": [
+          "Cell wall",
+          "Cell membrane",
+          "Cytoplasm",
+          "Nucleus"
+        ],
+        "answer": "Cell wall",
+        "explain": "The correct answer is Cell wall."
+      },
+      {
+        "q": "The cytoplasm is where many cell activities:",
+        "options": [
+          "take place",
+          "are erased",
+          "become solid",
+          "stop forever"
+        ],
+        "answer": "take place",
+        "explain": "The correct answer is take place."
+      }
+    ],
+    "Interactions": [
+      {
+        "q": "Which gas is needed for burning?",
+        "options": [
+          "Oxygen",
+          "Carbon dioxide",
+          "Nitrogen",
+          "Hydrogen"
+        ],
+        "answer": "Oxygen",
+        "explain": "The correct answer is Oxygen."
+      },
+      {
+        "q": "A force can change an object's:",
+        "options": [
+          "motion or shape",
+          "mass only",
+          "colour only",
+          "name only"
+        ],
+        "answer": "motion or shape",
+        "explain": "The correct answer is motion or shape."
+      },
+      {
+        "q": "What is the SI unit of force?",
+        "options": [
+          "Newton",
+          "Joule",
+          "Watt",
+          "Pascal"
+        ],
+        "answer": "Newton",
+        "explain": "The correct answer is Newton."
+      },
+      {
+        "q": "Friction usually acts:",
+        "options": [
+          "opposite to motion",
+          "with gravity only",
+          "in the same direction always",
+          "only upward"
+        ],
+        "answer": "opposite to motion",
+        "explain": "The correct answer is opposite to motion."
+      },
+      {
+        "q": "A magnet attracts:",
+        "options": [
+          "iron",
+          "plastic",
+          "wood",
+          "glass"
+        ],
+        "answer": "iron",
+        "explain": "The correct answer is iron."
+      }
+    ],
+    "Systems & Energy": [
+      {
+        "q": "Which organ system mainly transports oxygen around the body?",
+        "options": [
+          "Circulatory system",
+          "Digestive system",
+          "Skeletal system",
+          "Nervous system"
+        ],
+        "answer": "Circulatory system",
+        "explain": "The correct answer is Circulatory system."
+      },
+      {
+        "q": "Energy cannot be created or destroyed. It can only be:",
+        "options": [
+          "converted from one form to another",
+          "lost forever",
+          "made from nothing",
+          "measured only in grams"
+        ],
+        "answer": "converted from one form to another",
+        "explain": "The correct answer is converted from one form to another."
+      },
+      {
+        "q": "Which system breaks down food?",
+        "options": [
+          "Digestive system",
+          "Respiratory system",
+          "Muscular system",
+          "Reproductive system"
+        ],
+        "answer": "Digestive system",
+        "explain": "The correct answer is Digestive system."
+      },
+      {
+        "q": "Which energy store is linked to height above ground?",
+        "options": [
+          "Gravitational potential energy",
+          "Chemical energy",
+          "Sound energy",
+          "Thermal energy only"
+        ],
+        "answer": "Gravitational potential energy",
+        "explain": "The correct answer is Gravitational potential energy."
+      },
+      {
+        "q": "In a food chain, arrows show:",
+        "options": [
+          "direction of energy transfer",
+          "the largest animal",
+          "where water flows",
+          "the oldest organism"
+        ],
+        "answer": "direction of energy transfer",
+        "explain": "The correct answer is direction of energy transfer."
+      }
     ]
   },
-  English: {
-    'Grammar': [
-      { q: 'Choose the correct sentence.', options: ['He go to school.', 'He goes to school.', 'He going school.', 'He gone to school.'], answer: 'He goes to school.', explain: 'Use “goes” for he/she/it in present tense.' },
-      { q: 'Choose the correct word: Evans has ___ his homework.', options: ['do', 'did', 'done', 'doing'], answer: 'done', explain: 'Present perfect uses has/have + past participle.' },
-      { q: 'Which is an adjective?', options: ['quickly', 'beautiful', 'run', 'school'], answer: 'beautiful', explain: 'An adjective describes a noun.' }
+  "English Language": {
+    "Grammar": [
+      {
+        "q": "Choose the correct sentence.",
+        "options": [
+          "Neither of the boys is ready.",
+          "Neither of the boys are ready.",
+          "Neither the boys is ready.",
+          "Neither boys is ready."
+        ],
+        "answer": "Neither of the boys is ready.",
+        "explain": "The correct answer is Neither of the boys is ready.."
+      },
+      {
+        "q": "Which word is an adverb in: She spoke softly.",
+        "options": [
+          "softly",
+          "She",
+          "spoke",
+          "the sentence has no adverb"
+        ],
+        "answer": "softly",
+        "explain": "The correct answer is softly."
+      },
+      {
+        "q": "Choose the correct verb: The list of items ___ on the table.",
+        "options": [
+          "is",
+          "are",
+          "were",
+          "be"
+        ],
+        "answer": "is",
+        "explain": "The correct answer is is."
+      },
+      {
+        "q": "Which sentence uses the correct tense?",
+        "options": [
+          "Evans has completed his homework.",
+          "Evans have completed his homework.",
+          "Evans completed has his homework.",
+          "Evans completing his homework."
+        ],
+        "answer": "Evans has completed his homework.",
+        "explain": "The correct answer is Evans has completed his homework.."
+      },
+      {
+        "q": "Which is a conjunction?",
+        "options": [
+          "although",
+          "quickly",
+          "blue",
+          "table"
+        ],
+        "answer": "although",
+        "explain": "The correct answer is although."
+      }
     ],
-    'Writing': [
-      { q: 'A good paragraph should usually have...', options: ['one clear main idea', 'many unrelated ideas', 'no examples', 'only one word'], answer: 'one clear main idea', explain: 'A paragraph should be focused.' },
-      { q: 'Which phrase is more formal?', options: ['gonna', 'I would like to', 'wanna', 'kinda'], answer: 'I would like to', explain: 'Formal writing avoids slang.' }
+    "Vocabulary": [
+      {
+        "q": "Which word is closest in meaning to 'evaluate'?",
+        "options": [
+          "assess",
+          "ignore",
+          "decorate",
+          "repeat"
+        ],
+        "answer": "assess",
+        "explain": "The correct answer is assess."
+      },
+      {
+        "q": "Which word means 'able to change to suit new conditions'?",
+        "options": [
+          "adaptable",
+          "fragile",
+          "ordinary",
+          "visible"
+        ],
+        "answer": "adaptable",
+        "explain": "The correct answer is adaptable."
+      },
+      {
+        "q": "Which word is closest to 'credible'?",
+        "options": [
+          "trustworthy",
+          "colourful",
+          "silent",
+          "temporary"
+        ],
+        "answer": "trustworthy",
+        "explain": "The correct answer is trustworthy."
+      },
+      {
+        "q": "Which word is opposite of 'scarce'?",
+        "options": [
+          "abundant",
+          "rare",
+          "limited",
+          "insufficient"
+        ],
+        "answer": "abundant",
+        "explain": "The correct answer is abundant."
+      },
+      {
+        "q": "Which phrase means 'to support with evidence'?",
+        "options": [
+          "substantiate",
+          "contradict",
+          "decorate",
+          "interrupt"
+        ],
+        "answer": "substantiate",
+        "explain": "The correct answer is substantiate."
+      }
+    ],
+    "Reading & Viewing": [
+      {
+        "q": "The main idea of a paragraph is usually:",
+        "options": [
+          "the central point",
+          "a random detail",
+          "the longest word",
+          "the final punctuation mark"
+        ],
+        "answer": "the central point",
+        "explain": "The correct answer is the central point."
+      },
+      {
+        "q": "An inference is:",
+        "options": [
+          "a conclusion based on clues",
+          "a copied sentence",
+          "a spelling rule",
+          "a title"
+        ],
+        "answer": "a conclusion based on clues",
+        "explain": "The correct answer is a conclusion based on clues."
+      },
+      {
+        "q": "Tone means:",
+        "options": [
+          "the writer's attitude or feeling",
+          "the number of words",
+          "the page size",
+          "the font colour"
+        ],
+        "answer": "the writer's attitude or feeling",
+        "explain": "The correct answer is the writer's attitude or feeling."
+      },
+      {
+        "q": "A visual text may use images, layout and colour to:",
+        "options": [
+          "create meaning",
+          "remove meaning",
+          "avoid communication",
+          "replace all language"
+        ],
+        "answer": "create meaning",
+        "explain": "The correct answer is create meaning."
+      },
+      {
+        "q": "A fact is different from an opinion because a fact can be:",
+        "options": [
+          "verified",
+          "felt only",
+          "always emotional",
+          "never checked"
+        ],
+        "answer": "verified",
+        "explain": "The correct answer is verified."
+      }
+    ],
+    "Writing": [
+      {
+        "q": "A formal email should usually begin with:",
+        "options": [
+          "Dear Sir/Madam,",
+          "Yo,",
+          "Hey bro,",
+          "What's up?"
+        ],
+        "answer": "Dear Sir/Madam,",
+        "explain": "The correct answer is Dear Sir/Madam,."
+      },
+      {
+        "q": "A good summary should be:",
+        "options": [
+          "concise and focused on key points",
+          "longer than the original",
+          "full of personal opinions",
+          "only copied phrases"
+        ],
+        "answer": "concise and focused on key points",
+        "explain": "The correct answer is concise and focused on key points."
+      },
+      {
+        "q": "A persuasive essay aims to:",
+        "options": [
+          "convince the reader",
+          "list random words",
+          "avoid a viewpoint",
+          "describe only colours"
+        ],
+        "answer": "convince the reader",
+        "explain": "The correct answer is convince the reader."
+      },
+      {
+        "q": "A topic sentence usually introduces:",
+        "options": [
+          "the main idea of a paragraph",
+          "the page number",
+          "the author's age",
+          "the font used"
+        ],
+        "answer": "the main idea of a paragraph",
+        "explain": "The correct answer is the main idea of a paragraph."
+      },
+      {
+        "q": "Using paragraphing helps the reader follow:",
+        "options": [
+          "organised ideas",
+          "spelling errors",
+          "random jumps",
+          "unrelated facts"
+        ],
+        "answer": "organised ideas",
+        "explain": "The correct answer is organised ideas."
+      }
+    ],
+    "Editing": [
+      {
+        "q": "Which sentence uses punctuation correctly?",
+        "options": [
+          "After school, Evans revised his notes.",
+          "After school Evans, revised his notes.",
+          "After, school Evans revised his notes.",
+          "After school Evans revised, his notes."
+        ],
+        "answer": "After school, Evans revised his notes.",
+        "explain": "The correct answer is After school, Evans revised his notes.."
+      },
+      {
+        "q": "Which sentence is more concise?",
+        "options": [
+          "The test was difficult.",
+          "The test was of a difficult nature.",
+          "It was a test and it was difficult.",
+          "The test, which was a test, was difficult."
+        ],
+        "answer": "The test was difficult.",
+        "explain": "The correct answer is The test was difficult.."
+      },
+      {
+        "q": "Which word best replaces 'very big'?",
+        "options": [
+          "huge",
+          "tiny",
+          "slow",
+          "weak"
+        ],
+        "answer": "huge",
+        "explain": "The correct answer is huge."
+      },
+      {
+        "q": "Which sentence avoids repetition?",
+        "options": [
+          "Cyrus enjoyed the game because it was exciting.",
+          "Cyrus enjoyed the game because the game was exciting.",
+          "Cyrus enjoyed because game exciting.",
+          "Game Cyrus enjoyed game exciting."
+        ],
+        "answer": "Cyrus enjoyed the game because it was exciting.",
+        "explain": "The correct answer is Cyrus enjoyed the game because it was exciting.."
+      },
+      {
+        "q": "Which is the correct spelling?",
+        "options": [
+          "necessary",
+          "neccessary",
+          "necessery",
+          "necesary"
+        ],
+        "answer": "necessary",
+        "explain": "The correct answer is necessary."
+      }
     ]
   },
-  'Higher Chinese': {
-    '情境记叙文': [
-      { q: '情境记叙文最重要的是要写清楚什么？', options: ['时间、地点、人物、事情经过', '只写成语', '只写对话', '只写结尾'], answer: '时间、地点、人物、事情经过', explain: '记叙文需要交代清楚基本要素和事情发展。' },
-      { q: '描写人物心情时，哪一种写法更具体？', options: ['我很开心', '我高兴得差点跳起来', '开心', '很好'], answer: '我高兴得差点跳起来', explain: '具体动作能让心情描写更生动。' }
+  "Food & Consumer Education": {
+    "Nutrition & Health": [
+      {
+        "q": "Which nutrient is the body's main source of energy?",
+        "options": [
+          "Carbohydrate",
+          "Vitamin C",
+          "Calcium",
+          "Water"
+        ],
+        "answer": "Carbohydrate",
+        "explain": "The correct answer is Carbohydrate."
+      },
+      {
+        "q": "Protein is important mainly for:",
+        "options": [
+          "growth and repair",
+          "keeping food cold",
+          "making food sweet",
+          "removing bacteria"
+        ],
+        "answer": "growth and repair",
+        "explain": "The correct answer is growth and repair."
+      },
+      {
+        "q": "Too much sugar intake may increase the risk of:",
+        "options": [
+          "diet-related health problems",
+          "stronger bones only",
+          "better eyesight only",
+          "more sleep only"
+        ],
+        "answer": "diet-related health problems",
+        "explain": "The correct answer is diet-related health problems."
+      },
+      {
+        "q": "My Healthy Plate encourages eating more:",
+        "options": [
+          "fruit and vegetables",
+          "fried snacks",
+          "sugary drinks",
+          "processed meat only"
+        ],
+        "answer": "fruit and vegetables",
+        "explain": "The correct answer is fruit and vegetables."
+      },
+      {
+        "q": "Calcium is important for:",
+        "options": [
+          "strong bones and teeth",
+          "food colour",
+          "sweetness",
+          "washing hands"
+        ],
+        "answer": "strong bones and teeth",
+        "explain": "The correct answer is strong bones and teeth."
+      }
+    ],
+    "Meal Planning": [
+      {
+        "q": "A balanced meal should include:",
+        "options": [
+          "a variety of food groups",
+          "only fried food",
+          "only sweet drinks",
+          "only snacks"
+        ],
+        "answer": "a variety of food groups",
+        "explain": "The correct answer is a variety of food groups."
+      },
+      {
+        "q": "Meal planning should consider:",
+        "options": [
+          "dietary needs and budget",
+          "packaging colour only",
+          "advertisement only",
+          "random choices"
+        ],
+        "answer": "dietary needs and budget",
+        "explain": "The correct answer is dietary needs and budget."
+      },
+      {
+        "q": "A healthier cooking method is:",
+        "options": [
+          "steaming",
+          "deep-frying daily",
+          "burning food",
+          "adding excessive oil"
+        ],
+        "answer": "steaming",
+        "explain": "The correct answer is steaming."
+      },
+      {
+        "q": "Modifying a meal means:",
+        "options": [
+          "making changes to better meet needs",
+          "throwing it away",
+          "removing all nutrients",
+          "ignoring the eater"
+        ],
+        "answer": "making changes to better meet needs",
+        "explain": "The correct answer is making changes to better meet needs."
+      },
+      {
+        "q": "A target group could refer to:",
+        "options": [
+          "people with specific needs",
+          "only one brand",
+          "a cooking pot",
+          "a receipt"
+        ],
+        "answer": "people with specific needs",
+        "explain": "The correct answer is people with specific needs."
+      }
+    ],
+    "Food Safety": [
+      {
+        "q": "Which practice reduces the risk of food poisoning?",
+        "options": [
+          "Wash hands before handling food",
+          "Leave cooked food overnight",
+          "Use same board for raw chicken and salad",
+          "Taste expired food"
+        ],
+        "answer": "Wash hands before handling food",
+        "explain": "The correct answer is Wash hands before handling food."
+      },
+      {
+        "q": "Perishable food should usually be stored:",
+        "options": [
+          "in the refrigerator",
+          "under the sun",
+          "beside cleaning chemicals",
+          "open on the table"
+        ],
+        "answer": "in the refrigerator",
+        "explain": "The correct answer is in the refrigerator."
+      },
+      {
+        "q": "Raw and cooked food should be kept separate to prevent:",
+        "options": [
+          "cross-contamination",
+          "evaporation",
+          "interest rates",
+          "tone colour"
+        ],
+        "answer": "cross-contamination",
+        "explain": "The correct answer is cross-contamination."
+      },
+      {
+        "q": "The danger zone for bacterial growth is linked to:",
+        "options": [
+          "unsafe food temperatures",
+          "musical pitch",
+          "visual rhythm",
+          "algebra"
+        ],
+        "answer": "unsafe food temperatures",
+        "explain": "The correct answer is unsafe food temperatures."
+      },
+      {
+        "q": "Before using canned food, check for:",
+        "options": [
+          "expiry date and dents",
+          "font style only",
+          "price only",
+          "colour only"
+        ],
+        "answer": "expiry date and dents",
+        "explain": "The correct answer is expiry date and dents."
+      }
+    ],
+    "Consumer Literacy": [
+      {
+        "q": "A product label can help consumers check:",
+        "options": [
+          "nutrition and ingredients",
+          "only the cashier's name",
+          "the weather",
+          "the shop music"
+        ],
+        "answer": "nutrition and ingredients",
+        "explain": "The correct answer is nutrition and ingredients."
+      },
+      {
+        "q": "A need is different from a want because a need is:",
+        "options": [
+          "essential",
+          "always expensive",
+          "always fun",
+          "optional"
+        ],
+        "answer": "essential",
+        "explain": "The correct answer is essential."
+      },
+      {
+        "q": "A budget helps a person:",
+        "options": [
+          "manage money and spending",
+          "spend without thinking",
+          "avoid saving",
+          "buy everything online"
+        ],
+        "answer": "manage money and spending",
+        "explain": "The correct answer is manage money and spending."
+      },
+      {
+        "q": "Using credit responsibly means:",
+        "options": [
+          "borrowing only what can be repaid",
+          "borrowing without limits",
+          "ignoring bills",
+          "sharing passwords"
+        ],
+        "answer": "borrowing only what can be repaid",
+        "explain": "The correct answer is borrowing only what can be repaid."
+      },
+      {
+        "q": "A discerning consumer should compare products by:",
+        "options": [
+          "reading labels and checking needs",
+          "choosing only bright packaging",
+          "buying most expensive item",
+          "ignoring price"
+        ],
+        "answer": "reading labels and checking needs",
+        "explain": "The correct answer is reading labels and checking needs."
+      }
+    ],
+    "Sustainability & Food Culture": [
+      {
+        "q": "Which choice supports sustainable consumption?",
+        "options": [
+          "Reduce food waste",
+          "Throw away leftovers immediately",
+          "Buy more than needed",
+          "Avoid planning meals"
+        ],
+        "answer": "Reduce food waste",
+        "explain": "The correct answer is Reduce food waste."
+      },
+      {
+        "q": "Food culture refers to:",
+        "options": [
+          "food practices linked to people and traditions",
+          "only food prices",
+          "only kitchen tools",
+          "only spelling"
+        ],
+        "answer": "food practices linked to people and traditions",
+        "explain": "The correct answer is food practices linked to people and traditions."
+      },
+      {
+        "q": "Choosing seasonal or local produce may help:",
+        "options": [
+          "reduce environmental impact",
+          "increase waste always",
+          "remove nutrition",
+          "avoid budgeting"
+        ],
+        "answer": "reduce environmental impact",
+        "explain": "The correct answer is reduce environmental impact."
+      },
+      {
+        "q": "A reusable container helps reduce:",
+        "options": [
+          "single-use waste",
+          "food safety",
+          "nutrients",
+          "savings"
+        ],
+        "answer": "single-use waste",
+        "explain": "The correct answer is single-use waste."
+      },
+      {
+        "q": "Appreciating Singapore's food culture means respecting:",
+        "options": [
+          "diverse food traditions",
+          "only one cuisine",
+          "only imported food",
+          "only fast food"
+        ],
+        "answer": "diverse food traditions",
+        "explain": "The correct answer is diverse food traditions."
+      }
+    ]
+  },
+  "Art": {
+    "Visual Qualities": [
+      {
+        "q": "Which is a visual element in art?",
+        "options": [
+          "Line",
+          "Boiling",
+          "Gravity",
+          "Adverb"
+        ],
+        "answer": "Line",
+        "explain": "The correct answer is Line."
+      },
+      {
+        "q": "Warm colours include:",
+        "options": [
+          "red and orange",
+          "blue and green",
+          "black and white",
+          "grey and silver only"
+        ],
+        "answer": "red and orange",
+        "explain": "The correct answer is red and orange."
+      },
+      {
+        "q": "Texture in art refers to:",
+        "options": [
+          "surface quality",
+          "food temperature",
+          "grammar tense",
+          "musical speed"
+        ],
+        "answer": "surface quality",
+        "explain": "The correct answer is surface quality."
+      },
+      {
+        "q": "Contrast helps to:",
+        "options": [
+          "create visual difference",
+          "remove all focus",
+          "make everything identical",
+          "replace meaning"
+        ],
+        "answer": "create visual difference",
+        "explain": "The correct answer is create visual difference."
+      },
+      {
+        "q": "Composition refers to:",
+        "options": [
+          "how visual elements are arranged",
+          "how food is cooked",
+          "how force is measured",
+          "how words rhyme only"
+        ],
+        "answer": "how visual elements are arranged",
+        "explain": "The correct answer is how visual elements are arranged."
+      }
+    ],
+    "Art Forms & Media": [
+      {
+        "q": "A sculpture is usually:",
+        "options": [
+          "three-dimensional",
+          "only a paragraph",
+          "always a sound",
+          "only a flat graph"
+        ],
+        "answer": "three-dimensional",
+        "explain": "The correct answer is three-dimensional."
+      },
+      {
+        "q": "Watercolour is an example of:",
+        "options": [
+          "a painting medium",
+          "a musical instrument",
+          "a food nutrient",
+          "a grammar rule"
+        ],
+        "answer": "a painting medium",
+        "explain": "The correct answer is a painting medium."
+      },
+      {
+        "q": "Digital art uses:",
+        "options": [
+          "digital tools or technology",
+          "only clay",
+          "only boiling",
+          "only algebra"
+        ],
+        "answer": "digital tools or technology",
+        "explain": "The correct answer is digital tools or technology."
+      },
+      {
+        "q": "A collage is made by:",
+        "options": [
+          "combining different materials or images",
+          "measuring speed",
+          "cooking rice",
+          "writing equations only"
+        ],
+        "answer": "combining different materials or images",
+        "explain": "The correct answer is combining different materials or images."
+      },
+      {
+        "q": "Printmaking often involves:",
+        "options": [
+          "transferring an image from a surface",
+          "storing food",
+          "singing a melody",
+          "solving for x"
+        ],
+        "answer": "transferring an image from a surface",
+        "explain": "The correct answer is transferring an image from a surface."
+      }
+    ],
+    "Artistic Processes": [
+      {
+        "q": "Ideation means:",
+        "options": [
+          "generating and developing ideas",
+          "cleaning brushes only",
+          "copying answers",
+          "framing a work only"
+        ],
+        "answer": "generating and developing ideas",
+        "explain": "The correct answer is generating and developing ideas."
+      },
+      {
+        "q": "Close observation helps an artist:",
+        "options": [
+          "notice details",
+          "avoid looking",
+          "remove meaning",
+          "stop improving"
+        ],
+        "answer": "notice details",
+        "explain": "The correct answer is notice details."
+      },
+      {
+        "q": "An art portfolio usually shows:",
+        "options": [
+          "process and development",
+          "only final exam marks",
+          "only lunch choices",
+          "only equations"
+        ],
+        "answer": "process and development",
+        "explain": "The correct answer is process and development."
+      },
+      {
+        "q": "Experimenting with media helps artists:",
+        "options": [
+          "explore possibilities",
+          "avoid creativity",
+          "remove all choices",
+          "skip thinking"
+        ],
+        "answer": "explore possibilities",
+        "explain": "The correct answer is explore possibilities."
+      },
+      {
+        "q": "Reflecting on artwork helps students:",
+        "options": [
+          "improve and explain choices",
+          "hide mistakes",
+          "avoid feedback",
+          "stop experimenting"
+        ],
+        "answer": "improve and explain choices",
+        "explain": "The correct answer is improve and explain choices."
+      }
+    ],
+    "Context & Meaning": [
+      {
+        "q": "Art can help students connect with:",
+        "options": [
+          "society and culture",
+          "only multiplication",
+          "only food labels",
+          "only cell walls"
+        ],
+        "answer": "society and culture",
+        "explain": "The correct answer is society and culture."
+      },
+      {
+        "q": "Context in art helps us understand:",
+        "options": [
+          "meaning and background",
+          "only the price",
+          "only the size",
+          "only the spelling"
+        ],
+        "answer": "meaning and background",
+        "explain": "The correct answer is meaning and background."
+      },
+      {
+        "q": "Art can communicate:",
+        "options": [
+          "ideas, values and emotions",
+          "only numbers",
+          "only nutrients",
+          "only force units"
+        ],
+        "answer": "ideas, values and emotions",
+        "explain": "The correct answer is ideas, values and emotions."
+      },
+      {
+        "q": "An informed audience tries to:",
+        "options": [
+          "interpret artwork thoughtfully",
+          "ignore evidence",
+          "avoid looking",
+          "guess only price"
+        ],
+        "answer": "interpret artwork thoughtfully",
+        "explain": "The correct answer is interpret artwork thoughtfully."
+      },
+      {
+        "q": "Cultural context can shape:",
+        "options": [
+          "how art is made and understood",
+          "only paper size",
+          "only spelling",
+          "only calculator use"
+        ],
+        "answer": "how art is made and understood",
+        "explain": "The correct answer is how art is made and understood."
+      }
+    ]
+  },
+  "Music": {
+    "Listening": [
+      {
+        "q": "Listening in music involves identifying:",
+        "options": [
+          "musical elements and meaning",
+          "only spelling errors",
+          "only food labels",
+          "only angles"
+        ],
+        "answer": "musical elements and meaning",
+        "explain": "The correct answer is musical elements and meaning."
+      },
+      {
+        "q": "A listener can describe music by noticing:",
+        "options": [
+          "tempo, pitch and dynamics",
+          "discounts only",
+          "cell walls only",
+          "grammar only"
+        ],
+        "answer": "tempo, pitch and dynamics",
+        "explain": "The correct answer is tempo, pitch and dynamics."
+      },
+      {
+        "q": "Music can evoke:",
+        "options": [
+          "feelings and emotions",
+          "only numbers",
+          "only food labels",
+          "only force units"
+        ],
+        "answer": "feelings and emotions",
+        "explain": "The correct answer is feelings and emotions."
+      },
+      {
+        "q": "Critical listening means:",
+        "options": [
+          "listening carefully and making thoughtful comments",
+          "ignoring sound",
+          "guessing randomly",
+          "copying only"
+        ],
+        "answer": "listening carefully and making thoughtful comments",
+        "explain": "The correct answer is listening carefully and making thoughtful comments."
+      },
+      {
+        "q": "A repeated musical idea may be called:",
+        "options": [
+          "a motif",
+          "a receipt",
+          "a polygon",
+          "a nutrient"
+        ],
+        "answer": "a motif",
+        "explain": "The correct answer is a motif."
+      }
+    ],
+    "Creating": [
+      {
+        "q": "Creating music can include:",
+        "options": [
+          "composing or arranging sounds",
+          "boiling water",
+          "solving equations only",
+          "drawing polygons only"
+        ],
+        "answer": "composing or arranging sounds",
+        "explain": "The correct answer is composing or arranging sounds."
+      },
+      {
+        "q": "A composer uses musical elements to:",
+        "options": [
+          "communicate ideas or feelings",
+          "make food safer",
+          "measure area only",
+          "avoid expression"
+        ],
+        "answer": "communicate ideas or feelings",
+        "explain": "The correct answer is communicate ideas or feelings."
+      },
+      {
+        "q": "Improvisation means:",
+        "options": [
+          "creating music spontaneously",
+          "copying silently",
+          "freezing sound",
+          "reading a food label"
+        ],
+        "answer": "creating music spontaneously",
+        "explain": "The correct answer is creating music spontaneously."
+      },
+      {
+        "q": "A good musical idea can be developed by:",
+        "options": [
+          "repetition and variation",
+          "removing all rhythm",
+          "avoiding listening",
+          "using only silence"
+        ],
+        "answer": "repetition and variation",
+        "explain": "The correct answer is repetition and variation."
+      },
+      {
+        "q": "When creating music in a group, students should:",
+        "options": [
+          "collaborate and listen to one another",
+          "ignore others",
+          "play louder always",
+          "avoid feedback"
+        ],
+        "answer": "collaborate and listen to one another",
+        "explain": "The correct answer is collaborate and listen to one another."
+      }
+    ],
+    "Performing": [
+      {
+        "q": "Performing music usually involves:",
+        "options": [
+          "presenting music to an audience",
+          "separating mixtures",
+          "writing a receipt",
+          "measuring temperature"
+        ],
+        "answer": "presenting music to an audience",
+        "explain": "The correct answer is presenting music to an audience."
+      },
+      {
+        "q": "Playing in an ensemble develops:",
+        "options": [
+          "collaboration",
+          "food poisoning",
+          "evaporation",
+          "punctuation only"
+        ],
+        "answer": "collaboration",
+        "explain": "The correct answer is collaboration."
+      },
+      {
+        "q": "A performer should consider:",
+        "options": [
+          "accuracy and expression",
+          "food expiry dates only",
+          "GST only",
+          "cell membranes only"
+        ],
+        "answer": "accuracy and expression",
+        "explain": "The correct answer is accuracy and expression."
+      },
+      {
+        "q": "Practice helps a performer build:",
+        "options": [
+          "confidence and fluency",
+          "random errors",
+          "less control",
+          "no rhythm"
+        ],
+        "answer": "confidence and fluency",
+        "explain": "The correct answer is confidence and fluency."
+      },
+      {
+        "q": "Stage presence refers to:",
+        "options": [
+          "how a performer presents themselves",
+          "how to calculate mean",
+          "how to store meat",
+          "how to draw a graph only"
+        ],
+        "answer": "how a performer presents themselves",
+        "explain": "The correct answer is how a performer presents themselves."
+      }
+    ],
+    "Musical Elements": [
+      {
+        "q": "Which is a musical element?",
+        "options": [
+          "Rhythm",
+          "Protein",
+          "Gradient",
+          "Chromatography"
+        ],
+        "answer": "Rhythm",
+        "explain": "The correct answer is Rhythm."
+      },
+      {
+        "q": "Pitch refers to:",
+        "options": [
+          "how high or low a sound is",
+          "how heavy a sound is",
+          "how spicy a sound is",
+          "how square a sound is"
+        ],
+        "answer": "how high or low a sound is",
+        "explain": "The correct answer is how high or low a sound is."
+      },
+      {
+        "q": "Tempo means:",
+        "options": [
+          "speed of music",
+          "colour of music",
+          "height of music",
+          "food safety rule"
+        ],
+        "answer": "speed of music",
+        "explain": "The correct answer is speed of music."
+      },
+      {
+        "q": "Dynamics refer to:",
+        "options": [
+          "loudness or softness",
+          "area and perimeter",
+          "nutrients",
+          "visual symmetry"
+        ],
+        "answer": "loudness or softness",
+        "explain": "The correct answer is loudness or softness."
+      },
+      {
+        "q": "Timbre refers to:",
+        "options": [
+          "tone colour or sound quality",
+          "GST",
+          "cell division",
+          "punctuation"
+        ],
+        "answer": "tone colour or sound quality",
+        "explain": "The correct answer is tone colour or sound quality."
+      }
+    ],
+    "Context & Culture": [
+      {
+        "q": "Music can help people understand:",
+        "options": [
+          "local and global cultures",
+          "only multiplication",
+          "only discounts",
+          "only cell membranes"
+        ],
+        "answer": "local and global cultures",
+        "explain": "The correct answer is local and global cultures."
+      },
+      {
+        "q": "Music is shaped by:",
+        "options": [
+          "historical, social and cultural contexts",
+          "only calculator brands",
+          "only food prices",
+          "only grammar rules"
+        ],
+        "answer": "historical, social and cultural contexts",
+        "explain": "The correct answer is historical, social and cultural contexts."
+      },
+      {
+        "q": "Knowing the context of music can affect:",
+        "options": [
+          "how it is experienced and understood",
+          "its boiling point",
+          "its angle sum",
+          "its spelling only"
+        ],
+        "answer": "how it is experienced and understood",
+        "explain": "The correct answer is how it is experienced and understood."
+      },
+      {
+        "q": "Music can build community by:",
+        "options": [
+          "connecting people through shared experiences",
+          "removing teamwork",
+          "stopping communication",
+          "avoiding culture"
+        ],
+        "answer": "connecting people through shared experiences",
+        "explain": "The correct answer is connecting people through shared experiences."
+      },
+      {
+        "q": "After a performance, reflection helps students:",
+        "options": [
+          "improve musical decisions",
+          "avoid listening",
+          "remove rhythm",
+          "ignore feedback"
+        ],
+        "answer": "improve musical decisions",
+        "explain": "The correct answer is improve musical decisions."
+      }
+    ]
+  },
+  "History": {
+    "Historical Concepts": [
+      {
+        "q": "Chronology in History refers to:",
+        "options": [
+          "putting events in time order",
+          "guessing why people acted",
+          "drawing a map",
+          "writing only opinions"
+        ],
+        "answer": "putting events in time order",
+        "explain": "The correct answer is putting events in time order."
+      },
+      {
+        "q": "Historical evidence is usually derived from:",
+        "options": [
+          "historical sources",
+          "random guesses",
+          "modern advertisements only",
+          "personal feelings only"
+        ],
+        "answer": "historical sources",
+        "explain": "The correct answer is historical sources."
+      },
+      {
+        "q": "Causation in History helps us understand:",
+        "options": [
+          "why and how events happened",
+          "the colour of old books",
+          "only exact dates",
+          "only geography maps"
+        ],
+        "answer": "why and how events happened",
+        "explain": "The correct answer is why and how events happened."
+      },
+      {
+        "q": "Change and continuity means studying:",
+        "options": [
+          "what changed and what stayed the same over time",
+          "only what happened yesterday",
+          "only one person's opinion",
+          "only future events"
+        ],
+        "answer": "what changed and what stayed the same over time",
+        "explain": "The correct answer is what changed and what stayed the same over time."
+      },
+      {
+        "q": "Historical significance asks:",
+        "options": [
+          "why an event, person or idea mattered",
+          "how heavy a source is",
+          "how many pages a textbook has",
+          "whether a picture is colourful"
+        ],
+        "answer": "why an event, person or idea mattered",
+        "explain": "The correct answer is why an event, person or idea mattered."
+      }
+    ],
+    "Source Skills": [
+      {
+        "q": "When examining a source, historians should consider its origin, nature, purpose and:",
+        "options": [
+          "content",
+          "font size",
+          "price",
+          "weather"
+        ],
+        "answer": "content",
+        "explain": "The correct answer is content."
+      },
+      {
+        "q": "A biased source is one that may:",
+        "options": [
+          "show a particular point of view",
+          "be automatically useless",
+          "have no words",
+          "always be from the future"
+        ],
+        "answer": "show a particular point of view",
+        "explain": "The correct answer is show a particular point of view."
+      },
+      {
+        "q": "Corroboration means:",
+        "options": [
+          "checking one source against other sources",
+          "copying one source exactly",
+          "ignoring evidence",
+          "changing the date"
+        ],
+        "answer": "checking one source against other sources",
+        "explain": "The correct answer is checking one source against other sources."
+      },
+      {
+        "q": "A source's purpose refers to:",
+        "options": [
+          "why it was created",
+          "how expensive it is",
+          "how long it is",
+          "where it is stored only"
+        ],
+        "answer": "why it was created",
+        "explain": "The correct answer is why it was created."
+      },
+      {
+        "q": "A reliable historical answer should be supported by:",
+        "options": [
+          "evidence",
+          "guesswork",
+          "the longest paragraph only",
+          "a random picture"
+        ],
+        "answer": "evidence",
+        "explain": "The correct answer is evidence."
+      }
+    ],
+    "Historical Inquiry": [
+      {
+        "q": "Historical inquiry begins with:",
+        "options": [
+          "asking useful questions",
+          "memorising every word",
+          "drawing only cartoons",
+          "ignoring sources"
+        ],
+        "answer": "asking useful questions",
+        "explain": "The correct answer is asking useful questions."
+      },
+      {
+        "q": "A good historical question should be:",
+        "options": [
+          "focused and investigable",
+          "impossible to answer",
+          "unrelated to the past",
+          "based only on feelings"
+        ],
+        "answer": "focused and investigable",
+        "explain": "The correct answer is focused and investigable."
+      },
+      {
+        "q": "A reasoned historical interpretation should be:",
+        "options": [
+          "based on substantiated arguments",
+          "based on the loudest opinion",
+          "copied from one sentence",
+          "without evidence"
+        ],
+        "answer": "based on substantiated arguments",
+        "explain": "The correct answer is based on substantiated arguments."
+      },
+      {
+        "q": "Historical empathy means:",
+        "options": [
+          "understanding people in the context of their time",
+          "judging the past only by today's norms",
+          "agreeing with everyone",
+          "pretending sources are fake"
+        ],
+        "answer": "understanding people in the context of their time",
+        "explain": "The correct answer is understanding people in the context of their time."
+      },
+      {
+        "q": "A balanced answer should:",
+        "options": [
+          "consider different viewpoints",
+          "use only one viewpoint",
+          "avoid all evidence",
+          "ignore the question"
+        ],
+        "answer": "consider different viewpoints",
+        "explain": "The correct answer is consider different viewpoints."
+      }
+    ],
+    "Singapore's Past": [
+      {
+        "q": "Lower Secondary History studies Singapore's past in relation to:",
+        "options": [
+          "regional and global forces",
+          "only sports results",
+          "only weather",
+          "only modern shopping malls"
+        ],
+        "answer": "regional and global forces",
+        "explain": "The correct answer is regional and global forces."
+      },
+      {
+        "q": "Singapore's past helps students understand:",
+        "options": [
+          "how the present was shaped",
+          "why exams are cancelled",
+          "how to cook rice",
+          "only future inventions"
+        ],
+        "answer": "how the present was shaped",
+        "explain": "The correct answer is how the present was shaped."
+      },
+      {
+        "q": "The study of Singapore history includes shifts in:",
+        "options": [
+          "political status",
+          "musical pitch",
+          "cell structure",
+          "food labels"
+        ],
+        "answer": "political status",
+        "explain": "The correct answer is political status."
+      },
+      {
+        "q": "Understanding past challenges helps citizens:",
+        "options": [
+          "make connections between past and present",
+          "avoid civic responsibility",
+          "ignore national identity",
+          "forget evidence"
+        ],
+        "answer": "make connections between past and present",
+        "explain": "The correct answer is make connections between past and present."
+      },
+      {
+        "q": "National Education in History helps students understand Singapore's:",
+        "options": [
+          "journey and context",
+          "shopping discounts",
+          "restaurant menus",
+          "music tempo"
+        ],
+        "answer": "journey and context",
+        "explain": "The correct answer is journey and context."
+      }
+    ]
+  },
+  "Geography": {
+    "Introduction to Geography": [
+      {
+        "q": "Geography studies phenomena in:",
+        "options": [
+          "physical and built environments",
+          "only grammar",
+          "only music",
+          "only food recipes"
+        ],
+        "answer": "physical and built environments",
+        "explain": "The correct answer is physical and built environments."
+      },
+      {
+        "q": "Space in Geography refers to:",
+        "options": [
+          "a physical area on Earth's surface",
+          "a paragraph",
+          "a musical note",
+          "a cooking method"
+        ],
+        "answer": "a physical area on Earth's surface",
+        "explain": "The correct answer is a physical area on Earth's surface."
+      },
+      {
+        "q": "Place refers to an area that has:",
+        "options": [
+          "meaning to people",
+          "only numbers",
+          "only punctuation",
+          "only mass"
+        ],
+        "answer": "meaning to people",
+        "explain": "The correct answer is meaning to people."
+      },
+      {
+        "q": "Scale can refer to local, national, regional and:",
+        "options": [
+          "global levels",
+          "musical levels",
+          "grammar levels",
+          "kitchen levels"
+        ],
+        "answer": "global levels",
+        "explain": "The correct answer is global levels."
+      },
+      {
+        "q": "Geographers often use maps to study:",
+        "options": [
+          "location and patterns",
+          "sentence tense only",
+          "food nutrients only",
+          "historical empathy only"
+        ],
+        "answer": "location and patterns",
+        "explain": "The correct answer is location and patterns."
+      }
+    ],
+    "Geographical Inquiry": [
+      {
+        "q": "Interpreting geographical data helps students recognise:",
+        "options": [
+          "patterns and relationships",
+          "only punctuation",
+          "only melody",
+          "only cell walls"
+        ],
+        "answer": "patterns and relationships",
+        "explain": "The correct answer is patterns and relationships."
+      },
+      {
+        "q": "Geographical inquiry starts by posing:",
+        "options": [
+          "geographical questions",
+          "random answers",
+          "only recipes",
+          "only spelling lists"
+        ],
+        "answer": "geographical questions",
+        "explain": "The correct answer is geographical questions."
+      },
+      {
+        "q": "Fieldwork helps geographers collect:",
+        "options": [
+          "primary data",
+          "fictional characters",
+          "musical rhythm",
+          "grammar rules"
+        ],
+        "answer": "primary data",
+        "explain": "The correct answer is primary data."
+      },
+      {
+        "q": "GIS stands for:",
+        "options": [
+          "Geographic Information Systems",
+          "General Internet Score",
+          "Global Instrument Sound",
+          "Graphical Ink Style"
+        ],
+        "answer": "Geographic Information Systems",
+        "explain": "The correct answer is Geographic Information Systems."
+      },
+      {
+        "q": "A geographical investigation should be based on:",
+        "options": [
+          "evidence and data",
+          "guessing only",
+          "copying blindly",
+          "ignoring places"
+        ],
+        "answer": "evidence and data",
+        "explain": "The correct answer is evidence and data."
+      }
+    ],
+    "Water": [
+      {
+        "q": "Water is considered a natural resource because people:",
+        "options": [
+          "depend on it for life and activities",
+          "use it only for art",
+          "cannot measure it",
+          "do not need it"
+        ],
+        "answer": "depend on it for life and activities",
+        "explain": "The correct answer is depend on it for life and activities."
+      },
+      {
+        "q": "One strategy to improve water quality is:",
+        "options": [
+          "anti-pollution laws",
+          "adding more waste",
+          "using more plastic",
+          "ignoring rivers"
+        ],
+        "answer": "anti-pollution laws",
+        "explain": "The correct answer is anti-pollution laws."
+      },
+      {
+        "q": "Desalination refers to:",
+        "options": [
+          "removing salt from seawater",
+          "freezing land",
+          "cutting forests",
+          "building roads only"
+        ],
+        "answer": "removing salt from seawater",
+        "explain": "The correct answer is removing salt from seawater."
+      },
+      {
+        "q": "Water conservation aims to:",
+        "options": [
+          "reduce water consumption",
+          "increase wastage",
+          "pollute reservoirs",
+          "remove all technology"
+        ],
+        "answer": "reduce water consumption",
+        "explain": "The correct answer is reduce water consumption."
+      },
+      {
+        "q": "Importing water may involve:",
+        "options": [
+          "international agreements",
+          "musical performances",
+          "food labels",
+          "grammar tests"
+        ],
+        "answer": "international agreements",
+        "explain": "The correct answer is international agreements."
+      }
+    ],
+    "Tropical Rainforests & Mangroves": [
+      {
+        "q": "Tropical rainforests are important because they support:",
+        "options": [
+          "biodiversity",
+          "only traffic",
+          "only grammar",
+          "only shopping"
+        ],
+        "answer": "biodiversity",
+        "explain": "The correct answer is biodiversity."
+      },
+      {
+        "q": "Mangroves are commonly found in:",
+        "options": [
+          "coastal environments",
+          "deserts only",
+          "mountaintops only",
+          "indoor classrooms only"
+        ],
+        "answer": "coastal environments",
+        "explain": "The correct answer is coastal environments."
+      },
+      {
+        "q": "Deforestation can lead to:",
+        "options": [
+          "habitat loss",
+          "more forest cover immediately",
+          "less erosion always",
+          "more biodiversity always"
+        ],
+        "answer": "habitat loss",
+        "explain": "The correct answer is habitat loss."
+      },
+      {
+        "q": "Sustainable forest management aims to balance human needs and:",
+        "options": [
+          "environmental protection",
+          "food packaging",
+          "music tempo",
+          "punctuation"
+        ],
+        "answer": "environmental protection",
+        "explain": "The correct answer is environmental protection."
+      },
+      {
+        "q": "Mangroves can help protect coasts by:",
+        "options": [
+          "reducing wave energy",
+          "increasing storm damage",
+          "removing all animals",
+          "creating deserts"
+        ],
+        "answer": "reducing wave energy",
+        "explain": "The correct answer is reducing wave energy."
+      }
+    ],
+    "Housing & Transport": [
+      {
+        "q": "Built environment refers to places:",
+        "options": [
+          "constructed and managed by people",
+          "formed only by natural processes",
+          "without human activity",
+          "only in forests"
+        ],
+        "answer": "constructed and managed by people",
+        "explain": "The correct answer is constructed and managed by people."
+      },
+      {
+        "q": "A sustainable city should consider:",
+        "options": [
+          "people, environment and resources",
+          "only car speed",
+          "only building height",
+          "only shopping choices"
+        ],
+        "answer": "people, environment and resources",
+        "explain": "The correct answer is people, environment and resources."
+      },
+      {
+        "q": "Public transport can help reduce:",
+        "options": [
+          "traffic congestion and emissions",
+          "all walking",
+          "all maps",
+          "all weather"
+        ],
+        "answer": "traffic congestion and emissions",
+        "explain": "The correct answer is traffic congestion and emissions."
+      },
+      {
+        "q": "Housing is a geographical issue because it involves:",
+        "options": [
+          "land use and people's needs",
+          "only spelling",
+          "only musical pitch",
+          "only cell membranes"
+        ],
+        "answer": "land use and people's needs",
+        "explain": "The correct answer is land use and people's needs."
+      },
+      {
+        "q": "Transport systems connect people to:",
+        "options": [
+          "places and opportunities",
+          "grammar only",
+          "food storage only",
+          "historical dates only"
+        ],
+        "answer": "places and opportunities",
+        "explain": "The correct answer is places and opportunities."
+      }
+    ]
+  },
+  "Social Studies / Humanities": {
+    "Citizenship": [
+      {
+        "q": "Social Studies aims to develop students as informed, concerned and:",
+        "options": [
+          "participative citizens",
+          "silent citizens",
+          "random citizens",
+          "uninterested citizens"
+        ],
+        "answer": "participative citizens",
+        "explain": "The correct answer is participative citizens."
+      },
+      {
+        "q": "A concerned citizen should show care for:",
+        "options": [
+          "society and the world",
+          "only test scores",
+          "only fashion",
+          "only phone games"
+        ],
+        "answer": "society and the world",
+        "explain": "The correct answer is society and the world."
+      },
+      {
+        "q": "Responsible decision-making means considering:",
+        "options": [
+          "consequences and different perspectives",
+          "only personal benefit",
+          "only speed",
+          "only rumours"
+        ],
+        "answer": "consequences and different perspectives",
+        "explain": "The correct answer is consequences and different perspectives."
+      },
+      {
+        "q": "Civic identity is connected to:",
+        "options": [
+          "belonging and responsibility",
+          "food labels",
+          "musical tempo",
+          "cell walls"
+        ],
+        "answer": "belonging and responsibility",
+        "explain": "The correct answer is belonging and responsibility."
+      },
+      {
+        "q": "An active contributor should be willing to:",
+        "options": [
+          "take responsible action",
+          "avoid all issues",
+          "ignore others",
+          "refuse teamwork"
+        ],
+        "answer": "take responsible action",
+        "explain": "The correct answer is take responsible action."
+      }
+    ],
+    "Real-world Issues": [
+      {
+        "q": "An inquiry into real-world issues should begin with:",
+        "options": [
+          "questions",
+          "answers first",
+          "random drawings",
+          "ignoring evidence"
+        ],
+        "answer": "questions",
+        "explain": "The correct answer is questions."
+      },
+      {
+        "q": "A complex issue usually has:",
+        "options": [
+          "multiple perspectives",
+          "only one simple answer",
+          "no evidence",
+          "no stakeholders"
+        ],
+        "answer": "multiple perspectives",
+        "explain": "The correct answer is multiple perspectives."
+      },
+      {
+        "q": "To understand an issue well, students should evaluate:",
+        "options": [
+          "different sources",
+          "only one rumour",
+          "the shortest sentence",
+          "font colour only"
+        ],
+        "answer": "different sources",
+        "explain": "The correct answer is different sources."
+      },
+      {
+        "q": "Reflective thinking helps students:",
+        "options": [
+          "make more considered decisions",
+          "avoid responsibility",
+          "ignore feedback",
+          "guess quickly"
+        ],
+        "answer": "make more considered decisions",
+        "explain": "The correct answer is make more considered decisions."
+      },
+      {
+        "q": "A well-reasoned response should be supported by:",
+        "options": [
+          "evidence and explanation",
+          "volume",
+          "rhythm",
+          "random emotion only"
+        ],
+        "answer": "evidence and explanation",
+        "explain": "The correct answer is evidence and explanation."
+      }
+    ],
+    "Environment & Society": [
+      {
+        "q": "Protecting the environment may involve:",
+        "options": [
+          "reducing waste",
+          "using more single-use items",
+          "dumping rubbish",
+          "ignoring conservation"
+        ],
+        "answer": "reducing waste",
+        "explain": "The correct answer is reducing waste."
+      },
+      {
+        "q": "People are dependent on the environment for:",
+        "options": [
+          "resources and quality of life",
+          "only spelling",
+          "only music",
+          "only algebra"
+        ],
+        "answer": "resources and quality of life",
+        "explain": "The correct answer is resources and quality of life."
+      },
+      {
+        "q": "Human activities can affect the environment through:",
+        "options": [
+          "pollution and resource use",
+          "better punctuation",
+          "fewer maps",
+          "more adverbs"
+        ],
+        "answer": "pollution and resource use",
+        "explain": "The correct answer is pollution and resource use."
+      },
+      {
+        "q": "Sustainable action means meeting needs without:",
+        "options": [
+          "harming future generations",
+          "asking questions",
+          "using maps",
+          "reading sources"
+        ],
+        "answer": "harming future generations",
+        "explain": "The correct answer is harming future generations."
+      },
+      {
+        "q": "Community action can help address:",
+        "options": [
+          "societal concerns",
+          "only private entertainment",
+          "only grammar",
+          "only calculator use"
+        ],
+        "answer": "societal concerns",
+        "explain": "The correct answer is societal concerns."
+      }
+    ],
+    "Humanities Exposure": [
+      {
+        "q": "The Humanities Exposure Modules include Geography, History and:",
+        "options": [
+          "Literature in English",
+          "Chemistry only",
+          "Food Science only",
+          "Physical Education only"
+        ],
+        "answer": "Literature in English",
+        "explain": "The correct answer is Literature in English."
+      },
+      {
+        "q": "Humanities helps students understand relationships with self, society and:",
+        "options": [
+          "the environment",
+          "only calculators",
+          "only recipes",
+          "only musical instruments"
+        ],
+        "answer": "the environment",
+        "explain": "The correct answer is the environment."
+      },
+      {
+        "q": "Considering context and perspectives helps students:",
+        "options": [
+          "understand issues more deeply",
+          "avoid thinking",
+          "remove meaning",
+          "copy without reason"
+        ],
+        "answer": "understand issues more deeply",
+        "explain": "The correct answer is understand issues more deeply."
+      },
+      {
+        "q": "Empathy in Humanities means trying to understand:",
+        "options": [
+          "people's experiences and viewpoints",
+          "only one's own answer",
+          "only dates",
+          "only maps"
+        ],
+        "answer": "people's experiences and viewpoints",
+        "explain": "The correct answer is people's experiences and viewpoints."
+      },
+      {
+        "q": "Humanities learning often uses texts, images and:",
+        "options": [
+          "maps",
+          "food labels only",
+          "laboratory beakers only",
+          "musical notes only"
+        ],
+        "answer": "maps",
+        "explain": "The correct answer is maps."
+      }
+    ]
+  },
+  "华文 / Mother Tongue Chinese": {
+    "词语理解": [
+      {
+        "q": "“评估”最接近以下哪个意思？",
+        "options": [
+          "判断和分析",
+          "重复一遍",
+          "随便猜测",
+          "完全忽略"
+        ],
+        "answer": "判断和分析",
+        "explain": "The correct answer is 判断和分析."
+      },
+      {
+        "q": "“适应”最接近以下哪个意思？",
+        "options": [
+          "根据情况作出调整",
+          "马上放弃",
+          "完全不变",
+          "只看表面"
+        ],
+        "answer": "根据情况作出调整",
+        "explain": "The correct answer is 根据情况作出调整."
+      },
+      {
+        "q": "“可靠”的意思是：",
+        "options": [
+          "可以信任",
+          "很漂亮",
+          "很快速",
+          "很昂贵"
+        ],
+        "answer": "可以信任",
+        "explain": "The correct answer is 可以信任."
+      },
+      {
+        "q": "“珍惜”的意思是：",
+        "options": [
+          "重视并好好对待",
+          "随手丢掉",
+          "故意破坏",
+          "完全忘记"
+        ],
+        "answer": "重视并好好对待",
+        "explain": "The correct answer is 重视并好好对待."
+      },
+      {
+        "q": "“沟通”的意思是：",
+        "options": [
+          "交流想法和信息",
+          "独自睡觉",
+          "画一幅画",
+          "做一道数学题"
+        ],
+        "answer": "交流想法和信息",
+        "explain": "The correct answer is 交流想法和信息."
+      }
+    ],
+    "语法与句子": [
+      {
+        "q": "下面哪个句子最通顺？",
+        "options": [
+          "因为下雨，所以比赛取消了。",
+          "因为下雨，但是比赛取消了。",
+          "下雨所以因为比赛取消。",
+          "比赛因为所以取消下雨。"
+        ],
+        "answer": "因为下雨，所以比赛取消了。",
+        "explain": "The correct answer is 因为下雨，所以比赛取消了。."
+      },
+      {
+        "q": "“他一边听音乐，一边做功课。”这个句子表示：",
+        "options": [
+          "两个动作同时进行",
+          "两个动作完全相反",
+          "一个动作发生在昨天",
+          "没有动作"
+        ],
+        "answer": "两个动作同时进行",
+        "explain": "The correct answer is 两个动作同时进行."
+      },
+      {
+        "q": "“虽然……但是……”通常表示：",
+        "options": [
+          "转折关系",
+          "因果关系",
+          "并列关系",
+          "选择关系"
+        ],
+        "answer": "转折关系",
+        "explain": "The correct answer is 转折关系."
+      },
+      {
+        "q": "下面哪个词语适合填空：他学习很努力，成绩____进步。",
+        "options": [
+          "逐渐",
+          "突然地红色",
+          "非常桌子",
+          "正在如果"
+        ],
+        "answer": "逐渐",
+        "explain": "The correct answer is 逐渐."
+      },
+      {
+        "q": "“不仅……还……”表示：",
+        "options": [
+          "递进关系",
+          "否定关系",
+          "时间关系",
+          "地点关系"
+        ],
+        "answer": "递进关系",
+        "explain": "The correct answer is 递进关系."
+      }
+    ],
+    "阅读理解": [
+      {
+        "q": "阅读文章时，找中心思想主要是找：",
+        "options": [
+          "文章最主要的意思",
+          "最长的句子",
+          "第一个标点",
+          "所有生字"
+        ],
+        "answer": "文章最主要的意思",
+        "explain": "The correct answer is 文章最主要的意思."
+      },
+      {
+        "q": "根据线索推断人物想法，属于：",
+        "options": [
+          "推论能力",
+          "抄写能力",
+          "画图能力",
+          "计算能力"
+        ],
+        "answer": "推论能力",
+        "explain": "The correct answer is 推论能力."
+      },
+      {
+        "q": "作者的语气可以帮助我们理解：",
+        "options": [
+          "作者的态度和感情",
+          "纸张的重量",
+          "字体大小",
+          "页码"
+        ],
+        "answer": "作者的态度和感情",
+        "explain": "The correct answer is 作者的态度和感情."
+      },
+      {
+        "q": "如果题目问“为什么”，答案通常需要说明：",
+        "options": [
+          "原因",
+          "颜色",
+          "价格",
+          "字数"
+        ],
+        "answer": "原因",
+        "explain": "The correct answer is 原因."
+      },
+      {
+        "q": "概括段落内容时，应该：",
+        "options": [
+          "抓住重点，简洁表达",
+          "越长越好",
+          "加入无关意见",
+          "只抄一个字"
+        ],
+        "answer": "抓住重点，简洁表达",
+        "explain": "The correct answer is 抓住重点，简洁表达."
+      }
+    ],
+    "写作与表达": [
+      {
+        "q": "一封正式电邮开头通常应使用：",
+        "options": [
+          "尊敬的老师：",
+          "喂！",
+          "哈哈哈",
+          "你干嘛"
+        ],
+        "answer": "尊敬的老师：",
+        "explain": "The correct answer is 尊敬的老师：."
+      },
+      {
+        "q": "写说明文时，内容应该：",
+        "options": [
+          "清楚、有条理",
+          "完全随意",
+          "只写表情符号",
+          "没有重点"
+        ],
+        "answer": "清楚、有条理",
+        "explain": "The correct answer is 清楚、有条理."
+      },
+      {
+        "q": "写作文时分段的作用是：",
+        "options": [
+          "让内容更有层次",
+          "增加错别字",
+          "减少意思",
+          "隐藏主题"
+        ],
+        "answer": "让内容更有层次",
+        "explain": "The correct answer is 让内容更有层次."
+      },
+      {
+        "q": "表达个人看法时，最好加上：",
+        "options": [
+          "理由和例子",
+          "无关图片",
+          "随机数字",
+          "空白段落"
+        ],
+        "answer": "理由和例子",
+        "explain": "The correct answer is 理由和例子."
+      },
+      {
+        "q": "修改文章时，应检查：",
+        "options": [
+          "错别字、标点和语句是否通顺",
+          "鞋子颜色",
+          "天气预报",
+          "游戏分数"
+        ],
+        "answer": "错别字、标点和语句是否通顺",
+        "explain": "The correct answer is 错别字、标点和语句是否通顺."
+      }
+    ],
+    "文化与价值观": [
+      {
+        "q": "学习华文也帮助学生了解：",
+        "options": [
+          "文化和价值观",
+          "只了解数学公式",
+          "只了解交通规则",
+          "只了解天气"
+        ],
+        "answer": "文化和价值观",
+        "explain": "The correct answer is 文化和价值观."
+      },
+      {
+        "q": "“尊老爱幼”强调的是：",
+        "options": [
+          "尊敬长辈，爱护年幼者",
+          "只照顾自己",
+          "不理别人",
+          "只看成绩"
+        ],
+        "answer": "尊敬长辈，爱护年幼者",
+        "explain": "The correct answer is 尊敬长辈，爱护年幼者."
+      },
+      {
+        "q": "节日习俗可以反映一个族群的：",
+        "options": [
+          "文化传统",
+          "计算速度",
+          "运动成绩",
+          "手机品牌"
+        ],
+        "answer": "文化传统",
+        "explain": "The correct answer is 文化传统."
+      },
+      {
+        "q": "跨文化理解可以帮助我们：",
+        "options": [
+          "尊重不同背景的人",
+          "只坚持一种看法",
+          "拒绝沟通",
+          "忽略他人"
+        ],
+        "answer": "尊重不同背景的人",
+        "explain": "The correct answer is 尊重不同背景的人."
+      },
+      {
+        "q": "学习母语的目的之一是：",
+        "options": [
+          "更好地沟通与连接文化",
+          "完全不用说话",
+          "只为了背答案",
+          "避免阅读"
+        ],
+        "answer": "更好地沟通与连接文化",
+        "explain": "The correct answer is 更好地沟通与连接文化."
+      }
+    ]
+  },
+  "Malay Special Programme": {
+    "Basic Communication": [
+      {
+        "q": "In Malay, 'Selamat pagi' means:",
+        "options": [
+          "Good morning",
+          "Good night",
+          "Thank you",
+          "Excuse me"
+        ],
+        "answer": "Good morning",
+        "explain": "The correct answer is Good morning."
+      },
+      {
+        "q": "In Malay, 'Terima kasih' means:",
+        "options": [
+          "Thank you",
+          "Goodbye",
+          "Please sit",
+          "I am hungry"
+        ],
+        "answer": "Thank you",
+        "explain": "The correct answer is Thank you."
+      },
+      {
+        "q": "In Malay, 'Apa khabar?' is used to ask:",
+        "options": [
+          "How are you?",
+          "What time is it?",
+          "Where is school?",
+          "How much is it?"
+        ],
+        "answer": "How are you?",
+        "explain": "The correct answer is How are you?."
+      },
+      {
+        "q": "A learner says 'Nama saya Evans.' This means:",
+        "options": [
+          "My name is Evans.",
+          "I live in Evans.",
+          "Evans is hungry.",
+          "Evans is a teacher."
+        ],
+        "answer": "My name is Evans.",
+        "explain": "The correct answer is My name is Evans.."
+      },
+      {
+        "q": "In Malay, 'maaf' means:",
+        "options": [
+          "sorry",
+          "water",
+          "book",
+          "table"
+        ],
+        "answer": "sorry",
+        "explain": "The correct answer is sorry."
+      }
+    ],
+    "Vocabulary": [
+      {
+        "q": "In Malay, 'buku' means:",
+        "options": [
+          "book",
+          "chair",
+          "food",
+          "house"
+        ],
+        "answer": "book",
+        "explain": "The correct answer is book."
+      },
+      {
+        "q": "In Malay, 'sekolah' means:",
+        "options": [
+          "school",
+          "market",
+          "river",
+          "forest"
+        ],
+        "answer": "school",
+        "explain": "The correct answer is school."
+      },
+      {
+        "q": "In Malay, 'makan' means:",
+        "options": [
+          "to eat",
+          "to sleep",
+          "to read",
+          "to run"
+        ],
+        "answer": "to eat",
+        "explain": "The correct answer is to eat."
+      },
+      {
+        "q": "In Malay, 'air' means:",
+        "options": [
+          "water",
+          "fire",
+          "wind",
+          "tree"
+        ],
+        "answer": "water",
+        "explain": "The correct answer is water."
+      },
+      {
+        "q": "In Malay, 'kawan' means:",
+        "options": [
+          "friend",
+          "teacher",
+          "parent",
+          "shop"
+        ],
+        "answer": "friend",
+        "explain": "The correct answer is friend."
+      }
+    ],
+    "Grammar": [
+      {
+        "q": "Malay generally does not mark tense by changing:",
+        "options": [
+          "the verb form",
+          "the topic",
+          "the meaning",
+          "the speaker"
+        ],
+        "answer": "the verb form",
+        "explain": "The correct answer is the verb form."
+      },
+      {
+        "q": "The prefix 'ber-' often indicates:",
+        "options": [
+          "an action or state",
+          "a number only",
+          "a colour only",
+          "a punctuation mark"
+        ],
+        "answer": "an action or state",
+        "explain": "The correct answer is an action or state."
+      },
+      {
+        "q": "The word 'saya' means:",
+        "options": [
+          "I / me",
+          "you",
+          "he",
+          "they"
+        ],
+        "answer": "I / me",
+        "explain": "The correct answer is I / me."
+      },
+      {
+        "q": "The word 'dia' means:",
+        "options": [
+          "he / she",
+          "we",
+          "I",
+          "you plural"
+        ],
+        "answer": "he / she",
+        "explain": "The correct answer is he / she."
+      },
+      {
+        "q": "A simple Malay sentence often follows:",
+        "options": [
+          "subject + predicate",
+          "predicate only",
+          "object only",
+          "random order always"
+        ],
+        "answer": "subject + predicate",
+        "explain": "The correct answer is subject + predicate."
+      }
+    ],
+    "Culture & Connection": [
+      {
+        "q": "Malay Special Programme helps non-native learners understand:",
+        "options": [
+          "Malay language and culture",
+          "only mathematics",
+          "only traffic",
+          "only weather"
+        ],
+        "answer": "Malay language and culture",
+        "explain": "The correct answer is Malay language and culture."
+      },
+      {
+        "q": "Learning Malay supports communication with communities in:",
+        "options": [
+          "Singapore and the region",
+          "only one classroom",
+          "only outer space",
+          "only Antarctica"
+        ],
+        "answer": "Singapore and the region",
+        "explain": "The correct answer is Singapore and the region."
+      },
+      {
+        "q": "Cultural awareness means being sensitive to:",
+        "options": [
+          "different languages and cultures",
+          "only one's own habits",
+          "only exam marks",
+          "only food prices"
+        ],
+        "answer": "different languages and cultures",
+        "explain": "The correct answer is different languages and cultures."
+      },
+      {
+        "q": "Malay culture can include adat, arts, literature and:",
+        "options": [
+          "history",
+          "algebra",
+          "cell walls",
+          "force units"
+        ],
+        "answer": "history",
+        "explain": "The correct answer is history."
+      },
+      {
+        "q": "Learning a third language can strengthen:",
+        "options": [
+          "cross-cultural understanding",
+          "less communication",
+          "fewer perspectives",
+          "no interaction"
+        ],
+        "answer": "cross-cultural understanding",
+        "explain": "The correct answer is cross-cultural understanding."
+      }
     ]
   }
 };
@@ -731,7 +3617,31 @@ function renderRevisionControls() {
 function renderTopicOptions() {
   const subject = document.getElementById('subjectSelect').value;
   const topicSelect = document.getElementById('topicSelect');
-  topicSelect.innerHTML = Object.keys(QUESTION_BANK[subject]).map(t => `<option value="${t}">${t}</option>`).join('');
+  const topics = Object.keys(QUESTION_BANK[subject] || {});
+  topicSelect.innerHTML = [`<option value="Mixed Practice">Mixed Practice</option>`]
+    .concat(topics.map(t => `<option value="${t}">${t}</option>`))
+    .join('');
+}
+
+function getQuestionPool(subject, topic, count) {
+  const subjectBank = QUESTION_BANK[subject] || {};
+  const topics = Object.keys(subjectBank);
+  let primary = topic === 'Mixed Practice'
+    ? topics.flatMap(t => subjectBank[t].map(q => ({ ...q, topic: t })))
+    : (subjectBank[topic] || []).map(q => ({ ...q, topic }));
+  let pool = [...primary];
+
+  // If a topic has fewer questions than requested, fill from other topics in the same subject.
+  // This prevents a 5-question round from becoming only 2 or 3 questions.
+  if (pool.length < count) {
+    const seen = new Set(pool.map(q => q.q));
+    const extras = topics
+      .filter(t => t !== topic)
+      .flatMap(t => subjectBank[t].map(q => ({ ...q, topic: t })))
+      .filter(q => !seen.has(q.q));
+    pool = pool.concat(extras);
+  }
+  return pool;
 }
 function renderPracticeHistoryMini() {
   const history = getHistory();
@@ -745,8 +3655,11 @@ function startPracticeRound() {
   const subject = document.getElementById('subjectSelect').value;
   const topic = document.getElementById('topicSelect').value;
   const count = Number(document.getElementById('questionCountSelect').value);
-  const source = QUESTION_BANK[subject][topic];
-  const questions = [...source].sort(() => Math.random() - 0.5).slice(0, Math.min(count, source.length));
+  const source = getQuestionPool(subject, topic, count);
+  const questions = [...source]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, Math.min(count, source.length))
+    .map(q => ({ ...q, options: [...q.options].sort(() => Math.random() - 0.5) }));
   state.practiceRound = { subject, topic, questions, answers: [] };
   state.currentQuestionIndex = 0;
   state.score = 0;
@@ -801,7 +3714,7 @@ function addMistake(subject, topic, q, selected) {
     exists.correctCount = 0;
     exists.updatedAt = new Date().toISOString();
   } else {
-    mistakes.push({ id: `m-${Date.now()}-${Math.random().toString(16).slice(2)}`, subject, topic, q: q.q, answer: q.answer, explain: q.explain, lastSelected: selected, correctCount: 0, createdAt: new Date().toISOString() });
+    mistakes.push({ id: `m-${Date.now()}-${Math.random().toString(16).slice(2)}`, subject, topic: q.topic || topic, q: q.q, options: q.options || [], answer: q.answer, explain: q.explain, lastSelected: selected, correctCount: 0, createdAt: new Date().toISOString() });
   }
   setMistakes(mistakes);
 }
@@ -835,6 +3748,34 @@ function renderMistakeBook() {
     <div class="mistake-card"><strong>${m.subject}</strong><p>${m.q}</p><p>Mastered ✅</p></div>
   `).join('') : `<div class="empty-small">Mastered mistakes will appear here after two correct reviews.</div>`;
 }
+function startMistakeReview() {
+  const mistakes = getMistakes();
+  if (!mistakes.length) {
+    toast('No active mistakes yet');
+    return;
+  }
+  const m = mistakes[0];
+  const list = document.getElementById('mistakeList');
+  const choices = (m.options && m.options.length ? [...m.options] : [m.answer, m.lastSelected].filter(Boolean))
+    .filter((value, index, arr) => arr.indexOf(value) === index)
+    .sort(() => Math.random() - 0.5);
+
+  list.innerHTML = `
+    <article class="mistake-review-card">
+      <div class="question-top"><span class="mini-badge">Mistake Review</span><span class="mini-badge">${m.correctCount || 0}/2 correct</span></div>
+      <div class="question-text">${m.q}</div>
+      ${choices.length > 1 ? `<div class="option-grid">${choices.map(opt => `<button class="option-btn mistake-review-option" data-mistake-answer="${encodeURIComponent(opt)}" data-mistake-id="${m.id}">${opt}</button>`).join('')}</div>` : ''}
+      <div class="review-answer-box"><strong>Correct answer:</strong> ${m.answer}<br><small>${m.explain || ''}</small></div>
+      <div class="mistake-actions review-actions">
+        <button data-review-correct="${m.id}">I got it correct</button>
+        <button data-review-wrong="${m.id}">Still wrong</button>
+        <button class="secondary-action" id="showAllMistakesBtn">Show all mistakes</button>
+      </div>
+    </article>
+  `;
+  list.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
 function updateReviewStreak() {
   const today = todayDate().toISOString().slice(0, 10);
   const streak = load(LS.streak, { count: 0, lastDate: '' });
@@ -1002,16 +3943,19 @@ function setupEvents() {
     if (e.target.id === 'startPracticeBtn') startPracticeRound();
     if (e.target.id === 'practiceAgainBtn') startPracticeRound();
     if (e.target.classList.contains('option-btn')) answerQuestion(decodeURIComponent(e.target.dataset.answer));
-    if (e.target.id === 'startMistakeReviewBtn') {
-      const first = document.querySelector('[data-review-correct]');
-      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      else toast('No active mistakes yet');
-    }
+    if (e.target.id === 'startMistakeReviewBtn') startMistakeReview();
 
     const moveBtn = e.target.closest('[data-move-id]');
     if (moveBtn) movePlannerTask(moveBtn.dataset.moveDay, moveBtn.dataset.moveId);
     const delBtn = e.target.closest('[data-delete-id]');
     if (delBtn) deletePlannerTask(delBtn.dataset.deleteDay, delBtn.dataset.deleteId);
+    const mistakeOption = e.target.closest('[data-mistake-answer]');
+    if (mistakeOption) {
+      const mistakes = getMistakes();
+      const m = mistakes.find(x => x.id === mistakeOption.dataset.mistakeId);
+      if (m) reviewMistake(m.id, decodeURIComponent(mistakeOption.dataset.mistakeAnswer) === m.answer);
+    }
+    if (e.target.id === 'showAllMistakesBtn') renderMistakeBook();
     const correctBtn = e.target.closest('[data-review-correct]');
     if (correctBtn) reviewMistake(correctBtn.dataset.reviewCorrect, true);
     const wrongBtn = e.target.closest('[data-review-wrong]');
