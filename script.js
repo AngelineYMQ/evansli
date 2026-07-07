@@ -209,7 +209,7 @@ const LS = {
   mastered: 'eshq_v2_mastered',
   history: 'eshq_v2_history',
   streak: 'eshq_v2_streak',
-  cycleDay: 'eshq_v3_cycle_day'
+  cycleDay: 'eshq_v4_cycle_day'
 };
 
 const state = {
@@ -615,7 +615,47 @@ function renderProgress() {
 
 
 function getSelectedCycleDay() {
-  return load(LS.cycleDay, 'Day 1');
+  return load(LS.cycleDay, getAutoCycleDay());
+}
+function localDateOnly(date = new Date()) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+function parseLocalDate(dateStr) {
+  const [year, month, day] = dateStr.split('-').map(Number);
+  return new Date(year, month - 1, day);
+}
+function isSchoolDay(date) {
+  const day = date.getDay();
+  return day >= 1 && day <= 5;
+}
+function schoolDayOffset(anchorDate, targetDate) {
+  const anchor = localDateOnly(anchorDate);
+  const target = localDateOnly(targetDate);
+  if (anchor.getTime() === target.getTime()) return 0;
+  let cursor = new Date(anchor);
+  let offset = 0;
+  if (target > anchor) {
+    while (cursor < target) {
+      cursor.setDate(cursor.getDate() + 1);
+      if (isSchoolDay(cursor)) offset += 1;
+    }
+  } else {
+    while (cursor > target) {
+      if (isSchoolDay(cursor)) offset -= 1;
+      cursor.setDate(cursor.getDate() - 1);
+    }
+  }
+  return offset;
+}
+function getAutoCycleDay(date = new Date()) {
+  const anchor = parseLocalDate('2026-07-07'); // Tuesday 7 Jul 2026 is Day 7.
+  const anchorIndex = 6; // Day 7 in zero-based TIMETABLE_DAYS.
+  const offset = schoolDayOffset(anchor, date);
+  const idx = ((anchorIndex + offset) % TIMETABLE_DAYS.length + TIMETABLE_DAYS.length) % TIMETABLE_DAYS.length;
+  return TIMETABLE_DAYS[idx];
+}
+function isCycleManualOverride() {
+  return Boolean(localStorage.getItem(LS.cycleDay));
 }
 function getNextCycleDay(day) {
   const idx = TIMETABLE_DAYS.indexOf(day);
@@ -657,6 +697,8 @@ function renderTimetable() {
   const classes = TIMETABLE[selected] || [];
   const nextDay = getNextCycleDay(selected);
   document.getElementById('selectedCycleTitle').textContent = `${selected} Classes`;
+  const info = document.getElementById('cycleInfo');
+  if (info) info.textContent = isCycleManualOverride() ? `Manual override is on. Auto today would be ${getAutoCycleDay()}.` : `Auto today: ${getAutoCycleDay()} · Anchor: 7 Jul 2026 = Day 7.`;
   document.getElementById('selectedClassCount').textContent = `${classes.filter(c => !['Lunch', 'Recess'].includes(c.subject)).length} classes`;
   document.getElementById('selectedDayClasses').innerHTML = classes.map(classRow).join('');
   document.getElementById('packListTitle').textContent = `Pack for ${nextDay}`;
@@ -679,6 +721,13 @@ function renderAll() {
 
 function setupEvents() {
   document.addEventListener('click', e => {
+    if (e.target.id === 'autoCycleBtn') {
+      localStorage.removeItem(LS.cycleDay);
+      renderTimetable();
+      renderTimetableDashboard();
+      toast(`Auto cycle restored: ${getAutoCycleDay()}`);
+      return;
+    }
     const nav = e.target.closest('[data-section]');
     if (nav) switchSection(nav.dataset.section);
 

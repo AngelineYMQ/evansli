@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=4.0" />
 </head>
 <body>
   <div class="app-shell">
@@ -197,11 +197,13 @@
           <div>
             <p class="eyebrow">NCHS Sec 1 Excellence · Semester 2</p>
             <h2>My Timetable</h2>
-            <p class="muted">The school uses a 10-day cycle. Select today’s cycle day to see classes and tomorrow’s pack list.</p>
+            <p class="muted">The school uses a 10-day cycle. The school runs a 10-day cycle over two school weeks. 7 Jul 2026 is set as Day 7, and weekends are skipped automatically.</p>
           </div>
           <div class="timetable-selector">
             <label for="cycleDaySelect">Today is</label>
             <select id="cycleDaySelect"></select>
+            <button id="autoCycleBtn" class="text-btn" type="button">Use auto</button>
+            <small id="cycleInfo" class="cycle-info">Auto cycle is on.</small>
           </div>
         </div>
 
@@ -210,7 +212,7 @@
             <div class="section-title-row">
               <div>
                 <p class="eyebrow">Selected day</p>
-                <h3 id="selectedCycleTitle">Day 1 Classes</h3>
+                <h3 id="selectedCycleTitle">Today’s Classes</h3>
               </div>
               <span class="mini-badge" id="selectedClassCount">0 classes</span>
             </div>
@@ -340,6 +342,6 @@
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="script.js"></script>
+  <script src="script.js?v=4.0"></script>
 </body>
 </html>

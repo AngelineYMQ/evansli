@@ -1,4 +1,4 @@
-# Evans Study HQ v3
+# Evans Study HQ v4
 
 A static student dashboard for Evans.
 
@@ -21,3 +21,8 @@ Upload these files to the root of the GitHub repository:
 - README.md
 
 Then commit and push to GitHub Pages.
+
+
+## v4 cycle update
+
+The timetable now auto-calculates the NCHS 10-day cycle using 7 Jul 2026 = Day 7 and skips weekends. A manual override and Use auto button are included.
