@@ -1,13 +1,10 @@
-# Evans Study HQ v8 - Daily Streak
+# Evans Study HQ v9
 
-This version adds a Duolingo-style daily streak to encourage Evans to open and use the site every day.
+Navigation layout update.
 
-## New in v8
-- Daily streak card on the Dashboard
-- Check in today button
-- 7-day recent check-in dots
-- Best streak tracking
-- Completing real actions also keeps the streak alive: Homework, WA3 tasks, Weekly Plan tasks, and Revision Lab rounds
-- Streak data is saved in localStorage
+## Change
+- Keeps the main navigation on one line on desktop/tablet.
+- Reduces nav button size slightly.
+- Allows horizontal scrolling on smaller screens instead of wrapping Progress to the next line.
 
-Upload index.html, style.css, script.js and README.md to the GitHub repository root.
+Upload all four files to the GitHub repository root.
