@@ -451,6 +451,7 @@ function toast(message) {
 }
 
 function switchSection(id) {
+  if (id === 'mistakes') id = 'revision';
   document.querySelectorAll('.section').forEach(s => s.classList.toggle('active-section', s.id === id));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.section === id));
   window.scrollTo({ top: 0, behavior: 'smooth' });

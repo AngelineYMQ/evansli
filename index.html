@@ -26,7 +26,6 @@
         <button class="nav-btn" data-section="wa3">WA3 Board</button>
         <button class="nav-btn" data-section="planner">Weekly Plan</button>
         <button class="nav-btn" data-section="revision">Revision Lab</button>
-        <button class="nav-btn" data-section="mistakes">Mistake Book</button>
         <button class="nav-btn" data-section="progress">Progress</button>
       </nav>
       <div class="header-tools">
@@ -117,8 +116,7 @@
             <button class="quick-card" data-section="timetable"><strong>Schedule</strong><span>School, tuition and activities</span></button>
             <button class="quick-card" data-section="wa3"><strong>WA3 Board</strong><span>Track tests, projects and submissions</span></button>
             <button class="quick-card" data-section="planner"><strong>Weekly Plan</strong><span>Longer plans, activities and projects</span></button>
-            <button class="quick-card" data-section="revision"><strong>Revision Lab</strong><span>Practise questions by topic</span></button>
-            <button class="quick-card" data-section="mistakes"><strong>Mistake Book</strong><span>Review mistakes until mastered</span></button>
+            <button class="quick-card" data-section="revision"><strong>Revision Lab</strong><span>Practise questions and review mistakes</span></button>
             <button class="quick-card" data-section="progress"><strong>Progress</strong><span>See what is improving</span></button>
           </div>
         </section>
@@ -359,33 +357,35 @@
             </div>
           </div>
         </div>
-      </section>
 
-      <section id="mistakes" class="section">
-        <div class="page-header">
-          <div>
-            <p class="eyebrow">Review loop</p>
-            <h2>Mistake Book</h2>
-            <p class="muted">A mistake is only mastered after Evans answers it correctly twice during review.</p>
+        <div class="revision-mistake-panel">
+          <div class="page-header compact-page-header">
+            <div>
+              <p class="eyebrow">Review loop</p>
+              <h2>Mistake Book</h2>
+              <p class="muted">Wrong answers from Revision Lab appear here. A mistake is mastered after Evans answers it correctly twice.</p>
+            </div>
+            <div class="header-stat">
+              <span id="streakLabel">🔥 0</span>
+              <small>review streak</small>
+            </div>
           </div>
-          <div class="header-stat">
-            <span id="streakLabel">🔥 0</span>
-            <small>review streak</small>
+          <div class="mistake-grid-in-revision">
+            <div class="card">
+              <div class="section-title-row">
+                <h3>Active Mistakes</h3>
+                <button id="startMistakeReviewBtn" class="secondary-action">Start Review</button>
+              </div>
+              <div id="mistakeList" class="mistake-list"></div>
+            </div>
+            <div class="card mastered-card">
+              <div class="section-title-row">
+                <h3>Mastered</h3>
+                <span class="mini-badge" id="masteredCountLabel">0</span>
+              </div>
+              <div id="masteredList" class="mastered-list"></div>
+            </div>
           </div>
-        </div>
-        <div class="card">
-          <div class="section-title-row">
-            <h3>Active Mistakes</h3>
-            <button id="startMistakeReviewBtn" class="secondary-action">Start Review</button>
-          </div>
-          <div id="mistakeList" class="mistake-list"></div>
-        </div>
-        <div class="card mastered-card">
-          <div class="section-title-row">
-            <h3>Mastered</h3>
-            <span class="mini-badge" id="masteredCountLabel">0</span>
-          </div>
-          <div id="masteredList" class="mastered-list"></div>
         </div>
       </section>
 

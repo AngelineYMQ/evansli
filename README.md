@@ -28,3 +28,8 @@ Homework, WA3 completion, weekly plans, schedule activities, proof notes, timest
 ## v14 fix
 - The dashboard first focus task is now linked to the actual next WA3 item.
 - When Evans ticks the next WA3 focus task, it asks for proof, marks the WA3 item complete, records the timestamp, and the Next Deadline card moves to the next incomplete WA3 task.
+
+
+## v15 Navigation cleanup
+- Moved Mistake Book into Revision Lab so the top navigation stays on one line.
+- Existing mistake review logic, cloud sync and progress tracking are preserved.
