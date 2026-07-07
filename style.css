@@ -97,6 +97,7 @@ h3 { margin: 0; font-size: 17px; letter-spacing: -0.02em; }
 .full-width { width: 100%; }
 .dashboard-grid { display: grid; gap: 16px; margin-bottom: 16px; }
 .three-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.four-cols { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .two-cols { grid-template-columns: 1.25fr .75fr; }
 .card-heading-row, .section-title-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
 .mini-badge, .urgency-badge, .type-badge, .date-badge, .status-badge {
@@ -258,7 +259,7 @@ h3 { margin: 0; font-size: 17px; letter-spacing: -0.02em; }
 @media (max-width: 980px) {
   .topbar { align-items: flex-start; flex-direction: column; }
   .nav-tabs { justify-content: flex-start; }
-  .three-cols, .two-cols, .revision-layout, .progress-dashboard { grid-template-columns: 1fr; }
+  .three-cols, .four-cols, .two-cols, .revision-layout, .progress-dashboard { grid-template-columns: 1fr; }
   .quick-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .wa3-list { grid-template-columns: 1fr; }
   .planner-flow { grid-template-columns: 1fr; }
@@ -552,3 +553,18 @@ h3 { margin: 0; font-size: 17px; letter-spacing: -0.02em; }
   .activity-item { grid-template-columns:auto 1fr; }
   .activity-item button { grid-column:2; justify-self:start; }
 }
+
+/* v8 Daily streak */
+.streak-card { position: relative; overflow: hidden; }
+.streak-card::after { content: ''; position: absolute; right: -30px; top: -30px; width: 92px; height: 92px; border-radius: 50%; background: rgba(242, 184, 75, .16); }
+.streak-number { display: flex; align-items: baseline; gap: 8px; margin: 6px 0 8px; }
+.streak-number .flame { font-size: 24px; line-height: 1; }
+.streak-number strong { font-size: 40px; line-height: .9; letter-spacing: -0.06em; color: var(--ink); }
+.streak-number span:last-child { color: var(--muted); font-weight: 700; }
+.streak-dots { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+.streak-dot { width: 22px; height: 22px; border-radius: 999px; display: grid; place-items: center; font-size: 11px; font-weight: 800; background: #edf2ef; color: var(--muted); border: 1px solid var(--line); }
+.streak-dot.done { background: var(--amber-light); color: #8a5b05; border-color: #f1d28e; }
+.streak-dot.today { outline: 2px solid rgba(242, 184, 75, .45); }
+.streak-card.checked-in #dailyCheckinBtn { background: #edf2ef; color: var(--muted); box-shadow: none; }
+@media (max-width: 980px) { .four-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 720px) { .four-cols { grid-template-columns: 1fr; } .streak-number strong { font-size: 34px; } }

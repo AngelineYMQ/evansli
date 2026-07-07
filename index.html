@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Evans Study HQ v7</title>
+  <title>Evans Study HQ v8</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=7.0" />
+  <link rel="stylesheet" href="style.css?v=8.0" />
 </head>
 <body>
   <div class="app-shell">
@@ -45,7 +45,7 @@
           </div>
         </div>
 
-        <div class="dashboard-grid three-cols">
+        <div class="dashboard-grid four-cols">
           <article class="card top3-card">
             <div class="card-heading-row">
               <div>
@@ -81,6 +81,20 @@
             <div class="big-number" id="wa3ProgressText">0 / 12</div>
             <div class="progress-bar"><span id="wa3ProgressBar"></span></div>
             <p class="helper-text" id="wa3Encouragement">12 missions are already loaded. Start with the next deadline.</p>
+          </article>
+
+          <article class="card streak-card">
+            <div class="card-heading-row">
+              <div>
+                <p class="eyebrow">Daily habit</p>
+                <h3>Study Streak</h3>
+              </div>
+              <span class="mini-badge" id="streakStatusBadge">Ready</span>
+            </div>
+            <div class="streak-number"><span class="flame">🔥</span><strong id="streakCount">0</strong><span>days</span></div>
+            <p class="helper-text" id="streakHelper">Check in once a day after doing one real action.</p>
+            <button id="dailyCheckinBtn" class="secondary-action full-width">Check in today</button>
+            <div id="streakWeekDots" class="streak-dots" aria-label="Recent check-ins"></div>
           </article>
         </div>
 
@@ -471,6 +485,6 @@
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="script.js?v=7.0"></script>
+  <script src="script.js?v=8.0"></script>
 </body>
 </html>

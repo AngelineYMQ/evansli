@@ -1,20 +1,13 @@
-# Evans Study HQ v7 · Daily Homework + Schedule
+# Evans Study HQ v8 - Daily Streak
 
-This version separates daily homework from the weekly plan.
+This version adds a Duolingo-style daily streak to encourage Evans to open and use the site every day.
 
-## Main changes
-- Added **Homework Log** for daily school homework.
-- Homework due dates show as `Today · 7 Jul`, `Tomorrow · 8 Jul`, etc.
-- Homework completion requires quick proof and stores a timestamp.
-- Added **Schedule** support for tuition, taekwondo, CCA, exams and reminders.
-- Weekly Planner is now **Weekly Plan** for longer plans, activities, projects and revision focus.
-- Dashboard now shows homework due soon, after-school schedule, school timetable, pack list and WA3 deadlines.
+## New in v8
+- Daily streak card on the Dashboard
+- Check in today button
+- 7-day recent check-in dots
+- Best streak tracking
+- Completing real actions also keeps the streak alive: Homework, WA3 tasks, Weekly Plan tasks, and Revision Lab rounds
+- Streak data is saved in localStorage
 
-## Files
-Upload these files to the root of the GitHub repository:
-- index.html
-- style.css
-- script.js
-- README.md
-
-Then commit and push to GitHub Pages.
+Upload index.html, style.css, script.js and README.md to the GitHub repository root.

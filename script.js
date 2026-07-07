@@ -1424,3 +1424,129 @@ function init() {
   renderAll();
 }
 document.addEventListener('DOMContentLoaded', init);
+
+
+/* v8 Daily streak - Duolingo-style habit check */
+LS.dailyCheckins = 'eshq_v8_daily_checkins';
+LS.bestStreak = 'eshq_v8_best_streak';
+
+function localDateKey(date = new Date()) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+function addDays(date, days) {
+  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  d.setDate(d.getDate() + days);
+  return d;
+}
+function getDailyCheckins() {
+  return load(LS.dailyCheckins, []);
+}
+function setDailyCheckins(list) {
+  save(LS.dailyCheckins, Array.from(new Set(list)).sort().slice(-120));
+}
+function streakStats() {
+  const dates = new Set(getDailyCheckins());
+  const today = todayDate();
+  const todayKey = localDateKey(today);
+  const checkedToday = dates.has(todayKey);
+  let cursor = checkedToday ? today : addDays(today, -1);
+  let current = 0;
+  while (dates.has(localDateKey(cursor))) {
+    current += 1;
+    cursor = addDays(cursor, -1);
+  }
+  let best = Number(load(LS.bestStreak, 0)) || 0;
+  if (current > best) {
+    best = current;
+    save(LS.bestStreak, best);
+  }
+  return { current, best, checkedToday, todayKey };
+}
+function recordDailyCheckin(reason = 'manual') {
+  const list = getDailyCheckins();
+  const key = localDateKey();
+  if (!list.includes(key)) {
+    list.push(key);
+    setDailyCheckins(list);
+  }
+  save('eshq_v8_last_checkin_reason', reason);
+  return streakStats();
+}
+function renderStreakCard() {
+  const card = document.querySelector('.streak-card');
+  if (!card) return;
+  const stats = streakStats();
+  const count = document.getElementById('streakCount');
+  const badge = document.getElementById('streakStatusBadge');
+  const helper = document.getElementById('streakHelper');
+  const btn = document.getElementById('dailyCheckinBtn');
+  const dots = document.getElementById('streakWeekDots');
+  if (count) count.textContent = stats.current;
+  if (badge) badge.textContent = stats.checkedToday ? 'Done today' : 'Not yet';
+  if (helper) helper.textContent = stats.checkedToday
+    ? `Checked in today. Best streak: ${stats.best} day${stats.best === 1 ? '' : 's'}.`
+    : 'Do one real action, then check in to keep the streak alive.';
+  if (btn) btn.textContent = stats.checkedToday ? 'Checked in today ✓' : 'Check in today';
+  card.classList.toggle('checked-in', stats.checkedToday);
+  if (dots) {
+    const dates = new Set(getDailyCheckins());
+    const labels = ['M','T','W','T','F','S','S'];
+    const today = todayDate();
+    const start = addDays(today, -6);
+    let html = '';
+    for (let i = 0; i < 7; i += 1) {
+      const d = addDays(start, i);
+      const key = localDateKey(d);
+      const isToday = key === stats.todayKey;
+      html += `<span class="streak-dot ${dates.has(key) ? 'done' : ''} ${isToday ? 'today' : ''}" title="${d.toLocaleDateString('en-SG', { weekday: 'short', day: 'numeric', month: 'short' })}">${labels[d.getDay() === 0 ? 6 : d.getDay() - 1]}</span>`;
+    }
+    dots.innerHTML = html;
+  }
+}
+
+const v7RecordAudit = recordAudit;
+recordAudit = function(entry) {
+  v7RecordAudit(entry);
+  if (entry && entry.checked) recordDailyCheckin(entry.type || 'task');
+};
+
+const v7FinishPracticeRound = finishPracticeRound;
+finishPracticeRound = function() {
+  v7FinishPracticeRound();
+  recordDailyCheckin('practice');
+  renderStreakCard();
+};
+
+const v7RenderDashboard = renderDashboard;
+renderDashboard = function() {
+  v7RenderDashboard();
+  renderStreakCard();
+};
+
+const v7RenderProgress = renderProgress;
+renderProgress = function() {
+  v7RenderProgress();
+  const dash = document.getElementById('progressDashboard');
+  if (!dash) return;
+  const stats = streakStats();
+  const panel = document.createElement('article');
+  panel.className = 'progress-panel';
+  panel.innerHTML = `<h3>Daily Streak</h3><div class="metric"><span>Current streak</span><strong>${stats.current} day${stats.current === 1 ? '' : 's'}</strong></div><div class="metric"><span>Best streak</span><strong>${stats.best} day${stats.best === 1 ? '' : 's'}</strong></div><div class="metric"><span>Today</span><strong>${stats.checkedToday ? 'Checked in' : 'Not yet'}</strong></div><p class="helper-text">Completing homework, WA3, weekly plans or a practice round also keeps the streak alive.</p>`;
+  dash.prepend(panel);
+};
+
+document.addEventListener('click', e => {
+  if (e.target.id === 'dailyCheckinBtn') {
+    const stats = streakStats();
+    if (!stats.checkedToday) {
+      recordDailyCheckin('manual');
+      toast('Daily streak updated 🔥');
+    } else {
+      toast('Already checked in today');
+    }
+    renderAll();
+  }
+});
