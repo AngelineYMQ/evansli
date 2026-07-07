@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Evans Study HQ v5</title>
+  <title>Evans Study HQ v7</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=5.0" />
+  <link rel="stylesheet" href="style.css?v=7.0" />
 </head>
 <body>
   <div class="app-shell">
@@ -21,9 +21,10 @@
       </div>
       <nav class="nav-tabs" aria-label="Main navigation">
         <button class="nav-btn active" data-section="dashboard">Dashboard</button>
+        <button class="nav-btn" data-section="homework">Homework</button>
+        <button class="nav-btn" data-section="timetable">Schedule</button>
         <button class="nav-btn" data-section="wa3">WA3 Board</button>
-        <button class="nav-btn" data-section="planner">Weekly Planner</button>
-        <button class="nav-btn" data-section="timetable">Timetable</button>
+        <button class="nav-btn" data-section="planner">Weekly Plan</button>
         <button class="nav-btn" data-section="revision">Revision Lab</button>
         <button class="nav-btn" data-section="mistakes">Mistake Book</button>
         <button class="nav-btn" data-section="progress">Progress</button>
@@ -91,9 +92,10 @@
             </div>
           </div>
           <div class="quick-actions">
+            <button class="quick-card" data-section="homework"><strong>Homework</strong><span>Record daily homework and due dates</span></button>
+            <button class="quick-card" data-section="timetable"><strong>Schedule</strong><span>School, tuition and activities</span></button>
             <button class="quick-card" data-section="wa3"><strong>WA3 Board</strong><span>Track tests, projects and submissions</span></button>
-            <button class="quick-card" data-section="planner"><strong>Weekly Planner</strong><span>Plan homework and revision</span></button>
-            <button class="quick-card" data-section="timetable"><strong>Timetable</strong><span>Check classes and pack bag</span></button>
+            <button class="quick-card" data-section="planner"><strong>Weekly Plan</strong><span>Longer plans, activities and projects</span></button>
             <button class="quick-card" data-section="revision"><strong>Revision Lab</strong><span>Practise questions by topic</span></button>
             <button class="quick-card" data-section="mistakes"><strong>Mistake Book</strong><span>Review mistakes until mastered</span></button>
             <button class="quick-card" data-section="progress"><strong>Progress</strong><span>See what is improving</span></button>
@@ -101,6 +103,18 @@
         </section>
 
         <div class="dashboard-grid two-cols">
+          <section class="card homework-preview-card">
+            <div class="section-title-row">
+              <div>
+                <p class="eyebrow">Daily Homework</p>
+                <h3>Homework Due Soon</h3>
+              </div>
+              <button class="text-btn" data-section="homework">Open homework</button>
+            </div>
+            <div id="dashboardHomeworkPreview" class="homework-preview"></div>
+            <button id="quickAddHomeworkBtn" class="secondary-action full-width">+ Add homework</button>
+          </section>
+
           <section class="card">
             <div class="section-title-row">
               <div>
@@ -110,6 +124,19 @@
               <button class="text-btn" data-section="wa3">View all</button>
             </div>
             <div id="upcomingDeadlines" class="deadline-list"></div>
+          </section>
+        </div>
+
+        <div class="dashboard-grid two-cols">
+          <section class="card schedule-preview-card">
+            <div class="section-title-row">
+              <div>
+                <p class="eyebrow">Today</p>
+                <h3>After-school Schedule</h3>
+              </div>
+              <button class="text-btn" data-section="timetable">Open schedule</button>
+            </div>
+            <div id="dashboardActivitiesPreview" class="activity-list compact"></div>
           </section>
 
           <section class="card">
@@ -161,6 +188,25 @@
         </section>
       </section>
 
+      <section id="homework" class="section">
+        <div class="page-header">
+          <div>
+            <p class="eyebrow">Daily homework</p>
+            <h2>Homework Log</h2>
+            <p class="muted">Record homework after school. Due dates show as Today / Tomorrow plus the exact date.</p>
+          </div>
+          <button id="addHomeworkBtn" class="primary-action small">+ Add homework</button>
+        </div>
+        <div class="homework-toolbar card">
+          <div>
+            <p class="eyebrow">How to use</p>
+            <strong>After school: add every homework item. Before bed: check Due Tomorrow.</strong>
+          </div>
+          <button id="clearCompletedHomeworkBtn" class="text-btn">Clear completed</button>
+        </div>
+        <div id="homeworkBoard" class="homework-board"></div>
+      </section>
+
       <section id="wa3" class="section">
         <div class="page-header">
           <div>
@@ -186,11 +232,11 @@
       <section id="planner" class="section">
         <div class="page-header">
           <div>
-            <p class="eyebrow">Plan the week</p>
-            <h2>Weekly Planner</h2>
-            <p class="muted">Add homework, revision and packing tasks. Move unfinished work to tomorrow instead of forgetting it.</p>
+            <p class="eyebrow">Longer plan</p>
+            <h2>Weekly Plan</h2>
+            <p class="muted">Use this for longer plans: project work, tuition prep, taekwondo, CCA, exam prep and family reminders.</p>
           </div>
-          <button id="addPlannerTaskBtn" class="primary-action small">+ Add task</button>
+          <button id="addPlannerTaskBtn" class="primary-action small">+ Add plan</button>
         </div>
         <div id="plannerGrid" class="planner-grid"></div>
       </section>
@@ -199,9 +245,9 @@
       <section id="timetable" class="section">
         <div class="page-header">
           <div>
-            <p class="eyebrow">NCHS Sec 1 Excellence · Semester 2</p>
-            <h2>My Timetable</h2>
-            <p class="muted">The school uses a 10-day cycle. The school runs a 10-day cycle over two school weeks. 7 Jul 2026 is set as Day 7, and weekends are skipped automatically.</p>
+            <p class="eyebrow">School + after-school</p>
+            <h2>Schedule</h2>
+            <p class="muted">School uses a 10-day cycle. Add tuition, taekwondo, CCA and important activities here too.</p>
           </div>
           <div class="timetable-selector">
             <label for="cycleDaySelect">Today is</label>
@@ -238,8 +284,19 @@
         <section class="card">
           <div class="section-title-row">
             <div>
+              <p class="eyebrow">After school</p>
+              <h3>Tuition, CCA & Activities</h3>
+            </div>
+            <button id="addActivityBtn" class="primary-action small">+ Add activity</button>
+          </div>
+          <div id="activityList" class="activity-list"></div>
+        </section>
+
+        <section class="card">
+          <div class="section-title-row">
+            <div>
               <p class="eyebrow">10-day cycle</p>
-              <h3>Full Timetable</h3>
+              <h3>School Timetable</h3>
             </div>
           </div>
           <div id="fullTimetableGrid" class="timetable-grid"></div>
@@ -336,25 +393,84 @@
   <div id="taskModal" class="modal" aria-hidden="true">
     <div class="modal-card">
       <div class="section-title-row">
-        <h3>Add a Weekly Task</h3>
+        <h3>Add a Weekly Plan</h3>
         <button id="closeTaskModal" class="icon-btn" aria-label="Close">×</button>
       </div>
       <label>Day</label>
       <select id="modalDaySelect"></select>
       <label>Task</label>
-      <input id="modalTaskInput" type="text" placeholder="e.g. Finish Science report draft" />
+      <input id="modalTaskInput" type="text" placeholder="e.g. Taekwondo grading practice / work on Science IPW" />
       <label>Type</label>
       <select id="modalTaskType">
-        <option value="Homework">Homework</option>
-        <option value="Revision">Revision</option>
+        <option value="Study">Study</option>
         <option value="Project">Project</option>
-        <option value="Pack">Pack files</option>
+        <option value="Tuition">Tuition</option>
+        <option value="CCA">CCA</option>
+        <option value="Taekwondo">Taekwondo</option>
+        <option value="Exam">Exam</option>
+        <option value="Family">Family</option>
+        <option value="Reminder">Reminder</option>
       </select>
-      <button id="savePlannerTaskBtn" class="primary-action full-width">Save task</button>
+      <button id="savePlannerTaskBtn" class="primary-action full-width">Save plan</button>
+    </div>
+  </div>
+
+  <div id="homeworkModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="section-title-row">
+        <h3>Add Homework</h3>
+        <button id="closeHomeworkModal" class="icon-btn" aria-label="Close">×</button>
+      </div>
+      <label>Subject</label>
+      <select id="homeworkSubjectInput">
+        <option>Mathematics</option>
+        <option>English</option>
+        <option>Higher Chinese</option>
+        <option>Science</option>
+        <option>History</option>
+        <option>Geography</option>
+        <option>Literature</option>
+        <option>FCE</option>
+        <option>Art</option>
+        <option>MSP</option>
+        <option>Other</option>
+      </select>
+      <label>Homework details</label>
+      <input id="homeworkTextInput" type="text" placeholder="e.g. Worksheet 5B Q1-Q10" />
+      <label>Due date</label>
+      <input id="homeworkDueInput" type="date" />
+      <button id="saveHomeworkBtn" class="primary-action full-width">Save homework</button>
+    </div>
+  </div>
+
+  <div id="activityModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="section-title-row">
+        <h3>Add Schedule Item</h3>
+        <button id="closeActivityModal" class="icon-btn" aria-label="Close">×</button>
+      </div>
+      <label>Type</label>
+      <select id="activityTypeInput">
+        <option>Tuition</option>
+        <option>Taekwondo</option>
+        <option>CCA</option>
+        <option>Exam</option>
+        <option>Family</option>
+        <option>Reminder</option>
+      </select>
+      <label>Title</label>
+      <input id="activityTitleInput" type="text" placeholder="e.g. NANYANG Math tuition" />
+      <label>Date</label>
+      <input id="activityDateInput" type="date" />
+      <label>Time</label>
+      <input id="activityTimeInput" type="time" />
+      <label>Notes</label>
+      <input id="activityNotesInput" type="text" placeholder="e.g. Bring worksheet file" />
+      <button id="saveActivityBtn" class="primary-action full-width">Save schedule item</button>
     </div>
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="script.js?v=5.0"></script>
+  <script src="script.js?v=7.0"></script>
 </body>
 </html>

@@ -1029,10 +1029,398 @@ function removeMistake(id) {
   toast('Mistake removed');
 }
 
+
+// ===== v7 Daily Homework + Schedule additions =====
+LS.homework = 'eshq_v7_homework';
+LS.activities = 'eshq_v7_activities';
+
+function inputDateString(date = new Date()) {
+  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${d.getFullYear()}-${m}-${day}`;
+}
+function addDays(date, days) {
+  const d = new Date(date);
+  d.setDate(d.getDate() + days);
+  return d;
+}
+function getHomework() { return load(LS.homework, []); }
+function setHomework(list) { save(LS.homework, list); }
+function getActivities() { return load(LS.activities, []); }
+function setActivities(list) { save(LS.activities, list); }
+function dueLabel(dateStr) {
+  if (!dateStr) return 'No date';
+  const diff = Math.round((parseDate(dateStr) - todayDate()) / 86400000);
+  const exact = parseDate(dateStr).toLocaleDateString('en-SG', { weekday: 'short', day: 'numeric', month: 'short' });
+  if (diff === 0) return `Today · ${exact}`;
+  if (diff === 1) return `Tomorrow · ${exact}`;
+  if (diff === -1) return `Yesterday · ${exact}`;
+  if (diff < 0) return `${Math.abs(diff)} days overdue · ${exact}`;
+  if (diff <= 6) return `${exact}`;
+  return exact;
+}
+function homeworkSort(a, b) {
+  const da = parseDate(a.dueDate)?.getTime() ?? Infinity;
+  const db = parseDate(b.dueDate)?.getTime() ?? Infinity;
+  return da - db;
+}
+function homeworkGroups() {
+  const hw = getHomework().slice().sort(homeworkSort);
+  const today = inputDateString(todayDate());
+  const tomorrow = inputDateString(addDays(todayDate(), 1));
+  return {
+    overdue: hw.filter(h => !h.done && h.dueDate && h.dueDate < today),
+    today: hw.filter(h => !h.done && h.dueDate === today),
+    tomorrow: hw.filter(h => !h.done && h.dueDate === tomorrow),
+    upcoming: hw.filter(h => !h.done && h.dueDate && h.dueDate > tomorrow),
+    nodate: hw.filter(h => !h.done && !h.dueDate),
+    completed: hw.filter(h => h.done).sort((a, b) => (b.completedAt || '').localeCompare(a.completedAt || ''))
+  };
+}
+function homeworkMeta(h) {
+  if (h.done) return completionMeta('homework', h.id);
+  const diff = h.dueDate ? Math.round((parseDate(h.dueDate) - todayDate()) / 86400000) : null;
+  const urgent = diff !== null && diff <= 1;
+  return `<span class="${urgent ? 'status-badge danger' : 'status-badge'}">${dueLabel(h.dueDate)}</span><span class="proof-chip">Proof needed</span>`;
+}
+function renderHomeworkItem(h, compact = false) {
+  const typeClass = (h.subject || 'other').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  return `
+    <div class="homework-item ${h.done ? 'done' : ''} ${compact ? 'compact' : ''}">
+      <input type="checkbox" data-hw-id="${h.id}" ${h.done ? 'checked' : ''} aria-label="Complete ${h.text}">
+      <div class="homework-main">
+        <div class="homework-title"><span class="subject-pill ${typeClass}">${h.subject || 'Other'}</span><strong>${h.text}</strong></div>
+        <div class="homework-meta">${homeworkMeta(h)}</div>
+      </div>
+      <div class="planner-item-actions">
+        <button data-hw-edit="${h.id}">Edit</button>
+        <button data-hw-delete="${h.id}">Delete</button>
+      </div>
+    </div>`;
+}
+function renderHomeworkGroup(title, items, emptyText, className = '') {
+  return `<article class="homework-group ${className}"><div class="planner-group-head"><div><h3>${title}</h3></div><span class="group-count">${items.length}</span></div><div class="homework-list">${items.length ? items.map(h => renderHomeworkItem(h)).join('') : `<div class="empty-small">${emptyText}</div>`}</div></article>`;
+}
+function renderHomeworkBoard() {
+  const board = document.getElementById('homeworkBoard');
+  if (!board) return;
+  const g = homeworkGroups();
+  const activeCount = g.overdue.length + g.today.length + g.tomorrow.length + g.upcoming.length + g.nodate.length;
+  board.innerHTML = `
+    <div class="homework-summary-strip">
+      <div><strong>${activeCount}</strong><span>active homework</span></div>
+      <div><strong>${g.today.length}</strong><span>due today</span></div>
+      <div><strong>${g.tomorrow.length}</strong><span>due tomorrow</span></div>
+      <div><strong>${g.completed.length}</strong><span>completed</span></div>
+    </div>
+    <div class="homework-grid">
+      ${renderHomeworkGroup('Overdue', g.overdue, 'No overdue homework. Good.', 'overdue-group')}
+      ${renderHomeworkGroup('Due Today', g.today, 'Nothing due today.', 'today-group')}
+      ${renderHomeworkGroup('Due Tomorrow', g.tomorrow, 'Nothing due tomorrow yet.', 'tomorrow-group')}
+      ${renderHomeworkGroup('Upcoming', g.upcoming.slice(0, 8), 'No upcoming homework.', 'upcoming-group')}
+      ${renderHomeworkGroup('No Date Yet', g.nodate, 'No homework without date.', 'nodate-group')}
+      ${renderHomeworkGroup('Completed', g.completed.slice(0, 8), 'Completed homework will appear here.', 'completed-group')}
+    </div>`;
+}
+function renderDashboardHomework() {
+  const el = document.getElementById('dashboardHomeworkPreview');
+  if (!el) return;
+  const g = homeworkGroups();
+  const items = [...g.overdue, ...g.today, ...g.tomorrow, ...g.upcoming].slice(0, 4);
+  if (!items.length) {
+    el.innerHTML = `<div class="empty-small"><strong>No homework due soon.</strong><br>Add homework after school so tomorrow’s list is clear.</div>`;
+    return;
+  }
+  el.innerHTML = items.map(h => renderHomeworkItem(h, true)).join('');
+}
+function openHomeworkModal(editId = '') {
+  const modal = document.getElementById('homeworkModal');
+  if (!modal) return;
+  modal.dataset.editId = editId || '';
+  const h = editId ? getHomework().find(x => x.id === editId) : null;
+  document.getElementById('homeworkSubjectInput').value = h?.subject || 'Mathematics';
+  document.getElementById('homeworkTextInput').value = h?.text || '';
+  document.getElementById('homeworkDueInput').value = h?.dueDate || inputDateString(addDays(todayDate(), 1));
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden','false');
+  setTimeout(() => document.getElementById('homeworkTextInput').focus(), 50);
+}
+function closeHomeworkModal() {
+  const modal = document.getElementById('homeworkModal');
+  if (!modal) return;
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden','true');
+}
+function saveHomework() {
+  const subject = document.getElementById('homeworkSubjectInput').value;
+  const text = document.getElementById('homeworkTextInput').value.trim();
+  const dueDate = document.getElementById('homeworkDueInput').value;
+  if (!text) { toast('Please type the homework details'); return; }
+  const list = getHomework();
+  const editId = document.getElementById('homeworkModal').dataset.editId;
+  if (editId) {
+    const h = list.find(x => x.id === editId);
+    if (h) Object.assign(h, { subject, text, dueDate, updatedAt: new Date().toISOString() });
+  } else {
+    list.push({ id: `hw-${Date.now()}`, subject, text, dueDate, done: false, createdAt: new Date().toISOString() });
+  }
+  setHomework(list);
+  closeHomeworkModal();
+  renderAll();
+  toast(editId ? 'Homework updated' : 'Homework added');
+}
+function toggleHomework(id, checked) {
+  const list = getHomework();
+  const h = list.find(x => x.id === id);
+  if (!h) return;
+  let proof = '';
+  if (checked) {
+    proof = requestEvidence(`${h.subject} — ${h.text}`);
+    if (!proof) { toast('Add quick proof before ticking done'); return false; }
+    saveEvidence('homework', id, proof);
+    h.completedAt = new Date().toISOString();
+  } else {
+    h.completedAt = '';
+  }
+  h.done = checked;
+  setHomework(list);
+  recordAudit({ type: 'homework', id, label: `${h.subject}: ${h.text}`, checked, evidence: proof });
+  renderAll();
+  toast(checked ? 'Homework completed with proof' : 'Homework reopened');
+  return true;
+}
+function deleteHomework(id) {
+  if (!confirm('Delete this homework?')) return;
+  setHomework(getHomework().filter(h => h.id !== id));
+  renderAll();
+  toast('Homework deleted');
+}
+function clearCompletedHomework() {
+  if (!confirm('Clear completed homework from the visible list?')) return;
+  setHomework(getHomework().filter(h => !h.done));
+  renderAll();
+  toast('Completed homework cleared');
+}
+function activityDateKey(a) { return `${a.date || ''} ${a.time || ''}`; }
+function getTodayActivities() {
+  const today = inputDateString(todayDate());
+  return getActivities().filter(a => a.date === today).sort((a,b)=>activityDateKey(a).localeCompare(activityDateKey(b)));
+}
+function getUpcomingActivities(limit = 8) {
+  const today = inputDateString(todayDate());
+  return getActivities().filter(a => !a.date || a.date >= today).sort((a,b)=>activityDateKey(a).localeCompare(activityDateKey(b))).slice(0, limit);
+}
+function renderActivityItem(a, compact = false) {
+  return `<div class="activity-item ${compact ? 'compact' : ''}"><span class="type-badge">${a.type}</span><div><strong>${a.title}</strong><span>${a.date ? dueLabel(a.date) : 'No date'}${a.time ? ` · ${a.time}` : ''}${a.notes ? ` · ${a.notes}` : ''}</span></div><button data-activity-delete="${a.id}">Delete</button></div>`;
+}
+function renderActivitiesDashboard() {
+  const el = document.getElementById('dashboardActivitiesPreview');
+  if (!el) return;
+  const today = getTodayActivities();
+  const upcoming = getUpcomingActivities(3);
+  const items = today.length ? today : upcoming;
+  el.innerHTML = items.length ? items.map(a => renderActivityItem(a, true)).join('') : `<div class="empty-small"><strong>No after-school schedule added.</strong><br>Add tuition, taekwondo, CCA or reminders in Schedule.</div>`;
+}
+function renderActivities() {
+  const el = document.getElementById('activityList');
+  if (!el) return;
+  const items = getUpcomingActivities(20);
+  el.innerHTML = items.length ? items.map(a => renderActivityItem(a)).join('') : `<div class="empty-state"><h3>No activities added yet.</h3><p>Add tuition, taekwondo grading, CCA, family reminders or exam prep sessions here.</p></div>`;
+}
+function openActivityModal() {
+  const modal = document.getElementById('activityModal');
+  if (!modal) return;
+  document.getElementById('activityTypeInput').value = 'Tuition';
+  document.getElementById('activityTitleInput').value = '';
+  document.getElementById('activityDateInput').value = inputDateString(todayDate());
+  document.getElementById('activityTimeInput').value = '';
+  document.getElementById('activityNotesInput').value = '';
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden','false');
+}
+function closeActivityModal() {
+  const modal = document.getElementById('activityModal');
+  if (!modal) return;
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden','true');
+}
+function saveActivity() {
+  const type = document.getElementById('activityTypeInput').value;
+  const title = document.getElementById('activityTitleInput').value.trim();
+  const date = document.getElementById('activityDateInput').value;
+  const time = document.getElementById('activityTimeInput').value;
+  const notes = document.getElementById('activityNotesInput').value.trim();
+  if (!title) { toast('Please type the schedule title'); return; }
+  const list = getActivities();
+  list.push({ id: `act-${Date.now()}`, type, title, date, time, notes, createdAt: new Date().toISOString() });
+  setActivities(list);
+  closeActivityModal();
+  renderAll();
+  toast('Schedule item added');
+}
+function deleteActivity(id) {
+  if (!confirm('Delete this schedule item?')) return;
+  setActivities(getActivities().filter(a => a.id !== id));
+  renderAll();
+  toast('Schedule item deleted');
+}
+
+// Override focus, dashboard, planner and progress for v7
+function getFocusTasks() {
+  const g = homeworkGroups();
+  const firstHomework = [...g.overdue, ...g.today, ...g.tomorrow][0];
+  const upcoming = getUpcomingIncomplete()[0];
+  const primary = firstHomework
+    ? { text: `Finish homework: ${firstHomework.subject} — ${firstHomework.text}`, sub: `Due ${dueLabel(firstHomework.dueDate)}` }
+    : upcoming
+      ? { text: `Work on: ${upcoming.subject} — ${upcoming.title}`, sub: `Due ${formatLongDate(upcoming.date)}` }
+      : { text: 'Check homework after school', sub: 'Add new homework before starting games or rest' };
+  return [
+    { id: 'focus-primary', text: primary.text, sub: primary.sub },
+    { id: 'focus-pack', text: 'Check tomorrow’s pack list', sub: `Use Schedule: ${getNextCycleDay(getSelectedCycleDay())}` },
+    { id: 'focus-practice', text: 'Complete one short Revision Lab round', sub: '5 questions is enough to start' }
+  ];
+}
+function getPlanner() {
+  const defaultPlanner = {
+    Monday: [{ id: 'mon-plan', text: 'Set this week’s main study focus', type: 'Study', done: false }],
+    Tuesday: [{ id: 'tue-activity', text: 'Check activity or tuition schedule for the week', type: 'Reminder', done: false }],
+    Wednesday: [{ id: 'wed-project', text: 'Work on one long project or WA3 item', type: 'Project', done: false }],
+    Thursday: [{ id: 'thu-review', text: 'Review weak topic before the weekend', type: 'Study', done: false }],
+    Friday: [{ id: 'fri-clear', text: 'Clear unfinished homework before weekend', type: 'Reminder', done: false }],
+    Saturday: [{ id: 'sat-long', text: 'Longer study block or activity practice', type: 'Study', done: false }],
+    Sunday: [{ id: 'sun-prepare', text: 'Prepare for next school week', type: 'Family', done: false }]
+  };
+  return load(LS.planner, defaultPlanner);
+}
+function renderDashboard() {
+  document.getElementById('todayLabel').textContent = `${new Date().toLocaleDateString('en-SG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })} · ${getSelectedCycleDay()}`;
+  renderFocus();
+  renderDashboardHomework();
+  renderActivitiesDashboard();
+  renderNextDeadline();
+  renderWa3ProgressMini();
+  renderUpcomingDeadlines();
+  renderParentSummary();
+  renderWeekPreview();
+  renderTimetableDashboard();
+  renderAuditStatus();
+}
+function renderParentSummary() {
+  const planner = getPlanner();
+  const plannerTasks = DAYS.flatMap(day => planner[day] || []);
+  const plannerDone = plannerTasks.filter(t => t.done).length;
+  const hw = getHomework();
+  const activeHw = hw.filter(h => !h.done).length;
+  const done = getWa3Done();
+  const wa3Done = WA3_TASKS.filter(t => done[t.id]).length;
+  const recent = getRecentAudit(1)[0];
+  const prevOpen = load(LS.previousOpen, '');
+  document.getElementById('parentSummary').innerHTML = `
+    <div class="summary-tile"><strong>${activeHw}</strong><span>active homework</span></div>
+    <div class="summary-tile"><strong>${wa3Done}/${WA3_TASKS.length}</strong><span>WA3 completed</span></div>
+    <div class="summary-tile"><strong>${plannerDone}/${plannerTasks.length}</strong><span>weekly plans done</span></div>
+    <div class="summary-tile"><strong>${recent ? shortTime(recent.ts) : 'No proof yet'}</strong><span>latest proof</span></div>
+    <div class="summary-tile"><strong>${prevOpen ? shortTime(prevOpen) : 'First visit'}</strong><span>previous open</span></div>
+  `;
+  const nudge = document.getElementById('auditNudge');
+  if (nudge) nudge.textContent = auditWarning();
+}
+function renderWeekPreview() {
+  const planner = getPlanner();
+  document.getElementById('weekPreview').innerHTML = DAYS.map(day => {
+    const tasks = (planner[day] || []).slice(0, 2);
+    return `<div class="day-preview"><h4>${day.slice(0, 3)}</h4>${tasks.length ? tasks.map(t => `<p>${t.done ? '✅' : '□'} ${t.type}: ${t.text}</p>`).join('') : '<p>No plan yet</p>'}</div>`;
+  }).join('');
+}
+function renderPlanner() {
+  const planner = getPlanner();
+  const todayName = DAYS.includes(plannerDayName(0)) ? plannerDayName(0) : 'Monday';
+  const tomorrowName = DAYS.includes(plannerDayName(1)) ? plannerDayName(1) : DAYS[(DAYS.indexOf(todayName) + 1) % DAYS.length];
+  const todayTasks = (planner[todayName] || []).map(task => ({ day: todayName, task }));
+  const tomorrowTasks = (planner[tomorrowName] || []).map(task => ({ day: tomorrowName, task }));
+  const laterTasks = DAYS.filter(day => day !== todayName && day !== tomorrowName).flatMap(day => (planner[day] || []).map(task => ({ day, task })));
+  const allTasks = DAYS.flatMap(day => (planner[day] || []).map(task => ({ day, task })));
+  const doneCount = allTasks.filter(item => item.task.done).length;
+  document.getElementById('plannerGrid').innerHTML = `
+    <div class="planner-summary-strip">
+      <div><strong>${doneCount}/${allTasks.length}</strong><span>long-term plans done</span></div>
+      <div><strong>${todayTasks.length}</strong><span>today</span></div>
+      <div><strong>${tomorrowTasks.length}</strong><span>tomorrow</span></div>
+    </div>
+    <div class="planner-flow">
+      <div class="planner-priority-col">
+        ${renderPlannerGroup(`Today · ${todayName}`, 'Longer plan, not daily homework. Use Homework Log for school assignments.', todayTasks, 'today-group', 'No longer plan for today. Add tuition, activity, project or revision plan.')}
+        ${renderPlannerGroup(`Tomorrow · ${tomorrowName}`, 'Prepare any activity, tuition or project work early.', tomorrowTasks, 'tomorrow-group', 'No plan for tomorrow yet.')}
+      </div>
+      ${renderPlannerGroup('Later this week', 'Activities, exam prep and longer projects stay visible here.', laterTasks, 'later-group', 'No later plans yet.', { showDay: true, compact: true })}
+    </div>`;
+}
+function renderProgress() {
+  const done = getWa3Done();
+  const wa3Done = WA3_TASKS.filter(t => done[t.id]).length;
+  const hw = getHomework();
+  const hwDone = hw.filter(h => h.done).length;
+  const planner = getPlanner();
+  const plannerTasks = DAYS.flatMap(day => planner[day] || []);
+  const plannerDone = plannerTasks.filter(t => t.done).length;
+  const mistakes = getMistakes();
+  const mastered = getMastered();
+  const history = getHistory();
+  const subjectCounts = history.reduce((acc, h) => { acc[h.subject] = (acc[h.subject] || 0) + 1; return acc; }, {});
+  const subjectRows = Object.entries(subjectCounts).length ? Object.entries(subjectCounts).map(([s, n]) => `<div class="metric"><span>${s}</span><strong>${n} rounds</strong></div>`).join('') : `<p class="helper-text">Start one practice round to see subject history.</p>`;
+  document.getElementById('progressDashboard').innerHTML = `
+    <article class="progress-panel"><h3>Daily Work</h3><div class="metric"><span>Homework completed</span><strong>${hwDone}/${hw.length}</strong></div><div class="metric"><span>Active homework</span><strong>${hw.filter(h=>!h.done).length}</strong></div><div class="metric"><span>Schedule items</span><strong>${getActivities().length}</strong></div></article>
+    <article class="progress-panel"><h3>Assessment & Plans</h3><div class="metric"><span>WA3 completed</span><strong>${wa3Done}/${WA3_TASKS.length}</strong></div><div class="metric"><span>Weekly plans done</span><strong>${plannerDone}/${plannerTasks.length}</strong></div><div class="metric"><span>Next deadline</span><strong>${getUpcomingIncomplete()[0] ? formatDate(getUpcomingIncomplete()[0].date) : 'Done'}</strong></div></article>
+    <article class="progress-panel"><h3>Practice Progress</h3><div class="metric"><span>Practice rounds</span><strong>${history.length}</strong></div><div class="metric"><span>Last score</span><strong>${history.length ? `${history[history.length-1].score}/${history[history.length-1].total}` : '—'}</strong></div>${subjectRows}</article>
+    <article class="progress-panel"><h3>Mistake Review</h3><div class="metric"><span>Active mistakes</span><strong>${mistakes.length}</strong></div><div class="metric"><span>Mastered mistakes</span><strong>${mastered.length}</strong></div><p class="helper-text">Finish homework, practise one round, then review mistakes.</p></article>
+  `;
+  const auditList = document.getElementById('auditLogList');
+  if (auditList) {
+    const recent = getRecentAudit(10);
+    auditList.innerHTML = recent.length ? recent.map(a => `<div class="audit-row"><strong>${a.label || a.id}</strong><span>${a.checked ? 'Completed' : 'Reopened'} · ${shortTime(a.ts)}</span>${a.evidence ? `<em>${a.evidence}</em>` : ''}</div>`).join('') : '<div class="empty-small">No proof records yet. Complete one Homework, WA3 or Plan task to start.</div>';
+  }
+}
+function renderAll() {
+  renderDashboard();
+  renderHomeworkBoard();
+  renderWa3Board();
+  renderPlanner();
+  renderTimetable();
+  renderActivities();
+  renderRevisionControls();
+  renderMistakeBook();
+  renderProgress();
+}
+function setupExtraEvents() {
+  document.addEventListener('click', e => {
+    if (e.target.id === 'startMissionBtn') switchSection('homework');
+    if (e.target.id === 'addHomeworkBtn' || e.target.id === 'quickAddHomeworkBtn') openHomeworkModal();
+    if (e.target.id === 'closeHomeworkModal') closeHomeworkModal();
+    if (e.target.id === 'saveHomeworkBtn') saveHomework();
+    if (e.target.id === 'clearCompletedHomeworkBtn') clearCompletedHomework();
+    const hwEdit = e.target.closest('[data-hw-edit]');
+    if (hwEdit) openHomeworkModal(hwEdit.dataset.hwEdit);
+    const hwDel = e.target.closest('[data-hw-delete]');
+    if (hwDel) deleteHomework(hwDel.dataset.hwDelete);
+    if (e.target.id === 'addActivityBtn') openActivityModal();
+    if (e.target.id === 'closeActivityModal') closeActivityModal();
+    if (e.target.id === 'saveActivityBtn') saveActivity();
+    const actDel = e.target.closest('[data-activity-delete]');
+    if (actDel) deleteActivity(actDel.dataset.activityDelete);
+  });
+  document.addEventListener('change', e => {
+    if (e.target.matches('[data-hw-id]')) {
+      const ok = toggleHomework(e.target.dataset.hwId, e.target.checked);
+      if (!ok) e.target.checked = false;
+    }
+  });
+}
 function init() {
   setupEvents();
+  setupExtraEvents();
   markVisit();
   renderAll();
 }
-
 document.addEventListener('DOMContentLoaded', init);
