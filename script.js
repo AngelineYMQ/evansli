@@ -1550,3 +1550,134 @@ document.addEventListener('click', e => {
     renderAll();
   }
 });
+
+/* v11 bilingual language toggle */
+const ESHQ_LANG_KEY = 'eshq_v11_language';
+const ZH_TEXT = new Map(Object.entries({
+  'Dashboard': '首页', 'Homework': '功课', 'Schedule': '日程', 'WA3 Board': 'WA3任务', 'Weekly Plan': '周计划', 'Revision Lab': '练习室', 'Mistake Book': '错题本', 'Progress': '进度',
+  'Evans Study HQ': 'Evans 学习总部', 'Daily Study Dashboard': '每日学习看板', 'Last opened:': '上次打开：', 'Open this first': '先看这里', 'Hi Evans 👋': 'Hi Evans 👋',
+  'Check today’s mission, finish one task, then practise or review mistakes.': '先看今天任务，完成一件事，再做练习或复习错题。',
+  "Today's Mission": '今天任务', "Start Today’s Mission": '开始今天任务', 'Focus': '今日重点', "Today’s Top 3": '今天最重要的3件事', "Today's Top 3": '今天最重要的3件事',
+  'Tick one small task at a time. Progress is saved on this device.': '一次完成一个小任务，进度会保存在这台设备上。',
+  'Deadline': '截止日期', 'Next Deadline': '下一个截止日期', 'WA3': 'WA3', 'Daily habit': '每日习惯', 'Study Streak': '学习连续打卡', 'Ready': '准备好', 'days': '天', 'day': '天',
+  'Check in once a day after doing one real action.': '每天完成一个真实动作后打卡一次。', 'Do one real action, then check in to keep the streak alive.': '完成一个真实动作后再打卡，保持连续记录。',
+  'Check in today': '今天打卡', 'Checked in today ✓': '今天已打卡 ✓', 'Done today': '今天已打卡', 'Not yet': '还没打卡', 'Checked in': '已打卡',
+  'Quick Start': '快速开始', 'What do you need now?': '现在要做什么？', 'Daily Homework': '每日功课', 'Homework Due Soon': '近期要交的功课',
+  'Record daily homework and due dates': '记录每天功课和截止日期', 'School, tuition and activities': '学校、补习和活动', 'Track tests, projects and submissions': '追踪考试、项目和提交',
+  'Longer plans, activities and projects': '长期计划、活动和项目', 'Practise questions by topic': '按知识点练习题目', 'Review mistakes until mastered': '复习错题直到掌握', 'See what is improving': '查看进步情况',
+  'Open homework': '打开功课', '+ Add homework': '+ 添加功课', '+ Add task': '+ 添加任务', '+ Add plan': '+ 添加计划', '+ Add activity': '+ 添加日程', 'Next 5': '最近5项', 'Upcoming Deadlines': '即将到来的截止日期', 'View all': '查看全部',
+  'Today': '今天', 'Tomorrow': '明天', 'After-school Schedule': '课后日程', 'Open schedule': '打开日程', 'Mum Check': '妈妈检查', 'Proof & Activity': '完成证明与使用记录',
+  'School day': '学校日', "Today’s Classes": '今天课程', "Today's Classes": '今天课程', 'Open timetable': '打开课表', 'Pack List': '书包检查清单', 'Tomorrow Pack List': '明日书包清单',
+  'Timeline': '时间线', 'This Week Timeline': '本周时间线', 'Edit week': '编辑本周', 'Daily homework': '每日功课', 'Homework Log': '功课记录', 'Clear completed': '清除已完成',
+  'NCHS Sec 1 · Term 3': '南侨中一 · 第三学期', 'WA3 Mission Board': 'WA3任务板', 'completed': '已完成', 'Completed': '已完成',
+  'All': '全部', 'Tests': '考试', 'Submissions': '提交', 'Projects': '项目', 'Presentation': '演讲', 'Longer plan': '长期计划', 'School + after-school': '学校 + 课后',
+  'Today is': '今天是', 'Use auto': '自动计算', 'Auto cycle is on.': '已开启自动循环计算。', 'Selected day': '选中的日子', 'Bag check': '书包检查', 'Pack for Tomorrow': '准备明天书包',
+  'After school': '课后', 'Tuition, CCA & Activities': '补习、CCA和活动', '10-day cycle': '10天循环', 'School Timetable': '学校课表', 'My Timetable': '我的课表',
+  'Practice': '练习', 'last score': '上次分数', 'Subject': '科目', 'Topic': '知识点', 'Number of questions': '题目数量', '5 questions': '5题', '10 questions': '10题', 'Start Practice Round': '开始一轮练习',
+  'Ready for a short round?': '准备好做一小轮了吗？', 'Question': '题目', 'Choose the best answer.': '选择最佳答案。', 'Review loop': '复习闭环', 'review streak': '复习连续记录',
+  'Active Mistakes': '正在复习的错题', 'Start Review': '开始复习', 'Mastered': '已掌握', 'Evidence': '完成证明', 'Progress Dashboard': '进度看板', 'Audit trail': '记录轨迹', 'Recent Task Evidence': '最近完成证明',
+  'Add a Weekly Plan': '添加周计划', 'Day': '日期', 'Task': '任务', 'Type': '类别', 'Study': '学习', 'Project': '项目', 'Tuition': '补习', 'Taekwondo': '跆拳道', 'Exam': '考试', 'Family': '家庭', 'Reminder': '提醒', 'Save plan': '保存计划',
+  'Add Homework': '添加功课', 'Homework details': '功课内容', 'Due date': '截止日期', 'Save homework': '保存功课', 'Add Schedule Item': '添加日程', 'Title': '标题', 'Date': '日期', 'Time': '时间', 'Notes': '备注', 'Save schedule item': '保存日程',
+  'Mathematics': '数学', 'Science': '科学', 'English Language': '英文', 'English': '英文', 'Higher Chinese': '高级华文', 'History': '历史', 'Geography': '地理', 'English Literature': '英文文学', 'Literature': '文学', 'Food & Consumer Education': 'FCE家政', 'Art': '美术', 'Music': '音乐', 'PE (LS)': '体育', 'Recess': '课间休息', 'Lunch': '午餐', 'DEAR time': 'DEAR阅读时间',
+  'Pack': '整理书包', 'Revision': '复习', 'Other': '其他', 'No homework due soon.': '近期没有要交的功课。', 'No activities added yet.': '还没有添加课后日程。', 'No proof yet': '暂无证明', 'First visit': '第一次打开',
+  'Daily Streak': '每日连续打卡', 'Current streak': '当前连续天数', 'Best streak': '最高连续天数', 'Homework completed': '已完成功课', 'Active homework': '待完成功课', 'Schedule items': '日程项目', 'Assessment & Plans': '评估与计划',
+  'WA3 completed': 'WA3已完成', 'Weekly plans done': '周计划已完成', 'Next deadline': '下一个截止日期', 'Practice Progress': '练习进度', 'Practice rounds': '练习轮数', 'Last score': '上次分数', 'Mistake Review': '错题复习', 'Active mistakes': '待复习错题', 'Mastered mistakes': '已掌握错题',
+  'Usage Check': '使用检查', 'Recent proof records': '最近证明记录', 'No proof records yet. Complete one Homework, WA3 or Plan task to start.': '还没有完成证明。完成一项功课、WA3或计划任务后，这里会开始记录。',
+  'Proof needed': '需要证明', 'Proof needed when completed': '完成时需要填写证明', 'Move': '移到明天', 'Move to tomorrow': '移到明天', 'Delete': '删除', 'Edit': '编辑', 'Done': '完成',
+  'Soon': '即将到来', 'Urgent': '紧急', 'Upcoming': '即将到来', 'Overdue': '已逾期', 'TBC': '待确认', 'Clear': '完成', 'No task yet': '还没有任务', 'No Date Yet': '还没有日期', 'Due Today': '今天要交', 'Due Tomorrow': '明天要交',
+  'Overdue': '已逾期', 'No overdue homework. Good.': '没有逾期功课，很好。', 'Nothing due today.': '今天没有要交的功课。', 'Nothing due tomorrow yet.': '明天暂时没有要交的功课。', 'No upcoming homework.': '没有之后的功课。', 'No homework without date.': '没有未填日期的功课。', 'Completed homework will appear here.': '完成的功课会显示在这里。'
+}));
+const ZH_REVERSE = new Map(Array.from(ZH_TEXT.entries()).map(([en, zh]) => [zh, en]));
+const ORIGINAL_TEXT = new WeakMap();
+const ORIGINAL_ATTR = new WeakMap();
+
+function getLang() { return localStorage.getItem(ESHQ_LANG_KEY) || 'en'; }
+function setLang(lang) { localStorage.setItem(ESHQ_LANG_KEY, lang); applyLanguage(); }
+function translateTextValue(value) {
+  if (!value || typeof value !== 'string') return value;
+  let out = value;
+  Array.from(ZH_TEXT.entries()).sort((a,b)=>b[0].length-a[0].length).forEach(([en, zh]) => {
+    out = out.split(en).join(zh);
+  });
+  out = out
+    .replace(/(\d+) days left/g, '还剩 $1 天')
+    .replace(/(\d+) day left/g, '还剩 $1 天')
+    .replace(/(\d+) days overdue/g, '已逾期 $1 天')
+    .replace(/(\d+)d left/g, '还剩 $1 天')
+    .replace(/Due today/g, '今天截止')
+    .replace(/Due tomorrow/g, '明天截止')
+    .replace(/Due ([^·\n]+)/g, '截止：$1')
+    .replace(/Question (\d+)\/(\d+)/g, '第 $1/$2 题')
+    .replace(/Score (\d+)/g, '分数 $1')
+    .replace(/Correct answer:/g, '正确答案：')
+    .replace(/Correct reviews:/g, '答对复习次数：')
+    .replace(/(\d+) rounds/g, '$1 轮')
+    .replace(/(\d+) classes/g, '$1 节课')
+    .replace(/(\d+) class/g, '$1 节课');
+  return out;
+}
+function shouldSkipTranslation(parent) {
+  return !parent || ['SCRIPT','STYLE','TEXTAREA','INPUT','OPTION'].includes(parent.tagName) || parent.closest('.language-switch');
+}
+function applyLanguage(root = document.body) {
+  const lang = getLang();
+  document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : 'en';
+  document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', (btn.id === 'langZhBtn') === (lang === 'zh')));
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      const parent = node.parentElement;
+      if (shouldSkipTranslation(parent)) return NodeFilter.FILTER_REJECT;
+      if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(node => {
+    const text = node.nodeValue;
+    if (!ORIGINAL_TEXT.has(node) || (lang === 'zh' && ZH_TEXT.has(text.trim()))) ORIGINAL_TEXT.set(node, text);
+    const original = ORIGINAL_TEXT.get(node) || text;
+    if (lang === 'zh') {
+      node.nodeValue = translateTextValue(original);
+    } else {
+      if (ZH_REVERSE.has(text.trim()) || ORIGINAL_TEXT.has(node)) node.nodeValue = original;
+    }
+  });
+  document.querySelectorAll('input[placeholder], textarea[placeholder], button[aria-label], [title]').forEach(el => {
+    let store = ORIGINAL_ATTR.get(el);
+    if (!store) { store = {}; ORIGINAL_ATTR.set(el, store); }
+    ['placeholder','aria-label','title'].forEach(attr => {
+      const current = attr === 'placeholder' ? el.placeholder : el.getAttribute(attr);
+      if (!current) return;
+      if (!store[attr]) store[attr] = current;
+      const original = store[attr];
+      if (lang === 'zh') {
+        if (attr === 'placeholder') el.placeholder = translateTextValue(original);
+        else el.setAttribute(attr, translateTextValue(original));
+      } else {
+        if (attr === 'placeholder') el.placeholder = original;
+        else el.setAttribute(attr, original);
+      }
+    });
+  });
+}
+
+const v11RenderAll = renderAll;
+renderAll = function() { v11RenderAll(); applyLanguage(); };
+const v11Toast = toast;
+toast = function(message) { v11Toast(getLang() === 'zh' ? translateTextValue(message) : message); };
+const v11RequestEvidence = requestEvidence;
+requestEvidence = function(label) {
+  if (getLang() !== 'zh') return v11RequestEvidence(label);
+  const text = prompt(`完成证明\n\n你实际完成了什么：\n${translateTextValue(label)}\n\n写2–8个词，例如：“完成Q1-Q6” 或 “已带PE衣服”。`);
+  if (!text || !text.trim()) return null;
+  return text.trim().slice(0, 120);
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const enBtn = document.getElementById('langEnBtn');
+  const zhBtn = document.getElementById('langZhBtn');
+  if (enBtn) enBtn.addEventListener('click', () => { setLang('en'); toast('Language set to English'); });
+  if (zhBtn) zhBtn.addEventListener('click', () => { setLang('zh'); toast('语言已切换为中文'); });
+  applyLanguage();
+});

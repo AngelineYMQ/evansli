@@ -1,10 +1,5 @@
-# Evans Study HQ v9
+# Evans Study HQ v11
 
-Navigation layout update.
+Bilingual English / Chinese toggle version.
 
-## Change
-- Keeps the main navigation on one line on desktop/tablet.
-- Reduces nav button size slightly.
-- Allows horizontal scrolling on smaller screens instead of wrapping Progress to the next line.
-
-Upload all four files to the GitHub repository root.
+Upload `index.html`, `style.css`, `script.js`, and `README.md` to the root of the GitHub Pages repository.
