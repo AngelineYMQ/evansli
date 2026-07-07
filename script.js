@@ -223,10 +223,96 @@ const state = {
   score: 0
 };
 
+const CLOUD_SYNC = {
+  enabled: false,
+  ready: false,
+  state: {},
+  student: 'evans',
+  pending: 0,
+  lastError: ''
+};
+
+function cloudKeys() {
+  return Array.from(new Set(Object.values(LS).filter(Boolean)));
+}
+
+function setSyncStatus(text, mode = 'neutral') {
+  const el = document.getElementById('syncStatusPill');
+  if (!el) return;
+  el.textContent = text;
+  el.dataset.mode = mode;
+}
+
+async function initCloudSync() {
+  setSyncStatus('Syncing…');
+  try {
+    const res = await fetch(`/api/state?student=${encodeURIComponent(CLOUD_SYNC.student)}&t=${Date.now()}`, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`Cloud state failed: ${res.status}`);
+    const data = await res.json();
+    CLOUD_SYNC.enabled = true;
+    CLOUD_SYNC.ready = true;
+    CLOUD_SYNC.state = data.state || {};
+
+    // Mirror cloud values into localStorage so the site can still work offline.
+    Object.entries(CLOUD_SYNC.state).forEach(([key, value]) => {
+      try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+    });
+
+    // First-time migration: if the cloud has no value for a key but this browser has one, upload it.
+    for (const key of cloudKeys()) {
+      if (Object.prototype.hasOwnProperty.call(CLOUD_SYNC.state, key)) continue;
+      const raw = localStorage.getItem(key);
+      if (raw == null) continue;
+      try {
+        const value = JSON.parse(raw);
+        CLOUD_SYNC.state[key] = value;
+        cloudSave(key, value);
+      } catch {}
+    }
+    setSyncStatus('Cloud sync on', 'ok');
+  } catch (err) {
+    CLOUD_SYNC.enabled = false;
+    CLOUD_SYNC.ready = true;
+    CLOUD_SYNC.lastError = err?.message || String(err);
+    console.warn('Cloud sync unavailable; using this browser only.', err);
+    setSyncStatus('Local only', 'warn');
+  }
+}
+
+async function cloudSave(key, value) {
+  if (!CLOUD_SYNC.enabled) return;
+  CLOUD_SYNC.pending += 1;
+  setSyncStatus('Saving…');
+  try {
+    const res = await fetch('/api/action', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ student: CLOUD_SYNC.student, key, value })
+    });
+    if (!res.ok) throw new Error(`Cloud save failed: ${res.status}`);
+    setSyncStatus('Saved to cloud', 'ok');
+  } catch (err) {
+    CLOUD_SYNC.lastError = err?.message || String(err);
+    console.warn('Cloud save failed; value kept locally.', err);
+    setSyncStatus('Save failed', 'error');
+  } finally {
+    CLOUD_SYNC.pending = Math.max(0, CLOUD_SYNC.pending - 1);
+  }
+}
+
 function load(key, fallback) {
+  if (CLOUD_SYNC.ready && Object.prototype.hasOwnProperty.call(CLOUD_SYNC.state, key)) {
+    return CLOUD_SYNC.state[key] ?? fallback;
+  }
   try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
 }
-function save(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
+function save(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+  if (CLOUD_SYNC.ready) {
+    CLOUD_SYNC.state[key] = value;
+    cloudSave(key, value);
+  }
+}
 function todayDate() {
   const now = new Date();
   return new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -1417,9 +1503,10 @@ function setupExtraEvents() {
     }
   });
 }
-function init() {
+async function init() {
   setupEvents();
   setupExtraEvents();
+  await initCloudSync();
   markVisit();
   renderAll();
 }

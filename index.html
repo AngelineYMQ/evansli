@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Evans Study HQ v11</title>
+  <title>Evans Study HQ v13 · Cloud Sync</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=12.0" />
+  <link rel="stylesheet" href="style.css?v=13.0" />
 </head>
 <body>
   <div class="app-shell">
@@ -29,9 +29,12 @@
         <button class="nav-btn" data-section="mistakes">Mistake Book</button>
         <button class="nav-btn" data-section="progress">Progress</button>
       </nav>
-      <div class="language-switch" aria-label="Language switch">
-        <button id="langEnBtn" class="lang-btn active" type="button">EN</button>
-        <button id="langZhBtn" class="lang-btn" type="button">中文</button>
+      <div class="header-tools">
+        <div id="syncStatusPill" class="sync-pill" data-mode="neutral">Syncing…</div>
+        <div class="language-switch" aria-label="Language switch">
+          <button id="langEnBtn" class="lang-btn active" type="button">EN</button>
+          <button id="langZhBtn" class="lang-btn" type="button">中文</button>
+        </div>
       </div>
     </header>
 
@@ -489,6 +492,6 @@
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="script.js?v=12.0"></script>
+  <script src="script.js?v=13.0"></script>
 </body>
 </html>
