@@ -515,26 +515,73 @@ function renderWa3Board() {
   }).join('');
 }
 
+function plannerDayName(offset = 0) {
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  return d.toLocaleDateString('en-US', { weekday: 'long' });
+}
+function plannerDayShort(day) {
+  return day.slice(0, 3);
+}
+function renderPlannerTask(task, day, options = {}) {
+  const meta = task.done ? completionMeta('planner', task.id) : '<span class="proof-chip">Proof needed</span>';
+  const typeClass = (task.type || 'Task').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  return `
+    <div class="planner-list-item ${task.done ? 'done' : ''} ${options.compact ? 'compact' : ''}">
+      <input type="checkbox" data-plan-day="${day}" data-plan-id="${task.id}" ${task.done ? 'checked' : ''} aria-label="Complete ${task.text}">
+      <div class="planner-item-main">
+        <div class="planner-item-title">${options.showDay ? `<span class="day-pill">${plannerDayShort(day)}</span>` : ''}<strong>${task.text}</strong></div>
+        <div class="planner-item-meta"><span class="type-dot ${typeClass}">${task.type || 'Task'}</span>${meta}</div>
+      </div>
+      <div class="planner-item-actions">
+        <button data-move-day="${day}" data-move-id="${task.id}">Move</button>
+        <button data-delete-day="${day}" data-delete-id="${task.id}">Delete</button>
+      </div>
+    </div>
+  `;
+}
+function renderPlannerGroup(title, subtitle, tasks, className, emptyText, options = {}) {
+  return `
+    <article class="planner-group ${className || ''}">
+      <div class="planner-group-head">
+        <div>
+          <h3>${title}</h3>
+          ${subtitle ? `<p>${subtitle}</p>` : ''}
+        </div>
+        <span class="group-count">${tasks.length}</span>
+      </div>
+      <div class="planner-list">
+        ${tasks.length ? tasks.map(item => renderPlannerTask(item.task, item.day, options)).join('') : `<div class="empty-small">${emptyText}</div>`}
+      </div>
+    </article>
+  `;
+}
 function renderPlanner() {
   const planner = getPlanner();
-  document.getElementById('plannerGrid').innerHTML = DAYS.map(day => {
-    const tasks = planner[day] || [];
-    return `
-      <article class="planner-day">
-        <h3>${day}</h3>
-        ${tasks.length ? tasks.map(task => `
-          <div class="planner-task ${task.done ? 'done' : ''}">
-            <input type="checkbox" data-plan-day="${day}" data-plan-id="${task.id}" ${task.done ? 'checked' : ''}>
-            <div class="planner-task-text"><strong>${task.text}</strong><span>${task.type || 'Task'}</span>${task.done ? `<em>${completionMeta('planner', task.id)}</em>` : '<em class="proof-missing">Proof needed when completed</em>'}</div>
-            <div class="task-actions">
-              <button data-move-day="${day}" data-move-id="${task.id}">Move to tomorrow</button>
-              <button data-delete-day="${day}" data-delete-id="${task.id}">Delete</button>
-            </div>
-          </div>
-        `).join('') : '<div class="empty-small">No tasks yet. Add homework, revision or packing reminders.</div>'}
-      </article>
-    `;
-  }).join('');
+  const todayName = DAYS.includes(plannerDayName(0)) ? plannerDayName(0) : 'Monday';
+  const tomorrowName = DAYS.includes(plannerDayName(1)) ? plannerDayName(1) : DAYS[(DAYS.indexOf(todayName) + 1) % DAYS.length];
+  const todayTasks = (planner[todayName] || []).map(task => ({ day: todayName, task }));
+  const tomorrowTasks = (planner[tomorrowName] || []).map(task => ({ day: tomorrowName, task }));
+  const laterTasks = DAYS
+    .filter(day => day !== todayName && day !== tomorrowName)
+    .flatMap(day => (planner[day] || []).map(task => ({ day, task })));
+  const allTasks = DAYS.flatMap(day => (planner[day] || []).map(task => ({ day, task })));
+  const doneCount = allTasks.filter(item => item.task.done).length;
+
+  document.getElementById('plannerGrid').innerHTML = `
+    <div class="planner-summary-strip">
+      <div><strong>${doneCount}/${allTasks.length}</strong><span>tasks completed this week</span></div>
+      <div><strong>${todayTasks.length}</strong><span>today</span></div>
+      <div><strong>${tomorrowTasks.length}</strong><span>tomorrow</span></div>
+    </div>
+    <div class="planner-flow">
+      <div class="planner-priority-col">
+        ${renderPlannerGroup(`Today · ${todayName}`, 'Do these first. Tick only after adding quick proof.', todayTasks, 'today-group', 'No tasks for today. Add one small task to get started.')}
+        ${renderPlannerGroup(`Tomorrow · ${tomorrowName}`, 'Prepare early so it does not become last-minute.', tomorrowTasks, 'tomorrow-group', 'No tasks for tomorrow yet.')}
+      </div>
+      ${renderPlannerGroup('Later this week', 'Keep the rest visible, but not overwhelming.', laterTasks, 'later-group', 'No later tasks planned yet.', { showDay: true, compact: true })}
+    </div>
+  `;
 }
 
 function renderRevisionControls() {

@@ -34,3 +34,11 @@ The timetable now auto-calculates the NCHS 10-day cycle using 7 Jul 2026 = Day 7
 - Completion timestamps are shown beside completed WA3 and planner tasks.
 - Progress page now includes a Recent Task Evidence audit trail.
 - Mum Check highlights latest proof and possible burst-ticking behaviour.
+
+
+## v6 update
+
+- Redesigned Weekly Planner into a compact Today / Tomorrow / Later This Week flow.
+- Removed the crowded 7-column planner layout.
+- Kept proof notes, timestamps, Move and Delete actions.
+- Made planner tasks left-aligned and easier to scan on desktop and mobile.
