@@ -3,88 +3,176 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Evans Revision Lab | Sec 1</title>
-  <link rel="stylesheet" href="/style.css?v=6" />
+  <title>Evans Study HQ</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="app">
-    <section class="hero">
-      <div>
-        <p class="pill">EVANS LI'S WEBSITE</p>
-        <h1>Sec 1 Revision Lab</h1>
-        <p class="subtitle">Choose a subject, pick a topic, and practise with random syllabus-style questions.</p>
+  <div class="appShell">
+    <header class="topbar">
+      <div class="brandBlock">
+        <p class="eyebrow">EVANS LI'S WEBSITE</p>
+        <h1>Evans Study HQ</h1>
+        <p class="tagline">Plan today. Finish missions. Get ready for WA3.</p>
       </div>
-      <div class="scoreBox"><span>Round Score</span><strong id="score">0</strong></div>
-    </section>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="navBtn active" data-target="dashboard">Dashboard</button>
+        <button class="navBtn" data-target="wa3">WA3 Board</button>
+        <button class="navBtn" data-target="planner">Weekly Planner</button>
+        <button class="navBtn" data-target="revision">Revision Lab</button>
+        <button class="navBtn" data-target="mistakes">Mistake Book</button>
+        <button class="navBtn" data-target="progress">Progress</button>
+      </nav>
+    </header>
 
-    <section id="home" class="panel active">
-      <h2>Choose a subject</h2>
-      <p class="hint">All uploaded Sec 1-related syllabuses are included, including Humanities and languages.</p>
-      <div class="dashboardActions">
-        <button id="mistakesBtn" class="mainBtn">Review My Mistakes <span id="mistakeCount">0</span></button>
-        <button id="progressBtn" class="mainBtn secondaryMain">Weak Topics & Progress <span id="masteredCount">0</span> mastered</button>
-      </div>
-      <div id="subjectGrid" class="grid"></div>
-    </section>
+    <main>
+      <section id="dashboard" class="view activeView">
+        <div class="dashboardHero">
+          <div>
+            <p class="todayLine" id="todayLine">Today</p>
+            <h2>Hi Evans 👋</h2>
+            <p class="softText">Open this first, check what needs attention, then start one task.</p>
+          </div>
+          <button class="primaryAction" data-target="planner">Plan / update this week</button>
+        </div>
 
-    <section id="topics" class="panel">
-      <button id="homeBtn" class="smallBtn">← Subjects</button>
-      <p id="topicSubjectPill" class="pill">SUBJECT</p>
-      <h2 id="topicSubjectTitle">Subject</h2>
-      <p id="topicSubjectHint" class="hint"></p>
-      <div id="topicGrid" class="grid topicGrid"></div>
-    </section>
+        <div class="summaryGrid">
+          <article class="card compactCard">
+            <div class="cardHead">
+              <h3>Today’s Top 3</h3>
+              <span class="smallBadge">focus</span>
+            </div>
+            <div id="todayTop3" class="taskList"></div>
+            <button class="textBtn" data-target="planner">Edit in Weekly Planner →</button>
+          </article>
 
-    <section id="quiz" class="panel quizPanel">
-      <div class="quizHeader">
-        <button id="topicBackBtn" class="smallBtn">← Topics</button>
-        <p id="subjectLabel" class="pill">SUBJECT</p>
-      </div>
-      <div class="metaRow">
-        <span id="topicLabel">Topic</span>
-        <span id="questionNo">Question 1 / 10</span>
-      </div>
-      <div class="questionBox">
-        <p class="questionLabel">Question</p>
-        <h3 id="questionText">Question text</h3>
-      </div>
-      <p id="feedbackMini" class="instruction">Choose the best answer.</p>
-      <div id="answers" class="answers"></div>
-      <p id="feedback" class="feedback"></p>
-    </section>
+          <article class="card compactCard deadlineCard">
+            <div class="cardHead">
+              <h3>Next Deadline</h3>
+              <span class="smallBadge urgent">urgent</span>
+            </div>
+            <div id="nextDeadline"></div>
+          </article>
 
-    <section id="result" class="panel">
-      <div class="trophy">🏆</div>
-      <p class="pill">ROUND COMPLETE</p>
-      <h2 id="resultTitle">Great work</h2>
-      <p id="resultText" class="hint"></p>
-      <div id="reviewBox" class="review"></div>
-      <button id="againBtn" class="mainBtn">Choose another topic</button>
-    </section>
+          <article class="card compactCard">
+            <div class="cardHead">
+              <h3>WA3 Progress</h3>
+              <span class="smallBadge" id="wa3MiniCount">0/0</span>
+            </div>
+            <div class="progressBar"><div id="wa3ProgressFill"></div></div>
+            <p class="metric" id="wa3Percent">0%</p>
+            <button class="textBtn" data-target="wa3">Open WA3 Board →</button>
+          </article>
+        </div>
 
-    <section id="mistakes" class="panel">
-      <button id="backHomeFromMistakes" class="smallBtn">← Subjects</button>
-      <p class="pill">PRACTICE BOX</p>
-      <h2>Review My Mistakes</h2>
-      <p class="hint">Questions Evans misses are saved here automatically. If he answers a saved mistake correctly twice, it becomes Mastered.</p>
-      <div class="dashboardActions">
-        <button id="startReviewBtn" class="mainBtn">Start Mistake Review</button>
-        <button id="clearMistakesBtn" class="mainBtn dangerMain">Clear Saved Mistakes</button>
-      </div>
-      <div id="mistakeList" class="mistakeList"></div>
-    </section>
+        <section class="quickStart card">
+          <div class="sectionHeader">
+            <div>
+              <p class="eyebrow">QUICK START</p>
+              <h2>What do you need now?</h2>
+            </div>
+          </div>
+          <div class="actionGrid">
+            <button class="actionCard" data-target="wa3"><strong>WA3 Board</strong><span>Tests, projects and submissions</span></button>
+            <button class="actionCard" data-target="planner"><strong>Weekly Planner</strong><span>Homework and revision plan</span></button>
+            <button class="actionCard" data-target="revision"><strong>Revision Lab</strong><span>Practise syllabus-style questions</span></button>
+            <button class="actionCard" data-target="mistakes"><strong>Mistake Book</strong><span>Review what went wrong</span></button>
+            <button class="actionCard" data-target="progress"><strong>Progress</strong><span>Weak topics and mastered items</span></button>
+          </div>
+        </section>
 
-    <section id="progress" class="panel">
-      <button id="backHomeFromProgress" class="smallBtn">← Subjects</button>
-      <p class="pill">LEARNING TRACKER</p>
-      <h2>Weak Topics & Progress</h2>
-      <p class="hint">This page shows which topics need review and which ones Evans has already mastered.</p>
-      <div class="dashboardActions">
-        <button id="startReviewBtn2" class="mainBtn">Review Active Mistakes</button>
-      </div>
-      <div id="progressList" class="progressList"></div>
-    </section>
-  </main>
-  <script src="/script.js?v=6"></script>
+        <div class="twoCol">
+          <section class="card">
+            <div class="sectionHeader">
+              <div><p class="eyebrow">UPCOMING</p><h2>Next 5 Deadlines</h2></div>
+              <button class="smallAction" data-target="wa3">View all</button>
+            </div>
+            <div id="upcomingList" class="deadlineList"></div>
+          </section>
+          <section class="card">
+            <div class="sectionHeader">
+              <div><p class="eyebrow">THIS WEEK</p><h2>Timeline</h2></div>
+              <button class="smallAction" data-target="planner">Edit</button>
+            </div>
+            <div id="weekPreview" class="weekPreview"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="wa3" class="view">
+        <div class="pageTitleRow">
+          <div><p class="eyebrow">WA3 MISSION BOARD</p><h2>Sec 1 Term 3 Weighted Assessment Tracker</h2><p class="softText">Track tests, submissions, presentations and projects. Tick items off when completed.</p></div>
+          <div class="pageMetric"><strong id="wa3FullPercent">0%</strong><span>completed</span></div>
+        </div>
+        <div class="toolRow">
+          <label>Filter <select id="wa3Filter"><option value="all">All subjects</option></select></label>
+          <button id="clearWa3" class="smallAction danger">Reset WA3 ticks</button>
+        </div>
+        <div id="wa3List" class="missionGrid"></div>
+      </section>
+
+      <section id="planner" class="view">
+        <div class="pageTitleRow">
+          <div><p class="eyebrow">WEEKLY PLANNER</p><h2>Homework and Revision Timeline</h2><p class="softText">Keep this simple: add what needs to be done, tick it off, move on.</p></div>
+          <button id="addPlannerTask" class="primaryAction">+ Add task</button>
+        </div>
+        <div id="plannerGrid" class="plannerGrid"></div>
+      </section>
+
+      <section id="revision" class="view">
+        <div class="pageTitleRow">
+          <div><p class="eyebrow">REVISION LAB</p><h2>Practice Questions</h2><p class="softText">Choose a subject and topic. Mistakes will be saved automatically.</p></div>
+          <div class="scoreBox"><span>Round Score</span><strong id="score">0</strong></div>
+        </div>
+        <div id="subjectGrid" class="subjectGrid"></div>
+      </section>
+
+      <section id="topics" class="view">
+        <button class="smallAction" data-target="revision">← Subjects</button>
+        <p id="topicSubjectPill" class="eyebrow">SUBJECT</p>
+        <h2 id="topicSubjectTitle">Subject</h2>
+        <p id="topicSubjectHint" class="softText"></p>
+        <div id="topicGrid" class="subjectGrid topicGrid"></div>
+      </section>
+
+      <section id="quiz" class="view">
+        <div class="quizTop"><button id="topicBackBtn" class="smallAction">← Topics</button><span id="subjectLabel" class="smallBadge">SUBJECT</span><span id="questionNo" class="smallBadge">Question 1 / 10</span></div>
+        <article class="card quizCard">
+          <p id="topicLabel" class="eyebrow">Topic</p>
+          <h2 id="questionText">Question text</h2>
+          <p id="feedbackMini" class="softText">Choose the best answer.</p>
+          <div id="answers" class="answerGrid"></div>
+          <p id="feedback" class="feedback"></p>
+        </article>
+      </section>
+
+      <section id="result" class="view">
+        <article class="card resultCard">
+          <div class="trophy">🏆</div>
+          <p class="eyebrow">ROUND COMPLETE</p>
+          <h2 id="resultTitle">Great work</h2>
+          <p id="resultText" class="softText"></p>
+          <div id="reviewBox" class="reviewBox"></div>
+          <button class="primaryAction" data-target="revision">Choose another topic</button>
+        </article>
+      </section>
+
+      <section id="mistakes" class="view">
+        <div class="pageTitleRow">
+          <div><p class="eyebrow">MISTAKE BOOK</p><h2>Review My Mistakes</h2><p class="softText">If Evans answers a saved mistake correctly twice, it becomes Mastered.</p></div>
+          <div class="toolRow"><button id="startReviewBtn" class="primaryAction">Start Review</button><button id="clearMistakesBtn" class="smallAction danger">Clear</button></div>
+        </div>
+        <div id="mistakeList" class="stackList"></div>
+      </section>
+
+      <section id="progress" class="view">
+        <div class="pageTitleRow">
+          <div><p class="eyebrow">PROGRESS</p><h2>Weak Topics & Mastered Items</h2><p class="softText">See which topics need review and which ones are already mastered.</p></div>
+          <button id="startReviewBtn2" class="primaryAction">Review Active Mistakes</button>
+        </div>
+        <div id="progressList" class="stackList"></div>
+      </section>
+    </main>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
