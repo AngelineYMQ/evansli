@@ -209,7 +209,11 @@ const LS = {
   mastered: 'eshq_v2_mastered',
   history: 'eshq_v2_history',
   streak: 'eshq_v2_streak',
-  cycleDay: 'eshq_v4_cycle_day'
+  cycleDay: 'eshq_v4_cycle_day',
+  audit: 'eshq_v5_audit',
+  evidence: 'eshq_v5_evidence',
+  lastOpen: 'eshq_v5_last_open',
+  previousOpen: 'eshq_v5_previous_open'
 };
 
 const state = {
@@ -247,6 +251,64 @@ function formatLongDate(dateStr) {
   const d = parseDate(dateStr);
   return d.toLocaleDateString('en-SG', { weekday: 'short', day: 'numeric', month: 'short' });
 }
+
+function formatDateTime(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return d.toLocaleString('en-SG', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+}
+function shortTime(iso) {
+  if (!iso) return '';
+  return new Date(iso).toLocaleString('en-SG', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+}
+function markVisit() {
+  const now = new Date().toISOString();
+  const last = load(LS.lastOpen, '');
+  if (last) save(LS.previousOpen, last);
+  save(LS.lastOpen, now);
+}
+function getAudit() { return load(LS.audit, []); }
+function setAudit(list) { save(LS.audit, list.slice(-80)); }
+function getEvidence() { return load(LS.evidence, {}); }
+function setEvidence(obj) { save(LS.evidence, obj); }
+function recordAudit(entry) {
+  const list = getAudit();
+  list.push({ ...entry, ts: new Date().toISOString() });
+  setAudit(list);
+}
+function evidenceKey(type, id) { return `${type}:${id}`; }
+function saveEvidence(type, id, text) {
+  const ev = getEvidence();
+  ev[evidenceKey(type, id)] = { text, ts: new Date().toISOString() };
+  setEvidence(ev);
+}
+function getEvidenceItem(type, id) {
+  return getEvidence()[evidenceKey(type, id)] || null;
+}
+function requestEvidence(label) {
+  const text = prompt(`Quick proof check\n\nWhat did you actually do for:\n${label}\n\nWrite 2–8 words, e.g. "finished Q1-Q6" or "packed PE shirt".`);
+  if (!text || !text.trim()) return null;
+  return text.trim().slice(0, 120);
+}
+function completionMeta(type, id) {
+  const ev = getEvidenceItem(type, id);
+  if (!ev) return '<span class="proof-missing">Proof needed when completed</span>';
+  return `<span class="proof-line">✓ ${ev.text}</span><span class="time-line">Completed ${shortTime(ev.ts)}</span>`;
+}
+function getRecentAudit(limit = 6) {
+  return getAudit().slice().reverse().slice(0, limit);
+}
+function auditWarning() {
+  const recent = getRecentAudit(8);
+  if (!recent.length) return 'No checked tasks yet. Complete one task with proof to start the audit trail.';
+  const last = recent[0];
+  const tenMins = 10 * 60 * 1000;
+  const now = new Date(last.ts).getTime();
+  const burst = recent.filter(a => now - new Date(a.ts).getTime() <= tenMins && a.checked).length;
+  if (burst >= 3) return `Heads up: ${burst} tasks were ticked within 10 minutes. Check the proof if needed.`;
+  return `Latest proof: ${last.label || last.id} · ${shortTime(last.ts)}`;
+}
+
 function getWa3Done() { return load(LS.wa3Done, {}); }
 function setWa3Done(obj) { save(LS.wa3Done, obj); }
 function getWa3Notes() { return load(LS.wa3Notes, {}); }
@@ -313,6 +375,7 @@ function renderDashboard() {
   renderParentSummary();
   renderWeekPreview();
   renderTimetableDashboard();
+  renderAuditStatus();
 }
 
 function renderFocus() {
@@ -396,17 +459,23 @@ function renderParentSummary() {
   const planner = getPlanner();
   const plannerTasks = DAYS.flatMap(day => planner[day] || []);
   const plannerDone = plannerTasks.filter(t => t.done).length;
-  const mistakes = getMistakes();
-  const mastered = getMastered();
-  const history = getHistory();
   const done = getWa3Done();
   const wa3Done = WA3_TASKS.filter(t => done[t.id]).length;
+  const recent = getRecentAudit(1)[0];
+  const prevOpen = load(LS.previousOpen, '');
   document.getElementById('parentSummary').innerHTML = `
     <div class="summary-tile"><strong>${wa3Done}/${WA3_TASKS.length}</strong><span>WA3 completed</span></div>
     <div class="summary-tile"><strong>${plannerDone}/${plannerTasks.length}</strong><span>weekly tasks done</span></div>
-    <div class="summary-tile"><strong>${history.length}</strong><span>practice rounds</span></div>
-    <div class="summary-tile"><strong>${mastered.length}/${mistakes.length + mastered.length}</strong><span>mistakes mastered</span></div>
+    <div class="summary-tile"><strong>${prevOpen ? shortTime(prevOpen) : 'First visit'}</strong><span>previous open</span></div>
+    <div class="summary-tile"><strong>${recent ? shortTime(recent.ts) : 'No proof yet'}</strong><span>latest task proof</span></div>
   `;
+  const nudge = document.getElementById('auditNudge');
+  if (nudge) nudge.textContent = auditWarning();
+}
+
+function renderAuditStatus() {
+  const pill = document.getElementById('lastOpenedPill');
+  if (pill) pill.textContent = `Last opened: ${formatDateTime(load(LS.lastOpen, ''))}`;
 }
 
 function renderWeekPreview() {
@@ -436,6 +505,7 @@ function renderWa3Board() {
           <label class="done-toggle"><input type="checkbox" data-wa3-id="${t.id}" ${done[t.id] ? 'checked' : ''}>Done</label>
         </div>
         <div class="wa3-meta" style="margin-top:10px;">${t.detail}</div>
+        <div class="completion-meta">${done[t.id] ? completionMeta('wa3', t.id) : '<span class="proof-missing">When done, Evans must add quick proof.</span>'}</div>
         <details class="notes-box" ${notes[t.id] ? 'open' : ''}>
           <summary>Notes / things to remember</summary>
           <textarea data-note-id="${t.id}" placeholder="Add teacher instructions, materials to bring, links, or reminders...">${notes[t.id] || ''}</textarea>
@@ -455,7 +525,7 @@ function renderPlanner() {
         ${tasks.length ? tasks.map(task => `
           <div class="planner-task ${task.done ? 'done' : ''}">
             <input type="checkbox" data-plan-day="${day}" data-plan-id="${task.id}" ${task.done ? 'checked' : ''}>
-            <div class="planner-task-text"><strong>${task.text}</strong><span>${task.type || 'Task'}</span></div>
+            <div class="planner-task-text"><strong>${task.text}</strong><span>${task.type || 'Task'}</span>${task.done ? `<em>${completionMeta('planner', task.id)}</em>` : '<em class="proof-missing">Proof needed when completed</em>'}</div>
             <div class="task-actions">
               <button data-move-day="${day}" data-move-id="${task.id}">Move to tomorrow</button>
               <button data-delete-day="${day}" data-delete-id="${task.id}">Delete</button>
@@ -610,7 +680,15 @@ function renderProgress() {
     <article class="progress-panel"><h3>Task Progress</h3><div class="metric"><span>WA3 completed</span><strong>${wa3Done}/${WA3_TASKS.length}</strong></div><div class="metric"><span>Weekly tasks done</span><strong>${plannerDone}/${plannerTasks.length}</strong></div><div class="metric"><span>Next deadline</span><strong>${getUpcomingIncomplete()[0] ? formatDate(getUpcomingIncomplete()[0].date) : 'Done'}</strong></div></article>
     <article class="progress-panel"><h3>Practice Progress</h3><div class="metric"><span>Practice rounds</span><strong>${history.length}</strong></div><div class="metric"><span>Last score</span><strong>${history.length ? `${history[history.length-1].score}/${history[history.length-1].total}` : '—'}</strong></div>${subjectRows}</article>
     <article class="progress-panel"><h3>Mistake Review</h3><div class="metric"><span>Active mistakes</span><strong>${mistakes.length}</strong></div><div class="metric"><span>Mastered mistakes</span><strong>${mastered.length}</strong></div><p class="helper-text">To unlock more progress: complete one WA3 task, finish one Revision Lab round, and review one mistake.</p></article>
+    <article class="progress-panel"><h3>Usage Check</h3><div class="metric"><span>Last opened</span><strong>${shortTime(load(LS.lastOpen, '')) || '—'}</strong></div><div class="metric"><span>Recent proof records</span><strong>${getAudit().length}</strong></div><p class="helper-text">Self-check tasks now require a short proof note and store a timestamp.</p></article>
   `;
+  const auditList = document.getElementById('auditLogList');
+  if (auditList) {
+    const recent = getRecentAudit(10);
+    auditList.innerHTML = recent.length ? recent.map(a => `
+      <div class="audit-row"><strong>${a.label || a.id}</strong><span>${a.checked ? 'Completed' : 'Reopened'} · ${shortTime(a.ts)}</span>${a.evidence ? `<em>${a.evidence}</em>` : ''}</div>
+    `).join('') : '<div class="empty-small">No proof records yet. Complete one WA3 or Planner task to start.</div>';
+  }
 }
 
 
@@ -762,24 +840,41 @@ function setupEvents() {
   document.addEventListener('change', e => {
     if (e.target.matches('[data-focus-id]')) {
       const done = load(LS.focusDone, {});
+      const task = getFocusTasks().find(t => t.id === e.target.dataset.focusId);
       done[e.target.dataset.focusId] = e.target.checked;
       save(LS.focusDone, done);
+      recordAudit({ type: 'focus', id: e.target.dataset.focusId, label: task?.text || 'Focus task', checked: e.target.checked });
       toast(e.target.checked ? 'Focus task done' : 'Focus task reopened');
       renderAll();
     }
     if (e.target.matches('[data-wa3-id]')) {
       const done = getWa3Done();
+      const task = WA3_TASKS.find(t => t.id === e.target.dataset.wa3Id);
+      let proof = '';
+      if (e.target.checked) {
+        proof = requestEvidence(task ? `${task.subject} — ${task.title}` : 'WA3 task');
+        if (!proof) { e.target.checked = false; toast('Add quick proof before ticking done'); return; }
+        saveEvidence('wa3', e.target.dataset.wa3Id, proof);
+      }
       done[e.target.dataset.wa3Id] = e.target.checked;
       setWa3Done(done);
-      toast(e.target.checked ? 'WA3 mission completed' : 'WA3 mission reopened');
+      recordAudit({ type: 'wa3', id: e.target.dataset.wa3Id, label: task ? `${task.subject}: ${task.title}` : 'WA3 task', checked: e.target.checked, evidence: proof });
+      toast(e.target.checked ? 'WA3 mission completed with proof' : 'WA3 mission reopened');
       renderAll();
     }
     if (e.target.matches('[data-plan-id]')) {
       const planner = getPlanner();
       const task = planner[e.target.dataset.planDay].find(t => t.id === e.target.dataset.planId);
+      let proof = '';
+      if (task && e.target.checked) {
+        proof = requestEvidence(task.text);
+        if (!proof) { e.target.checked = false; toast('Add quick proof before ticking done'); return; }
+        saveEvidence('planner', task.id, proof);
+      }
       if (task) task.done = e.target.checked;
       setPlanner(planner);
-      toast(e.target.checked ? 'Task completed' : 'Task reopened');
+      recordAudit({ type: 'planner', id: e.target.dataset.planId, label: task?.text || 'Planner task', checked: e.target.checked, evidence: proof });
+      toast(e.target.checked ? 'Task completed with proof' : 'Task reopened');
       renderAll();
     }
     if (e.target.id === 'subjectSelect') renderTopicOptions();
@@ -889,6 +984,7 @@ function removeMistake(id) {
 
 function init() {
   setupEvents();
+  markVisit();
   renderAll();
 }
 

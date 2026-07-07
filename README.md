@@ -26,3 +26,11 @@ Then commit and push to GitHub Pages.
 ## v4 cycle update
 
 The timetable now auto-calculates the NCHS 10-day cycle using 7 Jul 2026 = Day 7 and skips weekends. A manual override and Use auto button are included.
+
+
+## v5 Verification Update
+- Added Last Opened tracking on the dashboard.
+- WA3 Board and Weekly Planner now require a short proof note before a task can be ticked done.
+- Completion timestamps are shown beside completed WA3 and planner tasks.
+- Progress page now includes a Recent Task Evidence audit trail.
+- Mum Check highlights latest proof and possible burst-ticking behaviour.

@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Evans Study HQ</title>
+  <title>Evans Study HQ v5</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=4.0" />
+  <link rel="stylesheet" href="style.css?v=5.0" />
 </head>
 <body>
   <div class="app-shell">
@@ -38,7 +38,10 @@
             <h2>Hi Evans 👋</h2>
             <p class="muted">Check today’s mission, finish one task, then practise or review mistakes.</p>
           </div>
-          <button id="startMissionBtn" class="primary-action">Start Today’s Mission</button>
+          <div class="hero-actions">
+            <button id="startMissionBtn" class="primary-action">Start Today’s Mission</button>
+            <div class="last-opened-pill" id="lastOpenedPill">Last opened: —</div>
+          </div>
         </div>
 
         <div class="dashboard-grid three-cols">
@@ -112,11 +115,12 @@
           <section class="card">
             <div class="section-title-row">
               <div>
-                <p class="eyebrow">Parent Summary</p>
-                <h3>This Week at a Glance</h3>
+                <p class="eyebrow">Mum Check</p>
+                <h3>Proof & Activity</h3>
               </div>
             </div>
             <div id="parentSummary" class="summary-grid"></div>
+            <div id="auditNudge" class="audit-nudge"></div>
           </section>
         </div>
 
@@ -316,6 +320,15 @@
           </div>
         </div>
         <div id="progressDashboard" class="progress-dashboard"></div>
+        <div class="card audit-log-card">
+          <div class="section-title-row">
+            <div>
+              <p class="eyebrow">Audit trail</p>
+              <h3>Recent Task Evidence</h3>
+            </div>
+          </div>
+          <div id="auditLogList" class="audit-log-list"></div>
+        </div>
       </section>
     </main>
   </div>
@@ -342,6 +355,6 @@
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="script.js?v=4.0"></script>
+  <script src="script.js?v=5.0"></script>
 </body>
 </html>
