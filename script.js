@@ -1,150 +1,644 @@
-const DATA = {"math": {"name": "Mathematics", "tagline": "Numbers, algebra, geometry, statistics and probability", "topics": {"Numbers & Ratio": [["A value increases from 80 to 100. What is the percentage increase?", "25%", ["20%", "30%", "40%"]], ["Share $72 in the ratio 5:7. What is the larger share?", "$42", ["$30", "$36", "$48"]], ["Write 0.00056 in standard form.", "5.6 × 10⁻⁴", ["5.6 × 10⁻³", "56 × 10⁻⁵", "0.56 × 10⁻³"]], ["Simplify: a³ × a⁵", "a⁸", ["a¹⁵", "2a⁸", "a²"]], ["A cyclist travels 24 km in 1.5 h. Find the speed.", "16 km/h", ["12 km/h", "18 km/h", "24 km/h"]]], "Algebra": [["Simplify: 3x + 5x - 2x", "6x", ["8x", "10x", "6x²"]], ["Expand: 4(2x - 3)", "8x - 12", ["8x - 3", "6x - 12", "8x + 12"]], ["Factorise: 6x + 9", "3(2x + 3)", ["6(x + 3)", "9(x + 1)", "3(2x + 9)"]], ["Solve: 5x - 7 = 18", "5", ["3", "4", "6"]], ["Solve: 2x + 3 > 11", "x > 4", ["x < 4", "x > 7", "x < 7"]]], "Functions & Graphs": [["For y = 3x - 2, find y when x = 5.", "13", ["11", "15", "17"]], ["What is the gradient of the line y = 4x + 7?", "4", ["7", "11", "-4"]], ["Which point lies on y = 2x + 1?", "(2, 5)", ["(1, 2)", "(3, 5)", "(4, 7)"]], ["The graph y = x² - 4 cuts the y-axis at which point?", "(0, -4)", ["(0, 4)", "(-4, 0)", "(4, 0)"]], ["Distance between (0,0) and (3,4) is:", "5", ["3", "4", "7"]]], "Geometry & Measurement": [["Angles on a straight line add up to:", "180°", ["90°", "270°", "360°"]], ["Each interior angle of a regular hexagon is:", "120°", ["90°", "108°", "135°"]], ["A right triangle has shorter sides 6 cm and 8 cm. Find the hypotenuse.", "10 cm", ["12 cm", "14 cm", "16 cm"]], ["Two similar figures have scale factor 3. Their area ratio is:", "1:9", ["1:3", "1:6", "3:1"]], ["Volume of a cylinder is:", "πr²h", ["2πrh", "πrh²", "4/3πr³"]]], "Statistics & Probability": [["The mean of 2, 4, 6, 8 is:", "5", ["4", "6", "7"]], ["Which measure is most affected by an extreme outlier?", "Mean", ["Median", "Mode", "Range only"]], ["A fair die is rolled. Probability of getting an even number is:", "1/2", ["1/6", "1/3", "2/3"]], ["Two fair coins are tossed. Probability of two heads is:", "1/4", ["1/2", "1/3", "1/8"]], ["If A = {1,2,3} and B = {3,4}, what is A ∩ B?", "{3}", ["{1,2}", "{1,2,3,4}", "∅"]]]}}, "science": {"name": "Science", "tagline": "Scientific endeavour, diversity, models, interactions and systems", "topics": {"Scientific Endeavour": [["Which attitude means checking ideas using evidence instead of guessing?", "Objectivity", ["Creativity", "Speed", "Volume"]], ["A fair test should change:", "only one variable at a time", ["all variables at once", "no variables", "the result after recording"]], ["A hypothesis is best described as:", "a testable explanation", ["a final proven fact", "a random guess", "a measurement unit"]], ["Why should scientists repeat experiments?", "To improve reliability", ["To make results look nicer", "To avoid data", "To change the hypothesis"]], ["Which value means reporting results honestly?", "Integrity", ["Pitch", "Texture", "Discount"]]], "Diversity of Matter": [["Which property is best used to separate iron filings from sand?", "Magnetic attraction", ["Evaporation", "Distillation", "Chromatography"]], ["Which separation method is suitable for separating an insoluble solid from a liquid?", "Filtration", ["Melting", "Freezing", "Condensation"]], ["Which technique can separate coloured dyes in ink?", "Paper chromatography", ["Magnetism", "Decanting", "Boiling"]], ["A pure substance has:", "a fixed composition", ["many random components", "no particles", "no melting point"]], ["Which is a chemical change?", "Burning paper", ["Melting ice", "Boiling water", "Dissolving sugar"]]], "Models & Cells": [["Which structure controls what enters and leaves a cell?", "Cell membrane", ["Cell wall", "Nucleus", "Vacuole"]], ["Which cell structure contains genetic material?", "Nucleus", ["Cytoplasm", "Cell wall", "Chloroplast"]], ["A model is useful because it helps us:", "represent and explain ideas", ["avoid evidence", "replace all experiments", "make facts disappear"]], ["Which is found in plant cells but not animal cells?", "Cell wall", ["Cell membrane", "Cytoplasm", "Nucleus"]], ["The cytoplasm is where many cell activities:", "take place", ["are erased", "become solid", "stop forever"]]], "Interactions": [["Which gas is needed for burning?", "Oxygen", ["Carbon dioxide", "Nitrogen", "Hydrogen"]], ["A force can change an object's:", "motion or shape", ["mass only", "colour only", "name only"]], ["What is the SI unit of force?", "Newton", ["Joule", "Watt", "Pascal"]], ["Friction usually acts:", "opposite to motion", ["with gravity only", "in the same direction always", "only upward"]], ["A magnet attracts:", "iron", ["plastic", "wood", "glass"]]], "Systems & Energy": [["Which organ system mainly transports oxygen around the body?", "Circulatory system", ["Digestive system", "Skeletal system", "Nervous system"]], ["Energy cannot be created or destroyed. It can only be:", "converted from one form to another", ["lost forever", "made from nothing", "measured only in grams"]], ["Which system breaks down food?", "Digestive system", ["Respiratory system", "Muscular system", "Reproductive system"]], ["Which energy store is linked to height above ground?", "Gravitational potential energy", ["Chemical energy", "Sound energy", "Thermal energy only"]], ["In a food chain, arrows show:", "direction of energy transfer", ["the largest animal", "where water flows", "the oldest organism"]]]}}, "english": {"name": "English Language", "tagline": "Grammar, vocabulary, reading, writing and multiliteracies", "topics": {"Grammar": [["Choose the correct sentence.", "Neither of the boys is ready.", ["Neither of the boys are ready.", "Neither the boys is ready.", "Neither boys is ready."]], ["Which word is an adverb in: She spoke softly.", "softly", ["She", "spoke", "the sentence has no adverb"]], ["Choose the correct verb: The list of items ___ on the table.", "is", ["are", "were", "be"]], ["Which sentence uses the correct tense?", "Evans has completed his homework.", ["Evans have completed his homework.", "Evans completed has his homework.", "Evans completing his homework."]], ["Which is a conjunction?", "although", ["quickly", "blue", "table"]]], "Vocabulary": [["Which word is closest in meaning to 'evaluate'?", "assess", ["ignore", "decorate", "repeat"]], ["Which word means 'able to change to suit new conditions'?", "adaptable", ["fragile", "ordinary", "visible"]], ["Which word is closest to 'credible'?", "trustworthy", ["colourful", "silent", "temporary"]], ["Which word is opposite of 'scarce'?", "abundant", ["rare", "limited", "insufficient"]], ["Which phrase means 'to support with evidence'?", "substantiate", ["contradict", "decorate", "interrupt"]]], "Reading & Viewing": [["The main idea of a paragraph is usually:", "the central point", ["a random detail", "the longest word", "the final punctuation mark"]], ["An inference is:", "a conclusion based on clues", ["a copied sentence", "a spelling rule", "a title"]], ["Tone means:", "the writer's attitude or feeling", ["the number of words", "the page size", "the font colour"]], ["A visual text may use images, layout and colour to:", "create meaning", ["remove meaning", "avoid communication", "replace all language"]], ["A fact is different from an opinion because a fact can be:", "verified", ["felt only", "always emotional", "never checked"]]], "Writing": [["A formal email should usually begin with:", "Dear Sir/Madam,", ["Yo,", "Hey bro,", "What's up?"]], ["A good summary should be:", "concise and focused on key points", ["longer than the original", "full of personal opinions", "only copied phrases"]], ["A persuasive essay aims to:", "convince the reader", ["list random words", "avoid a viewpoint", "describe only colours"]], ["A topic sentence usually introduces:", "the main idea of a paragraph", ["the page number", "the author's age", "the font used"]], ["Using paragraphing helps the reader follow:", "organised ideas", ["spelling errors", "random jumps", "unrelated facts"]]], "Editing": [["Which sentence uses punctuation correctly?", "After school, Evans revised his notes.", ["After school Evans, revised his notes.", "After, school Evans revised his notes.", "After school Evans revised, his notes."]], ["Which sentence is more concise?", "The test was difficult.", ["The test was of a difficult nature.", "It was a test and it was difficult.", "The test, which was a test, was difficult."]], ["Which word best replaces 'very big'?", "huge", ["tiny", "slow", "weak"]], ["Which sentence avoids repetition?", "Cyrus enjoyed the game because it was exciting.", ["Cyrus enjoyed the game because the game was exciting.", "Cyrus enjoyed because game exciting.", "Game Cyrus enjoyed game exciting."]], ["Which is the correct spelling?", "necessary", ["neccessary", "necessery", "necesary"]]]}}, "fce": {"name": "Food & Consumer Education", "tagline": "Nutrition, food safety, cooking and consumer choices", "topics": {"Nutrition & Health": [["Which nutrient is the body's main source of energy?", "Carbohydrate", ["Vitamin C", "Calcium", "Water"]], ["Protein is important mainly for:", "growth and repair", ["keeping food cold", "making food sweet", "removing bacteria"]], ["Too much sugar intake may increase the risk of:", "diet-related health problems", ["stronger bones only", "better eyesight only", "more sleep only"]], ["My Healthy Plate encourages eating more:", "fruit and vegetables", ["fried snacks", "sugary drinks", "processed meat only"]], ["Calcium is important for:", "strong bones and teeth", ["food colour", "sweetness", "washing hands"]]], "Meal Planning": [["A balanced meal should include:", "a variety of food groups", ["only fried food", "only sweet drinks", "only snacks"]], ["Meal planning should consider:", "dietary needs and budget", ["packaging colour only", "advertisement only", "random choices"]], ["A healthier cooking method is:", "steaming", ["deep-frying daily", "burning food", "adding excessive oil"]], ["Modifying a meal means:", "making changes to better meet needs", ["throwing it away", "removing all nutrients", "ignoring the eater"]], ["A target group could refer to:", "people with specific needs", ["only one brand", "a cooking pot", "a receipt"]]], "Food Safety": [["Which practice reduces the risk of food poisoning?", "Wash hands before handling food", ["Leave cooked food overnight", "Use same board for raw chicken and salad", "Taste expired food"]], ["Perishable food should usually be stored:", "in the refrigerator", ["under the sun", "beside cleaning chemicals", "open on the table"]], ["Raw and cooked food should be kept separate to prevent:", "cross-contamination", ["evaporation", "interest rates", "tone colour"]], ["The danger zone for bacterial growth is linked to:", "unsafe food temperatures", ["musical pitch", "visual rhythm", "algebra"]], ["Before using canned food, check for:", "expiry date and dents", ["font style only", "price only", "colour only"]]], "Consumer Literacy": [["A product label can help consumers check:", "nutrition and ingredients", ["only the cashier's name", "the weather", "the shop music"]], ["A need is different from a want because a need is:", "essential", ["always expensive", "always fun", "optional"]], ["A budget helps a person:", "manage money and spending", ["spend without thinking", "avoid saving", "buy everything online"]], ["Using credit responsibly means:", "borrowing only what can be repaid", ["borrowing without limits", "ignoring bills", "sharing passwords"]], ["A discerning consumer should compare products by:", "reading labels and checking needs", ["choosing only bright packaging", "buying most expensive item", "ignoring price"]]], "Sustainability & Food Culture": [["Which choice supports sustainable consumption?", "Reduce food waste", ["Throw away leftovers immediately", "Buy more than needed", "Avoid planning meals"]], ["Food culture refers to:", "food practices linked to people and traditions", ["only food prices", "only kitchen tools", "only spelling"]], ["Choosing seasonal or local produce may help:", "reduce environmental impact", ["increase waste always", "remove nutrition", "avoid budgeting"]], ["A reusable container helps reduce:", "single-use waste", ["food safety", "nutrients", "savings"]], ["Appreciating Singapore's food culture means respecting:", "diverse food traditions", ["only one cuisine", "only imported food", "only fast food"]]]}}, "art": {"name": "Art", "tagline": "Visual qualities, art forms, media, processes and context", "topics": {"Visual Qualities": [["Which is a visual element in art?", "Line", ["Boiling", "Gravity", "Adverb"]], ["Warm colours include:", "red and orange", ["blue and green", "black and white", "grey and silver only"]], ["Texture in art refers to:", "surface quality", ["food temperature", "grammar tense", "musical speed"]], ["Contrast helps to:", "create visual difference", ["remove all focus", "make everything identical", "replace meaning"]], ["Composition refers to:", "how visual elements are arranged", ["how food is cooked", "how force is measured", "how words rhyme only"]]], "Art Forms & Media": [["A sculpture is usually:", "three-dimensional", ["only a paragraph", "always a sound", "only a flat graph"]], ["Watercolour is an example of:", "a painting medium", ["a musical instrument", "a food nutrient", "a grammar rule"]], ["Digital art uses:", "digital tools or technology", ["only clay", "only boiling", "only algebra"]], ["A collage is made by:", "combining different materials or images", ["measuring speed", "cooking rice", "writing equations only"]], ["Printmaking often involves:", "transferring an image from a surface", ["storing food", "singing a melody", "solving for x"]]], "Artistic Processes": [["Ideation means:", "generating and developing ideas", ["cleaning brushes only", "copying answers", "framing a work only"]], ["Close observation helps an artist:", "notice details", ["avoid looking", "remove meaning", "stop improving"]], ["An art portfolio usually shows:", "process and development", ["only final exam marks", "only lunch choices", "only equations"]], ["Experimenting with media helps artists:", "explore possibilities", ["avoid creativity", "remove all choices", "skip thinking"]], ["Reflecting on artwork helps students:", "improve and explain choices", ["hide mistakes", "avoid feedback", "stop experimenting"]]], "Context & Meaning": [["Art can help students connect with:", "society and culture", ["only multiplication", "only food labels", "only cell walls"]], ["Context in art helps us understand:", "meaning and background", ["only the price", "only the size", "only the spelling"]], ["Art can communicate:", "ideas, values and emotions", ["only numbers", "only nutrients", "only force units"]], ["An informed audience tries to:", "interpret artwork thoughtfully", ["ignore evidence", "avoid looking", "guess only price"]], ["Cultural context can shape:", "how art is made and understood", ["only paper size", "only spelling", "only calculator use"]]]}}, "music": {"name": "Music", "tagline": "Listening, creating, performing and musical elements", "topics": {"Listening": [["Listening in music involves identifying:", "musical elements and meaning", ["only spelling errors", "only food labels", "only angles"]], ["A listener can describe music by noticing:", "tempo, pitch and dynamics", ["discounts only", "cell walls only", "grammar only"]], ["Music can evoke:", "feelings and emotions", ["only numbers", "only food labels", "only force units"]], ["Critical listening means:", "listening carefully and making thoughtful comments", ["ignoring sound", "guessing randomly", "copying only"]], ["A repeated musical idea may be called:", "a motif", ["a receipt", "a polygon", "a nutrient"]]], "Creating": [["Creating music can include:", "composing or arranging sounds", ["boiling water", "solving equations only", "drawing polygons only"]], ["A composer uses musical elements to:", "communicate ideas or feelings", ["make food safer", "measure area only", "avoid expression"]], ["Improvisation means:", "creating music spontaneously", ["copying silently", "freezing sound", "reading a food label"]], ["A good musical idea can be developed by:", "repetition and variation", ["removing all rhythm", "avoiding listening", "using only silence"]], ["When creating music in a group, students should:", "collaborate and listen to one another", ["ignore others", "play louder always", "avoid feedback"]]], "Performing": [["Performing music usually involves:", "presenting music to an audience", ["separating mixtures", "writing a receipt", "measuring temperature"]], ["Playing in an ensemble develops:", "collaboration", ["food poisoning", "evaporation", "punctuation only"]], ["A performer should consider:", "accuracy and expression", ["food expiry dates only", "GST only", "cell membranes only"]], ["Practice helps a performer build:", "confidence and fluency", ["random errors", "less control", "no rhythm"]], ["Stage presence refers to:", "how a performer presents themselves", ["how to calculate mean", "how to store meat", "how to draw a graph only"]]], "Musical Elements": [["Which is a musical element?", "Rhythm", ["Protein", "Gradient", "Chromatography"]], ["Pitch refers to:", "how high or low a sound is", ["how heavy a sound is", "how spicy a sound is", "how square a sound is"]], ["Tempo means:", "speed of music", ["colour of music", "height of music", "food safety rule"]], ["Dynamics refer to:", "loudness or softness", ["area and perimeter", "nutrients", "visual symmetry"]], ["Timbre refers to:", "tone colour or sound quality", ["GST", "cell division", "punctuation"]]], "Context & Culture": [["Music can help people understand:", "local and global cultures", ["only multiplication", "only discounts", "only cell membranes"]], ["Music is shaped by:", "historical, social and cultural contexts", ["only calculator brands", "only food prices", "only grammar rules"]], ["Knowing the context of music can affect:", "how it is experienced and understood", ["its boiling point", "its angle sum", "its spelling only"]], ["Music can build community by:", "connecting people through shared experiences", ["removing teamwork", "stopping communication", "avoiding culture"]], ["After a performance, reflection helps students:", "improve musical decisions", ["avoid listening", "remove rhythm", "ignore feedback"]]]}}, "history": {"name": "History", "tagline": "Historical concepts, inquiry, sources and Singapore's past", "topics": {"Historical Concepts": [["Chronology in History refers to:", "putting events in time order", ["guessing why people acted", "drawing a map", "writing only opinions"]], ["Historical evidence is usually derived from:", "historical sources", ["random guesses", "modern advertisements only", "personal feelings only"]], ["Causation in History helps us understand:", "why and how events happened", ["the colour of old books", "only exact dates", "only geography maps"]], ["Change and continuity means studying:", "what changed and what stayed the same over time", ["only what happened yesterday", "only one person's opinion", "only future events"]], ["Historical significance asks:", "why an event, person or idea mattered", ["how heavy a source is", "how many pages a textbook has", "whether a picture is colourful"]]], "Source Skills": [["When examining a source, historians should consider its origin, nature, purpose and:", "content", ["font size", "price", "weather"]], ["A biased source is one that may:", "show a particular point of view", ["be automatically useless", "have no words", "always be from the future"]], ["Corroboration means:", "checking one source against other sources", ["copying one source exactly", "ignoring evidence", "changing the date"]], ["A source's purpose refers to:", "why it was created", ["how expensive it is", "how long it is", "where it is stored only"]], ["A reliable historical answer should be supported by:", "evidence", ["guesswork", "the longest paragraph only", "a random picture"]]], "Historical Inquiry": [["Historical inquiry begins with:", "asking useful questions", ["memorising every word", "drawing only cartoons", "ignoring sources"]], ["A good historical question should be:", "focused and investigable", ["impossible to answer", "unrelated to the past", "based only on feelings"]], ["A reasoned historical interpretation should be:", "based on substantiated arguments", ["based on the loudest opinion", "copied from one sentence", "without evidence"]], ["Historical empathy means:", "understanding people in the context of their time", ["judging the past only by today's norms", "agreeing with everyone", "pretending sources are fake"]], ["A balanced answer should:", "consider different viewpoints", ["use only one viewpoint", "avoid all evidence", "ignore the question"]]], "Singapore's Past": [["Lower Secondary History studies Singapore's past in relation to:", "regional and global forces", ["only sports results", "only weather", "only modern shopping malls"]], ["Singapore's past helps students understand:", "how the present was shaped", ["why exams are cancelled", "how to cook rice", "only future inventions"]], ["The study of Singapore history includes shifts in:", "political status", ["musical pitch", "cell structure", "food labels"]], ["Understanding past challenges helps citizens:", "make connections between past and present", ["avoid civic responsibility", "ignore national identity", "forget evidence"]], ["National Education in History helps students understand Singapore's:", "journey and context", ["shopping discounts", "restaurant menus", "music tempo"]]]}}, "geography": {"name": "Geography", "tagline": "Space, place, environment, scale and sustainable resource use", "topics": {"Introduction to Geography": [["Geography studies phenomena in:", "physical and built environments", ["only grammar", "only music", "only food recipes"]], ["Space in Geography refers to:", "a physical area on Earth's surface", ["a paragraph", "a musical note", "a cooking method"]], ["Place refers to an area that has:", "meaning to people", ["only numbers", "only punctuation", "only mass"]], ["Scale can refer to local, national, regional and:", "global levels", ["musical levels", "grammar levels", "kitchen levels"]], ["Geographers often use maps to study:", "location and patterns", ["sentence tense only", "food nutrients only", "historical empathy only"]]], "Geographical Inquiry": [["Interpreting geographical data helps students recognise:", "patterns and relationships", ["only punctuation", "only melody", "only cell walls"]], ["Geographical inquiry starts by posing:", "geographical questions", ["random answers", "only recipes", "only spelling lists"]], ["Fieldwork helps geographers collect:", "primary data", ["fictional characters", "musical rhythm", "grammar rules"]], ["GIS stands for:", "Geographic Information Systems", ["General Internet Score", "Global Instrument Sound", "Graphical Ink Style"]], ["A geographical investigation should be based on:", "evidence and data", ["guessing only", "copying blindly", "ignoring places"]]], "Water": [["Water is considered a natural resource because people:", "depend on it for life and activities", ["use it only for art", "cannot measure it", "do not need it"]], ["One strategy to improve water quality is:", "anti-pollution laws", ["adding more waste", "using more plastic", "ignoring rivers"]], ["Desalination refers to:", "removing salt from seawater", ["freezing land", "cutting forests", "building roads only"]], ["Water conservation aims to:", "reduce water consumption", ["increase wastage", "pollute reservoirs", "remove all technology"]], ["Importing water may involve:", "international agreements", ["musical performances", "food labels", "grammar tests"]]], "Tropical Rainforests & Mangroves": [["Tropical rainforests are important because they support:", "biodiversity", ["only traffic", "only grammar", "only shopping"]], ["Mangroves are commonly found in:", "coastal environments", ["deserts only", "mountaintops only", "indoor classrooms only"]], ["Deforestation can lead to:", "habitat loss", ["more forest cover immediately", "less erosion always", "more biodiversity always"]], ["Sustainable forest management aims to balance human needs and:", "environmental protection", ["food packaging", "music tempo", "punctuation"]], ["Mangroves can help protect coasts by:", "reducing wave energy", ["increasing storm damage", "removing all animals", "creating deserts"]]], "Housing & Transport": [["Built environment refers to places:", "constructed and managed by people", ["formed only by natural processes", "without human activity", "only in forests"]], ["A sustainable city should consider:", "people, environment and resources", ["only car speed", "only building height", "only shopping choices"]], ["Public transport can help reduce:", "traffic congestion and emissions", ["all walking", "all maps", "all weather"]], ["Housing is a geographical issue because it involves:", "land use and people's needs", ["only spelling", "only musical pitch", "only cell membranes"]], ["Transport systems connect people to:", "places and opportunities", ["grammar only", "food storage only", "historical dates only"]]]}}, "socialstudies": {"name": "Social Studies / Humanities", "tagline": "Citizenship, real-world issues, perspectives and humanities exposure", "topics": {"Citizenship": [["Social Studies aims to develop students as informed, concerned and:", "participative citizens", ["silent citizens", "random citizens", "uninterested citizens"]], ["A concerned citizen should show care for:", "society and the world", ["only test scores", "only fashion", "only phone games"]], ["Responsible decision-making means considering:", "consequences and different perspectives", ["only personal benefit", "only speed", "only rumours"]], ["Civic identity is connected to:", "belonging and responsibility", ["food labels", "musical tempo", "cell walls"]], ["An active contributor should be willing to:", "take responsible action", ["avoid all issues", "ignore others", "refuse teamwork"]]], "Real-world Issues": [["An inquiry into real-world issues should begin with:", "questions", ["answers first", "random drawings", "ignoring evidence"]], ["A complex issue usually has:", "multiple perspectives", ["only one simple answer", "no evidence", "no stakeholders"]], ["To understand an issue well, students should evaluate:", "different sources", ["only one rumour", "the shortest sentence", "font colour only"]], ["Reflective thinking helps students:", "make more considered decisions", ["avoid responsibility", "ignore feedback", "guess quickly"]], ["A well-reasoned response should be supported by:", "evidence and explanation", ["volume", "rhythm", "random emotion only"]]], "Environment & Society": [["Protecting the environment may involve:", "reducing waste", ["using more single-use items", "dumping rubbish", "ignoring conservation"]], ["People are dependent on the environment for:", "resources and quality of life", ["only spelling", "only music", "only algebra"]], ["Human activities can affect the environment through:", "pollution and resource use", ["better punctuation", "fewer maps", "more adverbs"]], ["Sustainable action means meeting needs without:", "harming future generations", ["asking questions", "using maps", "reading sources"]], ["Community action can help address:", "societal concerns", ["only private entertainment", "only grammar", "only calculator use"]]], "Humanities Exposure": [["The Humanities Exposure Modules include Geography, History and:", "Literature in English", ["Chemistry only", "Food Science only", "Physical Education only"]], ["Humanities helps students understand relationships with self, society and:", "the environment", ["only calculators", "only recipes", "only musical instruments"]], ["Considering context and perspectives helps students:", "understand issues more deeply", ["avoid thinking", "remove meaning", "copy without reason"]], ["Empathy in Humanities means trying to understand:", "people's experiences and viewpoints", ["only one's own answer", "only dates", "only maps"]], ["Humanities learning often uses texts, images and:", "maps", ["food labels only", "laboratory beakers only", "musical notes only"]]]}}, "chinese": {"name": "华文 / Mother Tongue Chinese", "tagline": "听、说、读、写、互动、文化与语文知识", "topics": {"词语理解": [["“评估”最接近以下哪个意思？", "判断和分析", ["重复一遍", "随便猜测", "完全忽略"]], ["“适应”最接近以下哪个意思？", "根据情况作出调整", ["马上放弃", "完全不变", "只看表面"]], ["“可靠”的意思是：", "可以信任", ["很漂亮", "很快速", "很昂贵"]], ["“珍惜”的意思是：", "重视并好好对待", ["随手丢掉", "故意破坏", "完全忘记"]], ["“沟通”的意思是：", "交流想法和信息", ["独自睡觉", "画一幅画", "做一道数学题"]]], "语法与句子": [["下面哪个句子最通顺？", "因为下雨，所以比赛取消了。", ["因为下雨，但是比赛取消了。", "下雨所以因为比赛取消。", "比赛因为所以取消下雨。"]], ["“他一边听音乐，一边做功课。”这个句子表示：", "两个动作同时进行", ["两个动作完全相反", "一个动作发生在昨天", "没有动作"]], ["“虽然……但是……”通常表示：", "转折关系", ["因果关系", "并列关系", "选择关系"]], ["下面哪个词语适合填空：他学习很努力，成绩____进步。", "逐渐", ["突然地红色", "非常桌子", "正在如果"]], ["“不仅……还……”表示：", "递进关系", ["否定关系", "时间关系", "地点关系"]]], "阅读理解": [["阅读文章时，找中心思想主要是找：", "文章最主要的意思", ["最长的句子", "第一个标点", "所有生字"]], ["根据线索推断人物想法，属于：", "推论能力", ["抄写能力", "画图能力", "计算能力"]], ["作者的语气可以帮助我们理解：", "作者的态度和感情", ["纸张的重量", "字体大小", "页码"]], ["如果题目问“为什么”，答案通常需要说明：", "原因", ["颜色", "价格", "字数"]], ["概括段落内容时，应该：", "抓住重点，简洁表达", ["越长越好", "加入无关意见", "只抄一个字"]]], "写作与表达": [["一封正式电邮开头通常应使用：", "尊敬的老师：", ["喂！", "哈哈哈", "你干嘛"]], ["写说明文时，内容应该：", "清楚、有条理", ["完全随意", "只写表情符号", "没有重点"]], ["写作文时分段的作用是：", "让内容更有层次", ["增加错别字", "减少意思", "隐藏主题"]], ["表达个人看法时，最好加上：", "理由和例子", ["无关图片", "随机数字", "空白段落"]], ["修改文章时，应检查：", "错别字、标点和语句是否通顺", ["鞋子颜色", "天气预报", "游戏分数"]]], "文化与价值观": [["学习华文也帮助学生了解：", "文化和价值观", ["只了解数学公式", "只了解交通规则", "只了解天气"]], ["“尊老爱幼”强调的是：", "尊敬长辈，爱护年幼者", ["只照顾自己", "不理别人", "只看成绩"]], ["节日习俗可以反映一个族群的：", "文化传统", ["计算速度", "运动成绩", "手机品牌"]], ["跨文化理解可以帮助我们：", "尊重不同背景的人", ["只坚持一种看法", "拒绝沟通", "忽略他人"]], ["学习母语的目的之一是：", "更好地沟通与连接文化", ["完全不用说话", "只为了背答案", "避免阅读"]]]}}, "malay": {"name": "Malay Special Programme", "tagline": "Malay as a third language: communication, culture and regional connection", "topics": {"Basic Communication": [["In Malay, 'Selamat pagi' means:", "Good morning", ["Good night", "Thank you", "Excuse me"]], ["In Malay, 'Terima kasih' means:", "Thank you", ["Goodbye", "Please sit", "I am hungry"]], ["In Malay, 'Apa khabar?' is used to ask:", "How are you?", ["What time is it?", "Where is school?", "How much is it?"]], ["A learner says 'Nama saya Evans.' This means:", "My name is Evans.", ["I live in Evans.", "Evans is hungry.", "Evans is a teacher."]], ["In Malay, 'maaf' means:", "sorry", ["water", "book", "table"]]], "Vocabulary": [["In Malay, 'buku' means:", "book", ["chair", "food", "house"]], ["In Malay, 'sekolah' means:", "school", ["market", "river", "forest"]], ["In Malay, 'makan' means:", "to eat", ["to sleep", "to read", "to run"]], ["In Malay, 'air' means:", "water", ["fire", "wind", "tree"]], ["In Malay, 'kawan' means:", "friend", ["teacher", "parent", "shop"]]], "Grammar": [["Malay generally does not mark tense by changing:", "the verb form", ["the topic", "the meaning", "the speaker"]], ["The prefix 'ber-' often indicates:", "an action or state", ["a number only", "a colour only", "a punctuation mark"]], ["The word 'saya' means:", "I / me", ["you", "he", "they"]], ["The word 'dia' means:", "he / she", ["we", "I", "you plural"]], ["A simple Malay sentence often follows:", "subject + predicate", ["predicate only", "object only", "random order always"]]], "Culture & Connection": [["Malay Special Programme helps non-native learners understand:", "Malay language and culture", ["only mathematics", "only traffic", "only weather"]], ["Learning Malay supports communication with communities in:", "Singapore and the region", ["only one classroom", "only outer space", "only Antarctica"]], ["Cultural awareness means being sensitive to:", "different languages and cultures", ["only one's own habits", "only exam marks", "only food prices"]], ["Malay culture can include adat, arts, literature and:", "history", ["algebra", "cell walls", "force units"]], ["Learning a third language can strengthen:", "cross-cultural understanding", ["less communication", "fewer perspectives", "no interaction"]]]}}};
-
 const WA3_TASKS = [
-  { id:'math-ipw-stage3', subject:'Mathematics', title:'IPW Stage 3 submission', date:'2026-07-07', type:'Submission', duration:'9 weeks', marks:'14 marks; 70% of IPW Math component', topic:'Interdisciplinary Project Work - Stage 3' },
-  { id:'science-prototype-test', subject:'Science', title:'Water prototype testing', date:null, type:'Prototype testing', duration:'9 weeks', marks:'50% for IPW Science', topic:'IPW Stage 7 & 8. Teacher will inform laboratory session.' },
-  { id:'math-ipw-stage78', subject:'Mathematics', title:'IPW Stage 7 & 8 submission', date:'2026-07-17', type:'Submission', duration:'2 weeks', marks:'6 marks; 30% of IPW Math component', topic:'Interdisciplinary Project Work - Stage 7 & 8' },
-  { id:'science-ipw-report', subject:'Science', title:'IPW report submission', date:'2026-07-17', type:'Submission', duration:'10 weeks', marks:'50% for IPW Science', topic:'Science IPW report' },
-  { id:'english-written-test', subject:'English Language', title:'Written Test', date:'2026-07-20', type:'Written test', duration:'30 min', marks:'30 marks', topic:'Class dependent: 20 Jul / 21 Jul' },
-  { id:'history-investigation', subject:'History', title:'Historical Investigation Group Task', date:'2026-07-29', type:'Group task submission', duration:'7 weeks', marks:'15 marks', topic:'Historical Investigation' },
-  { id:'fce-presentation', subject:'Food and Consumer Education', title:'Nutrients Presentation & PowerPoint Slides', date:'2026-07-31', type:'Presentation / slides', duration:'5 weeks', marks:'30 marks', topic:'Nutrients' },
-  { id:'art-visual-mindmap', subject:'Art', title:'Visual Mindmap: There is no Planet B', date:'2026-07-31', type:'Performance task', duration:'5 weeks', marks:'15 marks', topic:'Theme: There is no Planet B' },
-  { id:'literature-character-cards', subject:'English Literature', title:'Alternative Assessment: Character Cards', date:'2026-08-05', type:'Alternative assessment', duration:'4 weeks', marks:'25 marks', topic:'The Little Prince; Character Cards' },
-  { id:'higher-chinese-written', subject:'Higher Chinese', title:'Written Test', date:'2026-08-14', type:'Written test', duration:'75 min', marks:'40 marks', topic:'情境记叙文写作 / Situational Narrative Essay Writing' },
-  { id:'higher-chinese-performance', subject:'Higher Chinese', title:'Performance Task submission', date:'2026-08-14', type:'Performance task submission', duration:'Given out in Term 1', marks:'', topic:'Submission is also on 14 August' },
-  { id:'msp-written-test', subject:'MSP', title:'Written Test', date:'2026-08-25', type:'Written / SLS Quiz', duration:'50 min', marks:'30 marks', topic:'Unit 1–4 Grammar; Basic Sentence and Blog Writing' }
+  { id: 'math-stage3', subject: 'Mathematics', title: 'IPW Stage 3 Submission', date: '2026-07-07', type: 'submission', duration: '9 weeks', marks: '14 marks · 70% of Math IPW component', detail: 'Task given in Term 2 Week 3.' },
+  { id: 'sci-prototype', subject: 'Science', title: 'Water Prototype Testing', date: '', type: 'project', duration: '9 weeks', marks: '50% of Science IPW', detail: 'Teacher will inform according to laboratory session.' },
+  { id: 'math-stage78', subject: 'Mathematics', title: 'IPW Stage 7 & 8 Submission', date: '2026-07-17', type: 'submission', duration: '2 weeks', marks: '6 marks · 30% of Math IPW component', detail: 'Task given in Term 3 Week 1.' },
+  { id: 'sci-report', subject: 'Science', title: 'IPW Report Submission', date: '2026-07-17', type: 'submission', duration: '10 weeks', marks: '50% of Science IPW', detail: 'Task given in Term 2 Week 3.' },
+  { id: 'english-written', subject: 'English Language', title: 'Written Test', date: '2026-07-20', altDate: '2026-07-21', type: 'test', duration: '30 min', marks: '30 marks', detail: '20 Jul: 1 Int, 1 Hum, 1, 1 Per, 1 Res, 1 Inn, 1 Exc. 21 Jul: 1 Sin, 1 Gra.' },
+  { id: 'history-investigation', subject: 'History', title: 'Historical Investigation Group Task', date: '2026-07-29', type: 'project', duration: '7 weeks', marks: '15 marks', detail: 'Task given in Term 2 Week 10.' },
+  { id: 'fce-presentation', subject: 'Food & Consumer Education', title: 'Nutrients Presentation & PowerPoint Slides', date: '2026-07-31', type: 'presentation', duration: '5 weeks', marks: '30 marks', detail: 'Task given in Term 3 Week 1.' },
+  { id: 'art-mindmap', subject: 'Art', title: 'Performance Task: Visual Mindmap', date: '2026-07-31', type: 'project', duration: '5 weeks', marks: '15 marks', detail: 'Theme: There is no Planet B. Task given in Term 3 Week 1.' },
+  { id: 'lit-little-prince', subject: 'English Literature', title: 'Alternative Assessment', date: '2026-08-05', type: 'submission', duration: '4 weeks', marks: '25 marks', detail: 'Topic: The Little Prince. Format: Character Cards. Task given in Week 2.' },
+  { id: 'hcl-written', subject: 'Higher Chinese', title: 'Written Test', date: '2026-08-14', type: 'test', duration: '75 min', marks: '40 marks', detail: 'Topic: 情境记叙文写作. Format: Situational Narrative Essay Writing.' },
+  { id: 'hcl-performance', subject: 'Higher Chinese', title: 'Performance Task Submission', date: '2026-08-14', type: 'submission', duration: 'Given in Term 1', marks: '', detail: 'Performance Task submission will be on 14 August too.' },
+  { id: 'msp-written', subject: 'MSP', title: 'Written Test', date: '2026-08-25', type: 'test', duration: '50 min', marks: '30 marks', detail: 'Topic: Unit 1–4 Grammar. Format: SLS Quiz. Basic sentence and blog writing.' }
 ];
 
-const STORAGE = {
-  wa3: 'evans_study_hq_wa3_v1',
-  planner: 'evans_study_hq_planner_v1',
-  focus: 'evans_study_hq_focus_v1',
-  mistakes: 'evans_revision_lab_mistakes_v1'
+const QUESTION_BANK = {
+  Mathematics: {
+    'Algebra': [
+      { q: 'Simplify: 3x + 2x - x', options: ['4x', '5x', '6x', '3x'], answer: '4x', explain: 'Combine like terms: 3x + 2x - x = 4x.' },
+      { q: 'If 2x = 18, what is x?', options: ['6', '8', '9', '16'], answer: '9', explain: 'Divide both sides by 2.' },
+      { q: 'Expand: 2(a + 5)', options: ['2a + 5', '2a + 10', 'a + 10', '7a'], answer: '2a + 10', explain: 'Multiply 2 by both terms inside the bracket.' },
+      { q: 'Simplify: 7y - 3y + 2', options: ['4y + 2', '6y', '10y + 2', '4y - 2'], answer: '4y + 2', explain: '7y - 3y = 4y, then keep +2.' },
+      { q: 'If x + 7 = 15, what is x?', options: ['7', '8', '9', '22'], answer: '8', explain: 'Subtract 7 from both sides.' }
+    ],
+    'Ratio & Percentage': [
+      { q: 'What is 25% of 80?', options: ['15', '20', '25', '40'], answer: '20', explain: '25% is one quarter. One quarter of 80 is 20.' },
+      { q: 'Simplify the ratio 12:18.', options: ['2:3', '3:2', '4:9', '6:9'], answer: '2:3', explain: 'Divide both numbers by 6.' },
+      { q: 'A shirt costs $40 after a 20% discount. What was the discount amount?', options: ['$5', '$8', '$10', '$20'], answer: '$10', explain: 'If $40 is 80%, original is $50, so discount is $10.' }
+    ]
+  },
+  Science: {
+    'Cells & Systems': [
+      { q: 'Which part of the cell controls activities?', options: ['Nucleus', 'Cell wall', 'Vacuole', 'Cytoplasm'], answer: 'Nucleus', explain: 'The nucleus controls cell activities.' },
+      { q: 'Which cell part is found in plant cells but not animal cells?', options: ['Cell wall', 'Nucleus', 'Cytoplasm', 'Cell membrane'], answer: 'Cell wall', explain: 'Plant cells have cell walls; animal cells do not.' },
+      { q: 'What is the function of the cell membrane?', options: ['Controls what enters and leaves', 'Makes food', 'Stores water only', 'Controls the whole cell'], answer: 'Controls what enters and leaves', explain: 'The cell membrane controls movement of substances in and out.' }
+    ],
+    'Water & Mixtures': [
+      { q: 'Which method separates insoluble solid from liquid?', options: ['Filtration', 'Evaporation', 'Condensation', 'Freezing'], answer: 'Filtration', explain: 'Filtration separates an insoluble solid from a liquid.' },
+      { q: 'Which process changes water vapour to liquid water?', options: ['Condensation', 'Evaporation', 'Melting', 'Boiling'], answer: 'Condensation', explain: 'Condensation is gas to liquid.' },
+      { q: 'A clear liquid may still contain dissolved substances. True or false?', options: ['True', 'False'], answer: 'True', explain: 'Dissolved substances may not be visible.' }
+    ]
+  },
+  English: {
+    'Grammar': [
+      { q: 'Choose the correct sentence.', options: ['He go to school.', 'He goes to school.', 'He going school.', 'He gone to school.'], answer: 'He goes to school.', explain: 'Use “goes” for he/she/it in present tense.' },
+      { q: 'Choose the correct word: Evans has ___ his homework.', options: ['do', 'did', 'done', 'doing'], answer: 'done', explain: 'Present perfect uses has/have + past participle.' },
+      { q: 'Which is an adjective?', options: ['quickly', 'beautiful', 'run', 'school'], answer: 'beautiful', explain: 'An adjective describes a noun.' }
+    ],
+    'Writing': [
+      { q: 'A good paragraph should usually have...', options: ['one clear main idea', 'many unrelated ideas', 'no examples', 'only one word'], answer: 'one clear main idea', explain: 'A paragraph should be focused.' },
+      { q: 'Which phrase is more formal?', options: ['gonna', 'I would like to', 'wanna', 'kinda'], answer: 'I would like to', explain: 'Formal writing avoids slang.' }
+    ]
+  },
+  'Higher Chinese': {
+    '情境记叙文': [
+      { q: '情境记叙文最重要的是要写清楚什么？', options: ['时间、地点、人物、事情经过', '只写成语', '只写对话', '只写结尾'], answer: '时间、地点、人物、事情经过', explain: '记叙文需要交代清楚基本要素和事情发展。' },
+      { q: '描写人物心情时，哪一种写法更具体？', options: ['我很开心', '我高兴得差点跳起来', '开心', '很好'], answer: '我高兴得差点跳起来', explain: '具体动作能让心情描写更生动。' }
+    ]
+  }
 };
-const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-const DEFAULT_PLANNER = {
-  Monday: ['Check school homework diary', '10 minutes mistake review'],
-  Tuesday: ['Math or Science revision block', 'Pack files for tomorrow'],
-  Wednesday: ['Update WA3 Board', 'Read English notes for 15 minutes'],
-  Thursday: ['Project work catch-up', 'Revise weak topic'],
-  Friday: ['Weekly homework check', 'Plan next week'],
-  Saturday: ['Longer revision block', 'Finish overdue tasks'],
-  Sunday: ['Pack school bag', 'Choose Monday Top 3']
+
+const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const LS = {
+  wa3Done: 'eshq_v2_wa3_done',
+  wa3Notes: 'eshq_v2_wa3_notes',
+  focusDone: 'eshq_v2_focus_done',
+  planner: 'eshq_v2_planner',
+  mistakes: 'eshq_v2_mistakes',
+  mastered: 'eshq_v2_mastered',
+  history: 'eshq_v2_history',
+  streak: 'eshq_v2_streak'
 };
 
-let wa3State = loadJSON(STORAGE.wa3, {});
-let plannerState = loadJSON(STORAGE.planner, DEFAULT_PLANNER);
-let focusState = loadJSON(STORAGE.focus, {});
-let mistakes = loadJSON(STORAGE.mistakes, []);
-let currentSubject = null, currentTopic = null, round = [], index = 0, score = 0, review = [], locked = false, quizMode = 'practice';
+const state = {
+  currentFilter: 'all',
+  practiceRound: null,
+  currentQuestionIndex: 0,
+  score: 0
+};
 
-const $ = id => document.getElementById(id);
-const views = ['dashboard','wa3','planner','revision','topics','quiz','result','mistakes','progress'];
-
-function loadJSON(key, fallback) { try { return JSON.parse(localStorage.getItem(key) || 'null') ?? structuredClone(fallback); } catch(e) { return structuredClone(fallback); } }
-function saveJSON(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
-function todayStart() { const d = new Date(); d.setHours(0,0,0,0); return d; }
-function parseDate(s) { if(!s) return null; const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); }
-function formatDate(s) { if(!s) return 'TBA'; const d=parseDate(s); return d.toLocaleDateString('en-SG', { day:'numeric', month:'short' }); }
-function daysLeft(s) { if(!s) return null; return Math.ceil((parseDate(s)-todayStart())/86400000); }
-function isDone(id) { return !!wa3State[id]; }
-function activeMistakes() { return mistakes.filter(m => m.status !== 'Mastered'); }
-function masteredMistakes() { return mistakes.filter(m => m.status === 'Mastered'); }
-function safeId(subjectKey, topic, q) { return `${subjectKey}::${topic}::${q}`.replace(/\s+/g,' ').trim(); }
-function shuffle(arr) { const a=[...arr]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
-function guessMistakeType(question, subjectKey, topic) { const text = `${question} ${topic}`.toLowerCase(); if(text.includes('why')||text.includes('为什么')||text.includes('inference')||text.includes('推断')) return 'Understanding / Reasoning'; if(text.includes('solve')||text.includes('simplify')||text.includes('calculate')||/\d/.test(text)) return 'Method / Calculation'; if(subjectKey==='english'||subjectKey==='chinese') return 'Language Accuracy'; return 'Concept Check'; }
-function saveMistakes() { saveJSON(STORAGE.mistakes, mistakes); renderMistakes(); renderProgress(); }
-
-function showView(name) {
-  views.forEach(v => $(v)?.classList.remove('activeView'));
-  $(name)?.classList.add('activeView');
-  document.querySelectorAll('.navBtn').forEach(b => b.classList.toggle('active', b.dataset.target === name || (name==='topics'||name==='quiz'||name==='result') && b.dataset.target==='revision'));
-  if(name==='dashboard') renderDashboard();
-  if(name==='wa3') renderWA3();
-  if(name==='planner') renderPlanner();
-  if(name==='mistakes') renderMistakes();
-  if(name==='progress') renderProgress();
-  window.scrollTo({top:0,behavior:'smooth'});
+function load(key, fallback) {
+  try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
+}
+function save(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
+function todayDate() {
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+}
+function parseDate(dateStr) {
+  if (!dateStr) return null;
+  const [y, m, d] = dateStr.split('-').map(Number);
+  return new Date(y, m - 1, d);
+}
+function daysUntil(dateStr) {
+  const d = parseDate(dateStr);
+  if (!d) return null;
+  return Math.ceil((d - todayDate()) / 86400000);
+}
+function formatDate(dateStr) {
+  if (!dateStr) return 'TBC';
+  const d = parseDate(dateStr);
+  return d.toLocaleDateString('en-SG', { day: 'numeric', month: 'short' });
+}
+function formatLongDate(dateStr) {
+  if (!dateStr) return 'Teacher will inform';
+  const d = parseDate(dateStr);
+  return d.toLocaleDateString('en-SG', { weekday: 'short', day: 'numeric', month: 'short' });
+}
+function getWa3Done() { return load(LS.wa3Done, {}); }
+function setWa3Done(obj) { save(LS.wa3Done, obj); }
+function getWa3Notes() { return load(LS.wa3Notes, {}); }
+function setWa3Notes(obj) { save(LS.wa3Notes, obj); }
+function getPlanner() {
+  const defaultPlanner = {
+    Monday: [{ id: 'mon-pack', text: 'Check school diary and pack files for tomorrow', type: 'Pack', done: false }],
+    Tuesday: [{ id: 'tue-wa3', text: 'Check the next WA3 deadline', type: 'Project', done: false }],
+    Wednesday: [{ id: 'wed-revision', text: 'Complete one Revision Lab practice round', type: 'Revision', done: false }],
+    Thursday: [{ id: 'thu-mistake', text: 'Review one mistake from Mistake Book', type: 'Revision', done: false }],
+    Friday: [{ id: 'fri-week', text: 'Plan next week and clear unfinished tasks', type: 'Homework', done: false }],
+    Saturday: [{ id: 'sat-wa3', text: 'Work on one WA3 project or submission', type: 'Project', done: false }],
+    Sunday: [{ id: 'sun-pack', text: 'Pack bag and files for Monday', type: 'Pack', done: false }]
+  };
+  return load(LS.planner, defaultPlanner);
+}
+function setPlanner(planner) { save(LS.planner, planner); }
+function getMistakes() { return load(LS.mistakes, []); }
+function setMistakes(list) { save(LS.mistakes, list); }
+function getMastered() { return load(LS.mastered, []); }
+function setMastered(list) { save(LS.mastered, list); }
+function getHistory() { return load(LS.history, []); }
+function setHistory(list) { save(LS.history, list); }
+function getFocusTasks() {
+  const upcoming = getUpcomingIncomplete()[0];
+  const title = upcoming ? `Work on: ${upcoming.subject} — ${upcoming.title}` : 'Check the WA3 Board';
+  return [
+    { id: 'focus-deadline', text: title, sub: upcoming ? `Due ${formatLongDate(upcoming.date)}` : 'Everything is loaded' },
+    { id: 'focus-practice', text: 'Complete one short Revision Lab round', sub: '5 questions is enough to start' },
+    { id: 'focus-pack', text: 'Pack files for tomorrow', sub: 'Check school diary and timetable' }
+  ];
+}
+function getUpcomingIncomplete() {
+  const done = getWa3Done();
+  return WA3_TASKS
+    .filter(t => !done[t.id])
+    .sort((a, b) => {
+      const da = parseDate(a.date)?.getTime() ?? Infinity;
+      const db = parseDate(b.date)?.getTime() ?? Infinity;
+      return da - db;
+    });
+}
+function toast(message) {
+  const el = document.getElementById('toast');
+  el.textContent = message;
+  el.classList.add('show');
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(() => el.classList.remove('show'), 1800);
 }
 
-document.addEventListener('click', e => {
-  const target = e.target.closest('[data-target]');
-  if(target) showView(target.dataset.target);
-});
-document.querySelectorAll('.navBtn').forEach(b => b.addEventListener('click', () => showView(b.dataset.target)));
-
-function sortedIncompleteTasks() {
-  return WA3_TASKS.filter(t => !isDone(t.id)).sort((a,b) => {
-    if(!a.date && !b.date) return 0; if(!a.date) return 1; if(!b.date) return -1; return parseDate(a.date)-parseDate(b.date);
-  });
+function switchSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.toggle('active-section', s.id === id));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.section === id));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  renderAll();
 }
-function getWA3Stats() { const done=WA3_TASKS.filter(t=>isDone(t.id)).length; return {done,total:WA3_TASKS.length,pct:Math.round(done/WA3_TASKS.length*100)}; }
-function toggleWA3(id) { wa3State[id] = !wa3State[id]; if(!wa3State[id]) delete wa3State[id]; saveJSON(STORAGE.wa3, wa3State); renderDashboard(); renderWA3(); }
 
-function taskCheckboxHTML(id, checked, cls='') { return `<input type="checkbox" ${checked?'checked':''} data-wa3-id="${id}" class="${cls}" />`; }
-function deadlineItemHTML(task) { const left=daysLeft(task.date); const urgent=left!==null && left<=7 && left>=0; return `<div class="deadlineItem ${isDone(task.id)?'done':''}">${taskCheckboxHTML(task.id,isDone(task.id))}<div class="deadlineDate ${urgent?'urgentDate':''}"><div>${formatDate(task.date)}</div><small>${left===null?'TBA':left<0?'passed':left+'d left'}</small></div><div class="deadlineContent"><h4>${task.subject}</h4><p class="muted">${task.title}</p></div></div>`; }
 function renderDashboard() {
-  $('todayLine').textContent = new Date().toLocaleDateString('en-SG', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
-  const stats=getWA3Stats(); $('wa3MiniCount').textContent=`${stats.done}/${stats.total}`; $('wa3ProgressFill').style.width=stats.pct+'%'; $('wa3Percent').textContent=stats.pct+'%';
-  const upcoming=sortedIncompleteTasks(); const next=upcoming[0];
-  $('nextDeadline').innerHTML = next ? `<h4 class="missionTitle">${next.subject}</h4><p>${next.title}</p><p class="metric">${formatDate(next.date)}</p><p class="muted">${daysLeft(next.date)===null?'Teacher will inform date':daysLeft(next.date)<0?'Date passed':daysLeft(next.date)+' days left'}</p>` : `<p>All WA3 missions completed. Great work.</p>`;
-  $('upcomingList').innerHTML = upcoming.slice(0,5).map(deadlineItemHTML).join('') || '<p class="muted">No upcoming incomplete WA3 tasks.</p>';
-  renderTodayTop3(); renderWeekPreview(); attachWA3Checkboxes();
-}
-function renderTodayTop3() {
-  const day = new Date().toLocaleDateString('en-US', {weekday:'long'});
-  const tasks = (plannerState[day] || []).slice(0,3);
-  const fallback = sortedIncompleteTasks().slice(0,3).map(t => `${t.subject}: ${t.title}`);
-  const display = tasks.length ? tasks : fallback;
-  $('todayTop3').innerHTML = display.map((text,i) => `<label class="taskItem ${focusState[day+'-'+i]?'done':''}"><input type="checkbox" data-focus-id="${day}-${i}" ${focusState[day+'-'+i]?'checked':''}><span class="taskTitle">${text}</span></label>`).join('') || '<p class="muted">No focus tasks yet. Add tasks in Weekly Planner.</p>';
-  document.querySelectorAll('[data-focus-id]').forEach(cb => cb.onchange = () => { focusState[cb.dataset.focusId]=cb.checked; if(!cb.checked) delete focusState[cb.dataset.focusId]; saveJSON(STORAGE.focus, focusState); renderTodayTop3(); });
-}
-function renderWeekPreview() {
-  $('weekPreview').innerHTML = DAYS.map(day => { const tasks=plannerState[day] || []; return `<div class="weekMini"><strong>${day.slice(0,3)}</strong>${tasks.slice(0,2).map(t=>`<p>• ${t}</p>`).join('') || '<p>No task yet</p>'}</div>`; }).join('');
+  document.getElementById('todayLabel').textContent = new Date().toLocaleDateString('en-SG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  renderFocus();
+  renderNextDeadline();
+  renderWa3ProgressMini();
+  renderUpcomingDeadlines();
+  renderParentSummary();
+  renderWeekPreview();
 }
 
-function renderWA3() {
-  const stats=getWA3Stats(); $('wa3FullPercent').textContent=stats.pct+'%';
-  const filter=$('wa3Filter');
-  if(filter.options.length===1) [...new Set(WA3_TASKS.map(t=>t.subject))].sort().forEach(s => filter.insertAdjacentHTML('beforeend', `<option value="${s}">${s}</option>`));
-  const selected=filter.value;
-  const tasks=WA3_TASKS.filter(t => selected==='all' || t.subject===selected).sort((a,b) => { if(!a.date&&!b.date)return 0;if(!a.date)return 1;if(!b.date)return -1;return parseDate(a.date)-parseDate(b.date); });
-  $('wa3List').innerHTML = tasks.map(t => `<label class="missionItem ${isDone(t.id)?'done':''}"><input type="checkbox" data-wa3-id="${t.id}" ${isDone(t.id)?'checked':''}><div><div><span class="missionPill">${formatDate(t.date)}</span><span class="missionPill">${t.type}</span></div><div class="missionTitle">${t.subject} — ${t.title}</div><div class="missionDetails">${[t.duration,t.marks,t.topic].filter(Boolean).join(' · ')}</div></div></label>`).join('');
-  attachWA3Checkboxes();
+function renderFocus() {
+  const focusDone = load(LS.focusDone, {});
+  const tasks = getFocusTasks();
+  const list = document.getElementById('todayFocusList');
+  list.innerHTML = tasks.map(t => `
+    <label class="task-row ${focusDone[t.id] ? 'done' : ''}">
+      <input type="checkbox" data-focus-id="${t.id}" ${focusDone[t.id] ? 'checked' : ''} />
+      <span class="task-text"><strong>${t.text}</strong><span>${t.sub}</span></span>
+    </label>
+  `).join('');
+  const count = tasks.filter(t => focusDone[t.id]).length;
+  document.getElementById('focusCountBadge').textContent = `${count}/3`;
 }
-function attachWA3Checkboxes() { document.querySelectorAll('[data-wa3-id]').forEach(cb => cb.onchange = () => toggleWA3(cb.dataset.wa3Id)); }
-$('wa3Filter').addEventListener('change', renderWA3);
-$('clearWa3').addEventListener('click', () => { if(confirm('Reset all WA3 checkboxes?')) { wa3State={}; saveJSON(STORAGE.wa3, wa3State); renderDashboard(); renderWA3(); } });
+
+function renderNextDeadline() {
+  const upcoming = getUpcomingIncomplete()[0];
+  const card = document.getElementById('nextDeadlineCard');
+  const badge = document.getElementById('nextDeadlineUrgency');
+  const bar = document.getElementById('deadlineTimeBar');
+  if (!upcoming) {
+    card.innerHTML = `<strong>All WA3 missions completed</strong><p>Great job. Keep reviewing mistakes and practising.</p><div class="days-left">Done</div>`;
+    badge.textContent = 'Clear';
+    badge.classList.remove('danger');
+    bar.style.width = '100%';
+    return;
+  }
+  const days = daysUntil(upcoming.date);
+  let label = 'Soon';
+  if (days === null) label = 'TBC';
+  else if (days < 0) label = 'Overdue';
+  else if (days <= 3) label = 'Urgent';
+  else if (days <= 10) label = 'Soon';
+  else label = 'Upcoming';
+  badge.textContent = label;
+  badge.classList.toggle('danger', days !== null && days <= 3);
+  const daysText = days === null ? 'TBC' : days < 0 ? `${Math.abs(days)} days overdue` : days === 0 ? 'Due today' : `${days} days left`;
+  card.innerHTML = `<strong>${formatLongDate(upcoming.date)}</strong><p>${upcoming.subject} · ${upcoming.title}</p><div class="days-left">${daysText}</div>`;
+  const pct = days === null ? 25 : Math.max(8, Math.min(100, 100 - (days / 30) * 100));
+  bar.style.width = `${pct}%`;
+}
+
+function renderWa3ProgressMini() {
+  const done = getWa3Done();
+  const completed = WA3_TASKS.filter(t => done[t.id]).length;
+  const total = WA3_TASKS.length;
+  const pct = Math.round((completed / total) * 100);
+  document.getElementById('wa3ProgressText').textContent = `${completed} / ${total}`;
+  document.getElementById('wa3PercentBadge').textContent = `${pct}%`;
+  document.getElementById('wa3ProgressBar').style.width = `${pct}%`;
+  document.getElementById('wa3Encouragement').textContent = completed === 0
+    ? '12 missions are already loaded. Start with the next deadline.'
+    : completed < total
+      ? 'Keep going. Finish the next small mission first.'
+      : 'All WA3 missions are complete. Well done.';
+  document.getElementById('wa3HeaderCompleted').textContent = `${completed}/${total}`;
+}
+
+function renderUpcomingDeadlines() {
+  const list = document.getElementById('upcomingDeadlines');
+  const upcoming = getUpcomingIncomplete().filter(t => t.date).slice(0, 5);
+  if (!upcoming.length) {
+    list.innerHTML = `<div class="empty-state"><h3>No upcoming dated tasks</h3><p>Check teacher-announced items and keep practising.</p></div>`;
+    return;
+  }
+  list.innerHTML = upcoming.map(t => {
+    const days = daysUntil(t.date);
+    const status = days === 0 ? 'Today' : days < 0 ? 'Overdue' : `${days}d left`;
+    return `
+      <div class="deadline-item">
+        <div class="date-badge"><strong>${formatDate(t.date).split(' ')[0]}</strong><small>${formatDate(t.date).split(' ')[1] || ''}</small></div>
+        <div class="deadline-title"><strong>${t.subject}</strong><span>${t.title}</span></div>
+        <span class="status-badge">${status}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderParentSummary() {
+  const planner = getPlanner();
+  const plannerTasks = DAYS.flatMap(day => planner[day] || []);
+  const plannerDone = plannerTasks.filter(t => t.done).length;
+  const mistakes = getMistakes();
+  const mastered = getMastered();
+  const history = getHistory();
+  const done = getWa3Done();
+  const wa3Done = WA3_TASKS.filter(t => done[t.id]).length;
+  document.getElementById('parentSummary').innerHTML = `
+    <div class="summary-tile"><strong>${wa3Done}/${WA3_TASKS.length}</strong><span>WA3 completed</span></div>
+    <div class="summary-tile"><strong>${plannerDone}/${plannerTasks.length}</strong><span>weekly tasks done</span></div>
+    <div class="summary-tile"><strong>${history.length}</strong><span>practice rounds</span></div>
+    <div class="summary-tile"><strong>${mastered.length}/${mistakes.length + mastered.length}</strong><span>mistakes mastered</span></div>
+  `;
+}
+
+function renderWeekPreview() {
+  const planner = getPlanner();
+  document.getElementById('weekPreview').innerHTML = DAYS.map(day => {
+    const tasks = (planner[day] || []).slice(0, 3);
+    return `<div class="day-preview"><h4>${day.slice(0, 3)}</h4>${tasks.length ? tasks.map(t => `<p>${t.done ? '✅' : '□'} ${t.text}</p>`).join('') : '<p>No task yet</p>'}</div>`;
+  }).join('');
+}
+
+function renderWa3Board() {
+  renderWa3ProgressMini();
+  const done = getWa3Done();
+  const notes = getWa3Notes();
+  const tasks = WA3_TASKS.filter(t => state.currentFilter === 'all' || t.type === state.currentFilter);
+  document.getElementById('wa3TaskList').innerHTML = tasks.map(t => {
+    const dateDisplay = formatDate(t.date);
+    return `
+      <article class="wa3-card ${done[t.id] ? 'done' : ''}">
+        <div class="wa3-main">
+          <div class="date-badge"><strong>${dateDisplay.split(' ')[0]}</strong><small>${dateDisplay.split(' ')[1] || ''}</small></div>
+          <div>
+            <h3>${t.subject}</h3>
+            <div class="wa3-meta"><strong>${t.title}</strong><br>${[t.duration, t.marks].filter(Boolean).join(' · ')}</div>
+            <span class="type-badge">${t.type}</span>
+          </div>
+          <label class="done-toggle"><input type="checkbox" data-wa3-id="${t.id}" ${done[t.id] ? 'checked' : ''}>Done</label>
+        </div>
+        <div class="wa3-meta" style="margin-top:10px;">${t.detail}</div>
+        <details class="notes-box" ${notes[t.id] ? 'open' : ''}>
+          <summary>Notes / things to remember</summary>
+          <textarea data-note-id="${t.id}" placeholder="Add teacher instructions, materials to bring, links, or reminders...">${notes[t.id] || ''}</textarea>
+        </details>
+      </article>
+    `;
+  }).join('');
+}
 
 function renderPlanner() {
-  $('plannerGrid').innerHTML = DAYS.map(day => `<section class="dayCard"><h3>${day}</h3><div class="dayTasks">${(plannerState[day]||[]).map((t,i)=>`<label class="plannerTask"><input type="checkbox" data-planner-done="${day}-${i}"><span>${t}</span><button class="textBtn" data-delete-task="${day}|${i}" type="button">×</button></label>`).join('')}</div><button class="addMini" data-add-day="${day}">+ Add to ${day.slice(0,3)}</button></section>`).join('');
-  document.querySelectorAll('[data-add-day]').forEach(btn => btn.onclick = () => addTaskToDay(btn.dataset.addDay));
-  document.querySelectorAll('[data-delete-task]').forEach(btn => btn.onclick = () => { const [day,i]=btn.dataset.deleteTask.split('|'); plannerState[day].splice(Number(i),1); saveJSON(STORAGE.planner, plannerState); renderPlanner(); renderDashboard(); });
+  const planner = getPlanner();
+  document.getElementById('plannerGrid').innerHTML = DAYS.map(day => {
+    const tasks = planner[day] || [];
+    return `
+      <article class="planner-day">
+        <h3>${day}</h3>
+        ${tasks.length ? tasks.map(task => `
+          <div class="planner-task ${task.done ? 'done' : ''}">
+            <input type="checkbox" data-plan-day="${day}" data-plan-id="${task.id}" ${task.done ? 'checked' : ''}>
+            <div class="planner-task-text"><strong>${task.text}</strong><span>${task.type || 'Task'}</span></div>
+            <div class="task-actions">
+              <button data-move-day="${day}" data-move-id="${task.id}">Move to tomorrow</button>
+              <button data-delete-day="${day}" data-delete-id="${task.id}">Delete</button>
+            </div>
+          </div>
+        `).join('') : '<div class="empty-small">No tasks yet. Add homework, revision or packing reminders.</div>'}
+      </article>
+    `;
+  }).join('');
 }
-function addTaskToDay(day) { const text=prompt(`Add a task for ${day}:`); if(text && text.trim()) { plannerState[day] = plannerState[day] || []; plannerState[day].push(text.trim()); saveJSON(STORAGE.planner, plannerState); renderPlanner(); renderDashboard(); } }
-$('addPlannerTask').addEventListener('click', () => { const day=prompt('Which day? Monday, Tuesday, Wednesday, Thursday, Friday, Saturday or Sunday'); if(!day) return; const matched=DAYS.find(d => d.toLowerCase().startsWith(day.toLowerCase().slice(0,3))); if(matched) addTaskToDay(matched); else alert('Please enter a valid day.'); });
 
-function renderSubjects() {
-  $('subjectGrid').innerHTML = Object.entries(DATA).map(([key, subject]) => `<button class="subjectCard" data-subject="${key}"><strong>${subject.name}</strong><span>${subject.tagline}</span></button>`).join('');
-  document.querySelectorAll('[data-subject]').forEach(btn => btn.onclick = () => openSubject(btn.dataset.subject));
+function renderRevisionControls() {
+  const subjectSelect = document.getElementById('subjectSelect');
+  const currentSubject = subjectSelect.value || Object.keys(QUESTION_BANK)[0];
+  subjectSelect.innerHTML = Object.keys(QUESTION_BANK).map(s => `<option value="${s}">${s}</option>`).join('');
+  subjectSelect.value = QUESTION_BANK[currentSubject] ? currentSubject : Object.keys(QUESTION_BANK)[0];
+  renderTopicOptions();
+  renderPracticeHistoryMini();
 }
-function openSubject(key) { currentSubject=key; const subject=DATA[key]; $('topicSubjectPill').textContent=subject.name; $('topicSubjectTitle').textContent=subject.name; $('topicSubjectHint').textContent=subject.tagline; $('topicGrid').innerHTML = Object.keys(subject.topics).map(topic => `<button class="subjectCard" data-topic="${topic}"><strong>${topic}</strong><span>${subject.topics[topic].length} questions</span></button>`).join(''); document.querySelectorAll('[data-topic]').forEach(btn => btn.onclick = () => startTopic(btn.dataset.topic)); showView('topics'); }
-function startTopic(topic) { currentTopic=topic; quizMode='practice'; const raw=DATA[currentSubject].topics[topic]; round=shuffle(raw.map(q => ({question:q[0], correct:q[1], wrong:q[2], subjectKey:currentSubject, subjectName:DATA[currentSubject].name, topic}))).slice(0,10); index=0; score=0; review=[]; $('score').textContent=score; renderQuestion(); showView('quiz'); }
-function renderQuestion() { locked=false; const q=round[index]; if(!q) return finishRound(); $('subjectLabel').textContent=q.subjectName; $('topicLabel').textContent=q.topic; $('questionNo').textContent=`Question ${index+1} / ${round.length}`; $('questionText').textContent=q.question; $('feedbackMini').textContent='Choose the best answer.'; $('feedback').textContent=''; $('answers').innerHTML=shuffle([q.correct, ...q.wrong]).map(a => `<button class="answerBtn" data-answer="${String(a).replace(/"/g,'&quot;')}">${a}</button>`).join(''); document.querySelectorAll('.answerBtn').forEach(btn => btn.onclick = () => chooseAnswer(btn.dataset.answer)); }
-function chooseAnswer(answer) { if(locked) return; locked=true; const q=round[index]; const ok=answer===q.correct; if(ok) score++; $('score').textContent=score; document.querySelectorAll('.answerBtn').forEach(btn => { if(btn.dataset.answer===q.correct) btn.classList.add('correct'); if(btn.dataset.answer===answer && !ok) btn.classList.add('wrong'); }); $('feedback').textContent = ok ? 'Correct ✅' : `Not quite. Correct answer: ${q.correct}`; review.push({...q, chosen:answer, ok}); if(!ok) addMistake(q); if(quizMode==='mistakeReview' && ok) markMistakeCorrect(q); setTimeout(()=>{ index++; renderQuestion(); }, 950); }
-function finishRound() { $('resultTitle').textContent = score >= Math.ceil(round.length*.8) ? 'Great work' : 'Good practice — review the weak spots'; $('resultText').textContent = `Score: ${score} / ${round.length}`; $('reviewBox').innerHTML = review.map(r => `<div class="reviewMini"><strong>${r.ok?'✅':'❌'} ${r.topic}</strong><p>${r.question}</p><p class="muted">Correct: ${r.correct}</p></div>`).join(''); renderMistakes(); renderProgress(); showView('result'); }
-function addMistake(q) { const id=safeId(q.subjectKey,q.topic,q.question); const existing=mistakes.find(m=>m.id===id); if(existing) { existing.timesMissed=(existing.timesMissed||1)+1; existing.correctStreak=0; existing.status='Active'; } else mistakes.push({id, subjectKey:q.subjectKey, subjectName:q.subjectName, topic:q.topic, question:q.question, correct:q.correct, wrong:q.wrong, timesMissed:1, correctStreak:0, status:'Active', type:guessMistakeType(q.question,q.subjectKey,q.topic)}); saveMistakes(); }
-function markMistakeCorrect(q) { const id=safeId(q.subjectKey,q.topic,q.question); const m=mistakes.find(x=>x.id===id); if(m) { m.correctStreak=(m.correctStreak||0)+1; if(m.correctStreak>=2) m.status='Mastered'; saveMistakes(); } }
-$('topicBackBtn').addEventListener('click', () => currentSubject ? openSubject(currentSubject) : showView('revision'));
+function renderTopicOptions() {
+  const subject = document.getElementById('subjectSelect').value;
+  const topicSelect = document.getElementById('topicSelect');
+  topicSelect.innerHTML = Object.keys(QUESTION_BANK[subject]).map(t => `<option value="${t}">${t}</option>`).join('');
+}
+function renderPracticeHistoryMini() {
+  const history = getHistory();
+  const last = history[history.length - 1];
+  document.getElementById('lastScoreLabel').textContent = last ? `${last.score}/${last.total}` : '—';
+  document.getElementById('practiceHistoryMini').innerHTML = last ? `
+    <strong>Last round</strong><br>${last.subject} · ${last.topic}<br>Score: ${last.score}/${last.total}<br>${new Date(last.date).toLocaleDateString('en-SG')}
+  ` : `<strong>No practice history yet.</strong><br>Start one short round to unlock your first score.`;
+}
+function startPracticeRound() {
+  const subject = document.getElementById('subjectSelect').value;
+  const topic = document.getElementById('topicSelect').value;
+  const count = Number(document.getElementById('questionCountSelect').value);
+  const source = QUESTION_BANK[subject][topic];
+  const questions = [...source].sort(() => Math.random() - 0.5).slice(0, Math.min(count, source.length));
+  state.practiceRound = { subject, topic, questions, answers: [] };
+  state.currentQuestionIndex = 0;
+  state.score = 0;
+  renderQuestion();
+}
+function renderQuestion() {
+  const round = state.practiceRound;
+  const area = document.getElementById('questionArea');
+  if (!round) return;
+  if (state.currentQuestionIndex >= round.questions.length) {
+    finishPracticeRound();
+    return;
+  }
+  const q = round.questions[state.currentQuestionIndex];
+  area.className = '';
+  area.innerHTML = `
+    <div class="question-top"><span class="mini-badge">Question ${state.currentQuestionIndex + 1}/${round.questions.length}</span><span class="mini-badge">Score ${state.score}</span></div>
+    <div class="question-text">${q.q}</div>
+    <div class="option-grid">${q.options.map(opt => `<button class="option-btn" data-answer="${encodeURIComponent(opt)}">${opt}</button>`).join('')}</div>
+    <div id="questionFeedback"></div>
+  `;
+}
+function answerQuestion(answer) {
+  const round = state.practiceRound;
+  const q = round.questions[state.currentQuestionIndex];
+  const correct = answer === q.answer;
+  if (correct) state.score += 1;
+  else addMistake(round.subject, round.topic, q, answer);
+  const feedback = document.getElementById('questionFeedback');
+  feedback.innerHTML = `<div class="feedback ${correct ? 'correct' : 'wrong'}">${correct ? 'Correct ✅' : `Not yet. Correct answer: ${q.answer}`}<br><small>${q.explain}</small></div>`;
+  document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
+  setTimeout(() => { state.currentQuestionIndex += 1; renderQuestion(); }, 1300);
+}
+function finishPracticeRound() {
+  const round = state.practiceRound;
+  const history = getHistory();
+  history.push({ subject: round.subject, topic: round.topic, score: state.score, total: round.questions.length, date: new Date().toISOString() });
+  setHistory(history);
+  document.getElementById('questionArea').innerHTML = `
+    <div class="empty-state"><h3>Round complete</h3><p>Your score: <strong>${state.score}/${round.questions.length}</strong></p><p>Wrong answers have been saved to the Mistake Book.</p><button class="primary-action" id="practiceAgainBtn">Practise again</button></div>
+  `;
+  state.practiceRound = null;
+  renderPracticeHistoryMini();
+  renderParentSummary();
+  toast('Practice round saved');
+}
+function addMistake(subject, topic, q, selected) {
+  const mistakes = getMistakes();
+  const exists = mistakes.find(m => m.q === q.q && m.subject === subject);
+  if (exists) {
+    exists.lastSelected = selected;
+    exists.correctCount = 0;
+    exists.updatedAt = new Date().toISOString();
+  } else {
+    mistakes.push({ id: `m-${Date.now()}-${Math.random().toString(16).slice(2)}`, subject, topic, q: q.q, answer: q.answer, explain: q.explain, lastSelected: selected, correctCount: 0, createdAt: new Date().toISOString() });
+  }
+  setMistakes(mistakes);
+}
 
-function renderMistakes() { const active=activeMistakes(); $('mistakeList').innerHTML = active.length ? active.map(m => `<article class="stackItem"><h3>${m.subjectName} — ${m.topic}</h3><p>${m.question}</p><p class="muted">Answer: ${m.correct} · Missed: ${m.timesMissed||1} · Type: ${m.type}</p></article>`).join('') : '<p class="muted">No active mistakes saved yet.</p>'; }
+function renderMistakeBook() {
+  const mistakes = getMistakes();
+  const mastered = getMastered();
+  const streak = load(LS.streak, { count: 0, lastDate: '' });
+  document.getElementById('streakLabel').textContent = `🔥 ${streak.count || 0}`;
+  document.getElementById('masteredCountLabel').textContent = mastered.length;
+  const list = document.getElementById('mistakeList');
+  if (!mistakes.length) {
+    list.innerHTML = `<div class="empty-state"><h3>No active mistakes saved yet.</h3><p>Do a Revision Lab round. Questions Evans gets wrong will appear here for review.</p></div>`;
+  } else {
+    list.innerHTML = mistakes.map(m => `
+      <article class="mistake-card">
+        <strong>${m.subject} · ${m.topic}</strong>
+        <p>${m.q}</p>
+        <p>Correct answer: <strong>${m.answer}</strong></p>
+        <p>${m.explain}</p>
+        <p>Correct reviews: ${m.correctCount}/2</p>
+        <div class="mistake-actions">
+          <button data-review-correct="${m.id}">I got it correct</button>
+          <button data-review-wrong="${m.id}">Still wrong</button>
+          <button data-remove-mistake="${m.id}">Remove</button>
+        </div>
+      </article>
+    `).join('');
+  }
+  document.getElementById('masteredList').innerHTML = mastered.length ? mastered.slice(-6).reverse().map(m => `
+    <div class="mistake-card"><strong>${m.subject}</strong><p>${m.q}</p><p>Mastered ✅</p></div>
+  `).join('') : `<div class="empty-small">Mastered mistakes will appear here after two correct reviews.</div>`;
+}
+function updateReviewStreak() {
+  const today = todayDate().toISOString().slice(0, 10);
+  const streak = load(LS.streak, { count: 0, lastDate: '' });
+  if (streak.lastDate !== today) {
+    const yesterday = new Date(todayDate());
+    yesterday.setDate(yesterday.getDate() - 1);
+    const y = yesterday.toISOString().slice(0, 10);
+    streak.count = streak.lastDate === y ? (streak.count || 0) + 1 : 1;
+    streak.lastDate = today;
+    save(LS.streak, streak);
+  }
+}
+
 function renderProgress() {
-  const byTopic={}; mistakes.forEach(m => { const key=`${m.subjectName} — ${m.topic}`; byTopic[key]=byTopic[key]||{active:0,mastered:0}; m.status==='Mastered'?byTopic[key].mastered++:byTopic[key].active++; });
-  const rows=Object.entries(byTopic).map(([key,v]) => `<article class="stackItem"><h3>${key}</h3><p class="muted">Active mistakes: ${v.active} · Mastered: ${v.mastered}</p></article>`).join('');
-  $('progressList').innerHTML = `<article class="stackItem"><h3>Overall</h3><p>Active mistakes: ${activeMistakes().length} · Mastered: ${masteredMistakes().length} · WA3: ${getWA3Stats().pct}%</p></article>${rows || '<p class="muted">Progress will appear after practice.</p>'}`;
+  const done = getWa3Done();
+  const wa3Done = WA3_TASKS.filter(t => done[t.id]).length;
+  const planner = getPlanner();
+  const plannerTasks = DAYS.flatMap(day => planner[day] || []);
+  const plannerDone = plannerTasks.filter(t => t.done).length;
+  const mistakes = getMistakes();
+  const mastered = getMastered();
+  const history = getHistory();
+  const subjectCounts = history.reduce((acc, h) => { acc[h.subject] = (acc[h.subject] || 0) + 1; return acc; }, {});
+  const subjectRows = Object.entries(subjectCounts).length ? Object.entries(subjectCounts).map(([s, n]) => `<div class="metric"><span>${s}</span><strong>${n} rounds</strong></div>`).join('') : `<p class="helper-text">Start one practice round to see subject history.</p>`;
+  document.getElementById('progressDashboard').innerHTML = `
+    <article class="progress-panel"><h3>Task Progress</h3><div class="metric"><span>WA3 completed</span><strong>${wa3Done}/${WA3_TASKS.length}</strong></div><div class="metric"><span>Weekly tasks done</span><strong>${plannerDone}/${plannerTasks.length}</strong></div><div class="metric"><span>Next deadline</span><strong>${getUpcomingIncomplete()[0] ? formatDate(getUpcomingIncomplete()[0].date) : 'Done'}</strong></div></article>
+    <article class="progress-panel"><h3>Practice Progress</h3><div class="metric"><span>Practice rounds</span><strong>${history.length}</strong></div><div class="metric"><span>Last score</span><strong>${history.length ? `${history[history.length-1].score}/${history[history.length-1].total}` : '—'}</strong></div>${subjectRows}</article>
+    <article class="progress-panel"><h3>Mistake Review</h3><div class="metric"><span>Active mistakes</span><strong>${mistakes.length}</strong></div><div class="metric"><span>Mastered mistakes</span><strong>${mastered.length}</strong></div><p class="helper-text">To unlock more progress: complete one WA3 task, finish one Revision Lab round, and review one mistake.</p></article>
+  `;
 }
-function startMistakeReview() { const active=activeMistakes(); if(!active.length) return alert('No active mistakes to review.'); quizMode='mistakeReview'; round=shuffle(active.map(m => ({question:m.question, correct:m.correct, wrong:m.wrong, subjectKey:m.subjectKey, subjectName:m.subjectName, topic:m.topic}))).slice(0,10); index=0; score=0; review=[]; $('score').textContent=0; renderQuestion(); showView('quiz'); }
-$('startReviewBtn').addEventListener('click', startMistakeReview); $('startReviewBtn2').addEventListener('click', startMistakeReview);
-$('clearMistakesBtn').addEventListener('click', () => { if(confirm('Clear all saved mistakes?')) { mistakes=[]; saveMistakes(); } });
 
-renderSubjects(); renderDashboard(); renderWA3(); renderPlanner(); renderMistakes(); renderProgress(); showView('dashboard');
+function renderAll() {
+  renderDashboard();
+  renderWa3Board();
+  renderPlanner();
+  renderRevisionControls();
+  renderMistakeBook();
+  renderProgress();
+}
+
+function setupEvents() {
+  document.addEventListener('click', e => {
+    const nav = e.target.closest('[data-section]');
+    if (nav) switchSection(nav.dataset.section);
+
+    if (e.target.id === 'startMissionBtn') {
+      switchSection('planner');
+      toast('Start with today’s top task');
+    }
+    if (e.target.id === 'addPlannerTaskBtn') openTaskModal();
+    if (e.target.id === 'closeTaskModal') closeTaskModal();
+    if (e.target.id === 'savePlannerTaskBtn') savePlannerTask();
+    if (e.target.id === 'startPracticeBtn') startPracticeRound();
+    if (e.target.id === 'practiceAgainBtn') startPracticeRound();
+    if (e.target.classList.contains('option-btn')) answerQuestion(decodeURIComponent(e.target.dataset.answer));
+    if (e.target.id === 'startMistakeReviewBtn') {
+      const first = document.querySelector('[data-review-correct]');
+      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      else toast('No active mistakes yet');
+    }
+
+    const moveBtn = e.target.closest('[data-move-id]');
+    if (moveBtn) movePlannerTask(moveBtn.dataset.moveDay, moveBtn.dataset.moveId);
+    const delBtn = e.target.closest('[data-delete-id]');
+    if (delBtn) deletePlannerTask(delBtn.dataset.deleteDay, delBtn.dataset.deleteId);
+    const correctBtn = e.target.closest('[data-review-correct]');
+    if (correctBtn) reviewMistake(correctBtn.dataset.reviewCorrect, true);
+    const wrongBtn = e.target.closest('[data-review-wrong]');
+    if (wrongBtn) reviewMistake(wrongBtn.dataset.reviewWrong, false);
+    const removeBtn = e.target.closest('[data-remove-mistake]');
+    if (removeBtn) removeMistake(removeBtn.dataset.removeMistake);
+  });
+
+  document.addEventListener('change', e => {
+    if (e.target.matches('[data-focus-id]')) {
+      const done = load(LS.focusDone, {});
+      done[e.target.dataset.focusId] = e.target.checked;
+      save(LS.focusDone, done);
+      toast(e.target.checked ? 'Focus task done' : 'Focus task reopened');
+      renderAll();
+    }
+    if (e.target.matches('[data-wa3-id]')) {
+      const done = getWa3Done();
+      done[e.target.dataset.wa3Id] = e.target.checked;
+      setWa3Done(done);
+      toast(e.target.checked ? 'WA3 mission completed' : 'WA3 mission reopened');
+      renderAll();
+    }
+    if (e.target.matches('[data-plan-id]')) {
+      const planner = getPlanner();
+      const task = planner[e.target.dataset.planDay].find(t => t.id === e.target.dataset.planId);
+      if (task) task.done = e.target.checked;
+      setPlanner(planner);
+      toast(e.target.checked ? 'Task completed' : 'Task reopened');
+      renderAll();
+    }
+    if (e.target.id === 'subjectSelect') renderTopicOptions();
+  });
+
+  document.addEventListener('input', e => {
+    if (e.target.matches('[data-note-id]')) {
+      const notes = getWa3Notes();
+      notes[e.target.dataset.noteId] = e.target.value;
+      setWa3Notes(notes);
+    }
+  });
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.currentFilter = btn.dataset.filter;
+      renderWa3Board();
+    });
+  });
+}
+
+function openTaskModal() {
+  document.getElementById('modalDaySelect').innerHTML = DAYS.map(d => `<option value="${d}">${d}</option>`).join('');
+  const todayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+  if (DAYS.includes(todayName)) document.getElementById('modalDaySelect').value = todayName;
+  document.getElementById('modalTaskInput').value = '';
+  document.getElementById('taskModal').classList.add('open');
+  document.getElementById('taskModal').setAttribute('aria-hidden', 'false');
+  setTimeout(() => document.getElementById('modalTaskInput').focus(), 50);
+}
+function closeTaskModal() {
+  document.getElementById('taskModal').classList.remove('open');
+  document.getElementById('taskModal').setAttribute('aria-hidden', 'true');
+}
+function savePlannerTask() {
+  const day = document.getElementById('modalDaySelect').value;
+  const text = document.getElementById('modalTaskInput').value.trim();
+  const type = document.getElementById('modalTaskType').value;
+  if (!text) { toast('Please type a task first'); return; }
+  const planner = getPlanner();
+  planner[day] = planner[day] || [];
+  planner[day].push({ id: `p-${Date.now()}`, text, type, done: false });
+  setPlanner(planner);
+  closeTaskModal();
+  renderAll();
+  toast('Task added');
+}
+function movePlannerTask(day, id) {
+  const planner = getPlanner();
+  const idx = DAYS.indexOf(day);
+  const nextDay = DAYS[(idx + 1) % DAYS.length];
+  const taskIndex = planner[day].findIndex(t => t.id === id);
+  if (taskIndex === -1) return;
+  const [task] = planner[day].splice(taskIndex, 1);
+  task.done = false;
+  planner[nextDay] = planner[nextDay] || [];
+  planner[nextDay].push(task);
+  setPlanner(planner);
+  renderAll();
+  toast(`Moved to ${nextDay}`);
+}
+function deletePlannerTask(day, id) {
+  if (!confirm('Delete this task?')) return;
+  const planner = getPlanner();
+  planner[day] = planner[day].filter(t => t.id !== id);
+  setPlanner(planner);
+  renderAll();
+  toast('Task deleted');
+}
+function reviewMistake(id, correct) {
+  const mistakes = getMistakes();
+  const mastered = getMastered();
+  const m = mistakes.find(x => x.id === id);
+  if (!m) return;
+  updateReviewStreak();
+  if (correct) {
+    m.correctCount = (m.correctCount || 0) + 1;
+    if (m.correctCount >= 2) {
+      setMistakes(mistakes.filter(x => x.id !== id));
+      mastered.push({ ...m, masteredAt: new Date().toISOString() });
+      setMastered(mastered);
+      toast('Mastered after 2 correct reviews');
+    } else {
+      setMistakes(mistakes);
+      toast('Good. One more correct review to master it');
+    }
+  } else {
+    m.correctCount = 0;
+    setMistakes(mistakes);
+    toast('Keep this in review');
+  }
+  renderAll();
+}
+function removeMistake(id) {
+  if (!confirm('Remove this mistake from active review?')) return;
+  setMistakes(getMistakes().filter(m => m.id !== id));
+  renderAll();
+  toast('Mistake removed');
+}
+
+function init() {
+  setupEvents();
+  renderAll();
+}
+
+document.addEventListener('DOMContentLoaded', init);

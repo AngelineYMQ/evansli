@@ -4,175 +4,266 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Evans Study HQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="appShell">
+  <div class="app-shell">
     <header class="topbar">
-      <div class="brandBlock">
-        <p class="eyebrow">EVANS LI'S WEBSITE</p>
-        <h1>Evans Study HQ</h1>
-        <p class="tagline">Plan today. Finish missions. Get ready for WA3.</p>
+      <div class="brand-block">
+        <div class="brand-mark">E</div>
+        <div>
+          <h1>Evans Study HQ</h1>
+          <p id="todayLabel">Daily Study Dashboard</p>
+        </div>
       </div>
-      <nav class="nav" aria-label="Main navigation">
-        <button class="navBtn active" data-target="dashboard">Dashboard</button>
-        <button class="navBtn" data-target="wa3">WA3 Board</button>
-        <button class="navBtn" data-target="planner">Weekly Planner</button>
-        <button class="navBtn" data-target="revision">Revision Lab</button>
-        <button class="navBtn" data-target="mistakes">Mistake Book</button>
-        <button class="navBtn" data-target="progress">Progress</button>
+      <nav class="nav-tabs" aria-label="Main navigation">
+        <button class="nav-btn active" data-section="dashboard">Dashboard</button>
+        <button class="nav-btn" data-section="wa3">WA3 Board</button>
+        <button class="nav-btn" data-section="planner">Weekly Planner</button>
+        <button class="nav-btn" data-section="revision">Revision Lab</button>
+        <button class="nav-btn" data-section="mistakes">Mistake Book</button>
+        <button class="nav-btn" data-section="progress">Progress</button>
       </nav>
     </header>
 
     <main>
-      <section id="dashboard" class="view activeView">
-        <div class="dashboardHero">
+      <section id="dashboard" class="section active-section">
+        <div class="dashboard-hero compact-card">
           <div>
-            <p class="todayLine" id="todayLine">Today</p>
+            <p class="eyebrow">Open this first</p>
             <h2>Hi Evans 👋</h2>
-            <p class="softText">Open this first, check what needs attention, then start one task.</p>
+            <p class="muted">Check today’s mission, finish one task, then practise or review mistakes.</p>
           </div>
-          <button class="primaryAction" data-target="planner">Plan / update this week</button>
+          <button id="startMissionBtn" class="primary-action">Start Today’s Mission</button>
         </div>
 
-        <div class="summaryGrid">
-          <article class="card compactCard">
-            <div class="cardHead">
-              <h3>Today’s Top 3</h3>
-              <span class="smallBadge">focus</span>
+        <div class="dashboard-grid three-cols">
+          <article class="card top3-card">
+            <div class="card-heading-row">
+              <div>
+                <p class="eyebrow">Focus</p>
+                <h3>Today’s Top 3</h3>
+              </div>
+              <span class="mini-badge" id="focusCountBadge">0/3</span>
             </div>
-            <div id="todayTop3" class="taskList"></div>
-            <button class="textBtn" data-target="planner">Edit in Weekly Planner →</button>
+            <div id="todayFocusList" class="task-list compact-list"></div>
+            <p class="helper-text">Tick one small task at a time. Progress is saved on this device.</p>
           </article>
 
-          <article class="card compactCard deadlineCard">
-            <div class="cardHead">
-              <h3>Next Deadline</h3>
-              <span class="smallBadge urgent">urgent</span>
+          <article class="card deadline-card">
+            <div class="card-heading-row">
+              <div>
+                <p class="eyebrow">Deadline</p>
+                <h3>Next Deadline</h3>
+              </div>
+              <span class="urgency-badge" id="nextDeadlineUrgency">Soon</span>
             </div>
-            <div id="nextDeadline"></div>
+            <div id="nextDeadlineCard" class="deadline-content"></div>
+            <div class="time-bar"><span id="deadlineTimeBar"></span></div>
           </article>
 
-          <article class="card compactCard">
-            <div class="cardHead">
-              <h3>WA3 Progress</h3>
-              <span class="smallBadge" id="wa3MiniCount">0/0</span>
+          <article class="card progress-card">
+            <div class="card-heading-row">
+              <div>
+                <p class="eyebrow">WA3</p>
+                <h3>Progress</h3>
+              </div>
+              <span class="mini-badge" id="wa3PercentBadge">0%</span>
             </div>
-            <div class="progressBar"><div id="wa3ProgressFill"></div></div>
-            <p class="metric" id="wa3Percent">0%</p>
-            <button class="textBtn" data-target="wa3">Open WA3 Board →</button>
+            <div class="big-number" id="wa3ProgressText">0 / 12</div>
+            <div class="progress-bar"><span id="wa3ProgressBar"></span></div>
+            <p class="helper-text" id="wa3Encouragement">12 missions are already loaded. Start with the next deadline.</p>
           </article>
         </div>
 
-        <section class="quickStart card">
-          <div class="sectionHeader">
+        <section class="card quick-start-card">
+          <div class="section-title-row">
             <div>
-              <p class="eyebrow">QUICK START</p>
-              <h2>What do you need now?</h2>
+              <p class="eyebrow">Quick Start</p>
+              <h3>What do you need now?</h3>
             </div>
           </div>
-          <div class="actionGrid">
-            <button class="actionCard" data-target="wa3"><strong>WA3 Board</strong><span>Tests, projects and submissions</span></button>
-            <button class="actionCard" data-target="planner"><strong>Weekly Planner</strong><span>Homework and revision plan</span></button>
-            <button class="actionCard" data-target="revision"><strong>Revision Lab</strong><span>Practise syllabus-style questions</span></button>
-            <button class="actionCard" data-target="mistakes"><strong>Mistake Book</strong><span>Review what went wrong</span></button>
-            <button class="actionCard" data-target="progress"><strong>Progress</strong><span>Weak topics and mastered items</span></button>
+          <div class="quick-actions">
+            <button class="quick-card" data-section="wa3"><strong>WA3 Board</strong><span>Track tests, projects and submissions</span></button>
+            <button class="quick-card" data-section="planner"><strong>Weekly Planner</strong><span>Plan homework and revision</span></button>
+            <button class="quick-card" data-section="revision"><strong>Revision Lab</strong><span>Practise questions by topic</span></button>
+            <button class="quick-card" data-section="mistakes"><strong>Mistake Book</strong><span>Review mistakes until mastered</span></button>
+            <button class="quick-card" data-section="progress"><strong>Progress</strong><span>See what is improving</span></button>
           </div>
         </section>
 
-        <div class="twoCol">
+        <div class="dashboard-grid two-cols">
           <section class="card">
-            <div class="sectionHeader">
-              <div><p class="eyebrow">UPCOMING</p><h2>Next 5 Deadlines</h2></div>
-              <button class="smallAction" data-target="wa3">View all</button>
+            <div class="section-title-row">
+              <div>
+                <p class="eyebrow">Next 5</p>
+                <h3>Upcoming Deadlines</h3>
+              </div>
+              <button class="text-btn" data-section="wa3">View all</button>
             </div>
-            <div id="upcomingList" class="deadlineList"></div>
+            <div id="upcomingDeadlines" class="deadline-list"></div>
           </section>
+
           <section class="card">
-            <div class="sectionHeader">
-              <div><p class="eyebrow">THIS WEEK</p><h2>Timeline</h2></div>
-              <button class="smallAction" data-target="planner">Edit</button>
+            <div class="section-title-row">
+              <div>
+                <p class="eyebrow">Parent Summary</p>
+                <h3>This Week at a Glance</h3>
+              </div>
             </div>
-            <div id="weekPreview" class="weekPreview"></div>
+            <div id="parentSummary" class="summary-grid"></div>
           </section>
         </div>
+
+        <section class="card">
+          <div class="section-title-row">
+            <div>
+              <p class="eyebrow">Timeline</p>
+              <h3>This Week Timeline</h3>
+            </div>
+            <button class="text-btn" data-section="planner">Edit week</button>
+          </div>
+          <div id="weekPreview" class="week-preview"></div>
+        </section>
       </section>
 
-      <section id="wa3" class="view">
-        <div class="pageTitleRow">
-          <div><p class="eyebrow">WA3 MISSION BOARD</p><h2>Sec 1 Term 3 Weighted Assessment Tracker</h2><p class="softText">Track tests, submissions, presentations and projects. Tick items off when completed.</p></div>
-          <div class="pageMetric"><strong id="wa3FullPercent">0%</strong><span>completed</span></div>
+      <section id="wa3" class="section">
+        <div class="page-header">
+          <div>
+            <p class="eyebrow">NCHS Sec 1 · Term 3</p>
+            <h2>WA3 Mission Board</h2>
+            <p class="muted">All WA3 tests, submissions and projects are preloaded. Add notes so nothing gets forgotten.</p>
+          </div>
+          <div class="header-stat">
+            <span id="wa3HeaderCompleted">0/12</span>
+            <small>completed</small>
+          </div>
         </div>
-        <div class="toolRow">
-          <label>Filter <select id="wa3Filter"><option value="all">All subjects</option></select></label>
-          <button id="clearWa3" class="smallAction danger">Reset WA3 ticks</button>
+        <div class="filter-row">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="test">Tests</button>
+          <button class="filter-btn" data-filter="submission">Submissions</button>
+          <button class="filter-btn" data-filter="project">Projects</button>
+          <button class="filter-btn" data-filter="presentation">Presentation</button>
         </div>
-        <div id="wa3List" class="missionGrid"></div>
+        <div id="wa3TaskList" class="wa3-list"></div>
       </section>
 
-      <section id="planner" class="view">
-        <div class="pageTitleRow">
-          <div><p class="eyebrow">WEEKLY PLANNER</p><h2>Homework and Revision Timeline</h2><p class="softText">Keep this simple: add what needs to be done, tick it off, move on.</p></div>
-          <button id="addPlannerTask" class="primaryAction">+ Add task</button>
+      <section id="planner" class="section">
+        <div class="page-header">
+          <div>
+            <p class="eyebrow">Plan the week</p>
+            <h2>Weekly Planner</h2>
+            <p class="muted">Add homework, revision and packing tasks. Move unfinished work to tomorrow instead of forgetting it.</p>
+          </div>
+          <button id="addPlannerTaskBtn" class="primary-action small">+ Add task</button>
         </div>
-        <div id="plannerGrid" class="plannerGrid"></div>
+        <div id="plannerGrid" class="planner-grid"></div>
       </section>
 
-      <section id="revision" class="view">
-        <div class="pageTitleRow">
-          <div><p class="eyebrow">REVISION LAB</p><h2>Practice Questions</h2><p class="softText">Choose a subject and topic. Mistakes will be saved automatically.</p></div>
-          <div class="scoreBox"><span>Round Score</span><strong id="score">0</strong></div>
+      <section id="revision" class="section">
+        <div class="page-header">
+          <div>
+            <p class="eyebrow">Practice</p>
+            <h2>Revision Lab</h2>
+            <p class="muted">Choose a subject and topic. Wrong answers go into the Mistake Book.</p>
+          </div>
+          <div class="header-stat">
+            <span id="lastScoreLabel">—</span>
+            <small>last score</small>
+          </div>
         </div>
-        <div id="subjectGrid" class="subjectGrid"></div>
-      </section>
 
-      <section id="topics" class="view">
-        <button class="smallAction" data-target="revision">← Subjects</button>
-        <p id="topicSubjectPill" class="eyebrow">SUBJECT</p>
-        <h2 id="topicSubjectTitle">Subject</h2>
-        <p id="topicSubjectHint" class="softText"></p>
-        <div id="topicGrid" class="subjectGrid topicGrid"></div>
-      </section>
+        <div class="revision-layout">
+          <aside class="card revision-controls">
+            <label>Subject</label>
+            <select id="subjectSelect"></select>
+            <label>Topic</label>
+            <select id="topicSelect"></select>
+            <label>Number of questions</label>
+            <select id="questionCountSelect">
+              <option value="5">5 questions</option>
+              <option value="10">10 questions</option>
+            </select>
+            <button id="startPracticeBtn" class="primary-action full-width">Start Practice Round</button>
+            <div class="practice-history-mini" id="practiceHistoryMini"></div>
+          </aside>
 
-      <section id="quiz" class="view">
-        <div class="quizTop"><button id="topicBackBtn" class="smallAction">← Topics</button><span id="subjectLabel" class="smallBadge">SUBJECT</span><span id="questionNo" class="smallBadge">Question 1 / 10</span></div>
-        <article class="card quizCard">
-          <p id="topicLabel" class="eyebrow">Topic</p>
-          <h2 id="questionText">Question text</h2>
-          <p id="feedbackMini" class="softText">Choose the best answer.</p>
-          <div id="answers" class="answerGrid"></div>
-          <p id="feedback" class="feedback"></p>
-        </article>
-      </section>
-
-      <section id="result" class="view">
-        <article class="card resultCard">
-          <div class="trophy">🏆</div>
-          <p class="eyebrow">ROUND COMPLETE</p>
-          <h2 id="resultTitle">Great work</h2>
-          <p id="resultText" class="softText"></p>
-          <div id="reviewBox" class="reviewBox"></div>
-          <button class="primaryAction" data-target="revision">Choose another topic</button>
-        </article>
-      </section>
-
-      <section id="mistakes" class="view">
-        <div class="pageTitleRow">
-          <div><p class="eyebrow">MISTAKE BOOK</p><h2>Review My Mistakes</h2><p class="softText">If Evans answers a saved mistake correctly twice, it becomes Mastered.</p></div>
-          <div class="toolRow"><button id="startReviewBtn" class="primaryAction">Start Review</button><button id="clearMistakesBtn" class="smallAction danger">Clear</button></div>
+          <div class="card question-card">
+            <div id="questionArea" class="empty-state">
+              <h3>Ready for a short round?</h3>
+              <p>Pick a subject and topic, then start. Keep rounds short so it feels doable.</p>
+            </div>
+          </div>
         </div>
-        <div id="mistakeList" class="stackList"></div>
       </section>
 
-      <section id="progress" class="view">
-        <div class="pageTitleRow">
-          <div><p class="eyebrow">PROGRESS</p><h2>Weak Topics & Mastered Items</h2><p class="softText">See which topics need review and which ones are already mastered.</p></div>
-          <button id="startReviewBtn2" class="primaryAction">Review Active Mistakes</button>
+      <section id="mistakes" class="section">
+        <div class="page-header">
+          <div>
+            <p class="eyebrow">Review loop</p>
+            <h2>Mistake Book</h2>
+            <p class="muted">A mistake is only mastered after Evans answers it correctly twice during review.</p>
+          </div>
+          <div class="header-stat">
+            <span id="streakLabel">🔥 0</span>
+            <small>review streak</small>
+          </div>
         </div>
-        <div id="progressList" class="stackList"></div>
+        <div class="card">
+          <div class="section-title-row">
+            <h3>Active Mistakes</h3>
+            <button id="startMistakeReviewBtn" class="secondary-action">Start Review</button>
+          </div>
+          <div id="mistakeList" class="mistake-list"></div>
+        </div>
+        <div class="card mastered-card">
+          <div class="section-title-row">
+            <h3>Mastered</h3>
+            <span class="mini-badge" id="masteredCountLabel">0</span>
+          </div>
+          <div id="masteredList" class="mastered-list"></div>
+        </div>
+      </section>
+
+      <section id="progress" class="section">
+        <div class="page-header">
+          <div>
+            <p class="eyebrow">Evidence</p>
+            <h2>Progress Dashboard</h2>
+            <p class="muted">This grows when Evans completes tasks, practises and reviews mistakes.</p>
+          </div>
+        </div>
+        <div id="progressDashboard" class="progress-dashboard"></div>
       </section>
     </main>
   </div>
+
+  <div id="taskModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="section-title-row">
+        <h3>Add a Weekly Task</h3>
+        <button id="closeTaskModal" class="icon-btn" aria-label="Close">×</button>
+      </div>
+      <label>Day</label>
+      <select id="modalDaySelect"></select>
+      <label>Task</label>
+      <input id="modalTaskInput" type="text" placeholder="e.g. Finish Science report draft" />
+      <label>Type</label>
+      <select id="modalTaskType">
+        <option value="Homework">Homework</option>
+        <option value="Revision">Revision</option>
+        <option value="Project">Project</option>
+        <option value="Pack">Pack files</option>
+      </select>
+      <button id="savePlannerTaskBtn" class="primary-action full-width">Save task</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="script.js"></script>
 </body>
 </html>
