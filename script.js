@@ -1595,14 +1595,14 @@ function getLang() { return localStorage.getItem(ESHQ_LANG_KEY) || 'en'; }
 function setLang(lang) { localStorage.setItem(ESHQ_LANG_KEY, lang); applyLanguage(); }
 function translateTextValue(value) {
   if (!value || typeof value !== 'string') return value;
-  let out = value;
-  Array.from(ZH_TEXT.entries()).sort((a,b)=>b[0].length-a[0].length).forEach(([en, zh]) => {
-    out = out.split(en).join(zh);
-  });
-  out = out
+
+  // Handle mixed dynamic phrases before dictionary replacement.
+  // This prevents the generic word "day" from turning "today" into "to天".
+  let out = value
     .replace(/(\d+) days left/g, '还剩 $1 天')
     .replace(/(\d+) day left/g, '还剩 $1 天')
     .replace(/(\d+) days overdue/g, '已逾期 $1 天')
+    .replace(/(\d+) day overdue/g, '已逾期 $1 天')
     .replace(/(\d+)d left/g, '还剩 $1 天')
     .replace(/Due today/g, '今天截止')
     .replace(/Due tomorrow/g, '明天截止')
@@ -1614,6 +1614,11 @@ function translateTextValue(value) {
     .replace(/(\d+) rounds/g, '$1 轮')
     .replace(/(\d+) classes/g, '$1 节课')
     .replace(/(\d+) class/g, '$1 节课');
+
+  Array.from(ZH_TEXT.entries()).sort((a,b)=>b[0].length-a[0].length).forEach(([en, zh]) => {
+    if (en === 'day' || en === 'days') return;
+    out = out.split(en).join(zh);
+  });
   return out;
 }
 function shouldSkipTranslation(parent) {

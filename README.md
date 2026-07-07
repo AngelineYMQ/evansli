@@ -1,5 +1,3 @@
-# Evans Study HQ v11
+# Evans Study HQ v12
 
-Bilingual English / Chinese toggle version.
-
-Upload `index.html`, `style.css`, `script.js`, and `README.md` to the root of the GitHub Pages repository.
+Bilingual toggle bug fix. Fixes Chinese dynamic deadline text such as “Due today” so it does not appear as “截止：to天”.
