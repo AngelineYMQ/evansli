@@ -243,20 +243,41 @@ function setSyncStatus(text, mode = 'neutral') {
   el.dataset.mode = mode;
 }
 
+function applyCloudState(state) {
+  CLOUD_SYNC.state = state || {};
+  Object.entries(CLOUD_SYNC.state).forEach(([key, value]) => {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+  });
+}
+
+async function fetchCloudState(silent = false) {
+  if (!silent) setSyncStatus('Syncing…');
+  const res = await fetch(`/api/state?student=${encodeURIComponent(CLOUD_SYNC.student)}&t=${Date.now()}`, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`Cloud state failed: ${res.status}`);
+  const data = await res.json();
+  applyCloudState(data.state || {});
+  CLOUD_SYNC.enabled = true;
+  CLOUD_SYNC.ready = true;
+  if (!silent) setSyncStatus('Saved to cloud', 'ok');
+  return data;
+}
+
+async function refreshFromCloud(silent = true) {
+  if (!CLOUD_SYNC.enabled && CLOUD_SYNC.ready) return;
+  try {
+    await fetchCloudState(silent);
+    renderAll();
+  } catch (err) {
+    CLOUD_SYNC.lastError = err?.message || String(err);
+    console.warn('Cloud refresh failed.', err);
+    if (!silent) setSyncStatus('Refresh failed', 'error');
+  }
+}
+
 async function initCloudSync() {
   setSyncStatus('Syncing…');
   try {
-    const res = await fetch(`/api/state?student=${encodeURIComponent(CLOUD_SYNC.student)}&t=${Date.now()}`, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`Cloud state failed: ${res.status}`);
-    const data = await res.json();
-    CLOUD_SYNC.enabled = true;
-    CLOUD_SYNC.ready = true;
-    CLOUD_SYNC.state = data.state || {};
-
-    // Mirror cloud values into localStorage so the site can still work offline.
-    Object.entries(CLOUD_SYNC.state).forEach(([key, value]) => {
-      try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
-    });
+    await fetchCloudState(true);
 
     // First-time migration: if the cloud has no value for a key but this browser has one, upload it.
     for (const key of cloudKeys()) {
@@ -269,7 +290,7 @@ async function initCloudSync() {
         cloudSave(key, value);
       } catch {}
     }
-    setSyncStatus('Cloud sync on', 'ok');
+    setSyncStatus('Saved to cloud', 'ok');
   } catch (err) {
     CLOUD_SYNC.enabled = false;
     CLOUD_SYNC.ready = true;
@@ -1538,6 +1559,12 @@ async function init() {
   await initCloudSync();
   markVisit();
   renderAll();
+  // Keep Mum's computer / Evans's phone in sync without needing a manual refresh.
+  setInterval(() => refreshFromCloud(true), 12000);
+  window.addEventListener('focus', () => refreshFromCloud(true));
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) refreshFromCloud(true);
+  });
 }
 document.addEventListener('DOMContentLoaded', init);
 

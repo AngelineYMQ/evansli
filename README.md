@@ -33,3 +33,8 @@ Homework, WA3 completion, weekly plans, schedule activities, proof notes, timest
 ## v15 Navigation cleanup
 - Moved Mistake Book into Revision Lab so the top navigation stays on one line.
 - Existing mistake review logic, cloud sync and progress tracking are preserved.
+
+
+## v16 cloud visibility fix
+
+Adds automatic cloud refresh every 12 seconds and when the page regains focus, so homework added on one device appears on other devices without needing to reopen the site.
