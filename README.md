@@ -1,15 +1,11 @@
-# Evans Study HQ v19 · Restore Original Revision Lab
+# Evans Study HQ v20 - Pack List Sync Fix
 
-This version merges the original `v6-mistake-book.zip` Revision Lab logic into the current Evans Study HQ cloud version.
+Fixes the bag check / pack list so checked items stay checked after Cloudflare refresh and sync across devices.
 
-## What is included
-- Keeps the current Evans Study HQ dashboard, homework, schedule, WA3 board, weekly plan, CCA schedule, lunch-time fix and Cloudflare D1 sync.
-- Restores the older Revision Lab question bank and subject/topic coverage from the uploaded v6 source.
-- Restores a stronger Mistake Book review loop: wrong answers are saved, active mistakes can be reviewed, and a mistake becomes Mastered after Evans answers it correctly twice.
-- Supports Mixed Practice and larger question rounds. If a topic has fewer questions than selected, the app fills from the same subject instead of stopping early.
-- Keeps cache-busting at `v=19.0` so the browser loads the updated CSS/JS.
+## Included
+- Dashboard, homework, schedule, WA3, weekly plan, revision lab and progress
+- Cloudflare D1 sync
+- Restored original Revision Lab and Mistake Book logic
+- Persistent pack-list checkboxes saved under `eshq_v20_pack_done`
 
-## Deploy
-Upload all files to the root of the `evansli` repository and push to `main`. Cloudflare Pages should deploy automatically.
-
-Required Cloudflare D1 binding: `DB`.
+Deploy to Cloudflare Pages with D1 binding `DB`.

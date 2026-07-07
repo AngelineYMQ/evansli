@@ -3122,7 +3122,8 @@ const LS = {
   audit: 'eshq_v5_audit',
   evidence: 'eshq_v5_evidence',
   lastOpen: 'eshq_v5_last_open',
-  previousOpen: 'eshq_v5_previous_open'
+  previousOpen: 'eshq_v5_previous_open',
+  packDone: 'eshq_v20_pack_done'
 };
 
 const state = {
@@ -3871,6 +3872,20 @@ function getPackItemsForDay(day) {
   });
   return [...items];
 }
+function getPackDone() {
+  return load(LS.packDone, {});
+}
+function setPackDone(value) {
+  save(LS.packDone, value);
+}
+function packDoneKey(day, item) {
+  return `${day}::${item}`;
+}
+function renderPackItem(day, item) {
+  const done = getPackDone();
+  const key = packDoneKey(day, item);
+  return `<label class="pack-item ${done[key] ? 'done' : ''}"><input type="checkbox" data-pack-day="${day}" data-pack-item="${encodeURIComponent(item)}" ${done[key] ? 'checked' : ''}> <span>${item}</span></label>`;
+}
 function classRow(c) {
   const extra = [c.teacher, c.venue].filter(Boolean).join(' · ');
   return `<div class="class-row"><span class="class-time">${c.time}</span><div><strong>${c.subject}</strong>${extra ? `<span>${extra}</span>` : ''}</div></div>`;
@@ -3887,7 +3902,7 @@ function renderTimetableDashboard() {
     preview.innerHTML = `<div class="cycle-chip">${day}</div>` + classes.slice(0, 6).map(classRow).join('') + (classes.length > 6 ? `<button class="text-btn" data-section="timetable">View ${classes.length - 6} more</button>` : '');
   }
   if (pack) {
-    pack.innerHTML = getPackItemsForDay(nextDay).slice(0, 7).map(item => `<label class="pack-item"><input type="checkbox"> <span>${item}</span></label>`).join('');
+    pack.innerHTML = getPackItemsForDay(nextDay).slice(0, 7).map(item => renderPackItem(nextDay, item)).join('');
   }
 }
 function renderTimetable() {
@@ -3904,7 +3919,7 @@ function renderTimetable() {
   document.getElementById('selectedClassCount').textContent = `${classes.filter(c => !['Lunch', 'Recess'].includes(c.subject)).length} classes`;
   document.getElementById('selectedDayClasses').innerHTML = classes.map(classRow).join('');
   document.getElementById('packListTitle').textContent = `Pack for ${nextDay}`;
-  document.getElementById('tomorrowPackList').innerHTML = getPackItemsForDay(nextDay).map(item => `<label class="pack-item"><input type="checkbox"> <span>${item}</span></label>`).join('');
+  document.getElementById('tomorrowPackList').innerHTML = getPackItemsForDay(nextDay).map(item => renderPackItem(nextDay, item)).join('');
   document.getElementById('fullTimetableGrid').innerHTML = TIMETABLE_DAYS.map(day => {
     const dayClasses = (TIMETABLE[day] || []).filter(c => !['Lunch', 'Recess'].includes(c.subject));
     return `<article class="timetable-day ${day === selected ? 'active' : ''}"><h3>${day}</h3>${dayClasses.map(c => `<p><strong>${c.time}</strong> ${c.subject}${c.venue ? ` · ${c.venue}` : ''}</p>`).join('')}</article>`;
@@ -4026,6 +4041,20 @@ function setupEvents() {
       recordAudit({ type: 'planner', id: e.target.dataset.planId, label: task?.text || 'Planner task', checked: e.target.checked, evidence: proof });
       toast(e.target.checked ? 'Task completed with proof' : 'Task reopened');
       renderAll();
+    }
+    if (e.target.matches('[data-pack-day][data-pack-item]')) {
+      const done = getPackDone();
+      const day = e.target.dataset.packDay;
+      const item = decodeURIComponent(e.target.dataset.packItem);
+      const key = packDoneKey(day, item);
+      done[key] = e.target.checked;
+      setPackDone(done);
+      recordAudit({ type: 'pack', id: key, label: `${day}: ${item}`, checked: e.target.checked, evidence: e.target.checked ? 'packed' : '' });
+      toast(e.target.checked ? 'Packed item saved' : 'Packed item reopened');
+      renderTimetableDashboard();
+      renderTimetable();
+      renderProgress();
+      return;
     }
     if (e.target.id === 'subjectSelect') renderTopicOptions();
     if (e.target.id === 'cycleDaySelect') {
