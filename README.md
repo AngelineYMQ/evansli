@@ -1,3 +1,5 @@
+# Evans Study HQ v17 · CCA + Timetable Fix
+
 # Evans Study HQ v14 · Cloudflare Sync
 
 This version keeps the Evans Study HQ interface and adds Cloudflare D1 sync.
@@ -38,3 +40,10 @@ Homework, WA3 completion, weekly plans, schedule activities, proof notes, timest
 ## v16 cloud visibility fix
 
 Adds automatic cloud refresh every 12 seconds and when the page regains focus, so homework added on one device appears on other devices without needing to reopen the site.
+
+
+## v17 updates
+- Corrected school lunch time to 13:40–14:20 across Day 1–Day 10.
+- Added Term 3 Chinese Orchestra CCA training schedule from 29 Jun to 2 Sep.
+- CCA sessions now appear in After-school Schedule and Dashboard upcoming schedule.
+- Fixed CCA entries are marked as school schedule and cannot be deleted from the app.

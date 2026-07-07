@@ -25,8 +25,8 @@ const TIMETABLE = {
     { time: '10:40–11:20', subject: 'HCL', teacher: 'JiW', venue: '' },
     { time: '11:20–12:00', subject: 'Science', teacher: 'LeowSH', venue: '' },
     { time: '12:00–12:40', subject: 'Mathematics', teacher: 'TohML', venue: '' },
-    { time: '12:40–14:00', subject: 'History', teacher: 'NeoCW', venue: '' },
-    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' }
+    { time: '12:40–13:40', subject: 'History', teacher: 'NeoCW', venue: '' },
+    { time: '13:40–14:20', subject: 'Lunch', teacher: '', venue: '' }
   ],
   'Day 2': [
     { time: '7:40–8:00', subject: 'DEAR time', teacher: '', venue: '' },
@@ -35,8 +35,8 @@ const TIMETABLE = {
     { time: '10:00–10:40', subject: 'Recess', teacher: '', venue: '' },
     { time: '10:40–11:20', subject: 'Mathematics', teacher: 'TohML', venue: '' },
     { time: '11:20–12:40', subject: 'Science', teacher: 'LeowSH', venue: '' },
-    { time: '12:40–14:00', subject: 'English', teacher: 'Su Mei', venue: '' },
-    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' },
+    { time: '12:40–13:40', subject: 'English', teacher: 'Su Mei', venue: '' },
+    { time: '13:40–14:20', subject: 'Lunch', teacher: '', venue: '' },
     { time: '15:00–17:20', subject: 'MSP', teacher: 'Maizurah', venue: '' }
   ],
   'Day 3': [
@@ -48,7 +48,7 @@ const TIMETABLE = {
     { time: '10:40–12:00', subject: 'HCL', teacher: 'JiW', venue: '' },
     { time: '12:00–13:20', subject: 'English', teacher: 'Su Mei', venue: '' },
     { time: '13:20–14:00', subject: 'Art', teacher: 'Faizal / Insyirah', venue: 'ART2' },
-    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' }
+    { time: '13:40–14:20', subject: 'Lunch', teacher: '', venue: '' }
   ],
   'Day 4': [
     { time: '7:40–8:00', subject: 'DEAR time', teacher: '', venue: '' },
@@ -58,8 +58,8 @@ const TIMETABLE = {
     { time: '10:40–11:20', subject: 'Geography', teacher: 'LokLM', venue: '' },
     { time: '11:20–12:00', subject: 'HCL', teacher: 'JiW', venue: '' },
     { time: '12:00–12:40', subject: 'PE (LS)', teacher: 'Andrew', venue: 'ISH L2' },
-    { time: '12:40–14:00', subject: 'English', teacher: 'Su Mei', venue: '' },
-    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' }
+    { time: '12:40–13:40', subject: 'English', teacher: 'Su Mei', venue: '' },
+    { time: '13:40–14:20', subject: 'Lunch', teacher: '', venue: '' }
   ],
   'Day 5': [
     { time: '7:40–8:00', subject: 'S/Love My Sch', teacher: '', venue: '' },
@@ -69,8 +69,8 @@ const TIMETABLE = {
     { time: '10:00–10:40', subject: 'Recess', teacher: '', venue: '' },
     { time: '10:40–12:00', subject: 'Science', teacher: 'LeowSH', venue: 'BI2' },
     { time: '12:00–13:20', subject: 'Literature', teacher: 'Shahnaaz', venue: '' },
-    { time: '13:20–14:00', subject: 'Mathematics', teacher: 'TohML', venue: '' },
-    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' }
+    { time: '13:20–13:40', subject: 'Mathematics', teacher: 'TohML', venue: '' },
+    { time: '13:40–14:20', subject: 'Lunch', teacher: '', venue: '' }
   ],
   'Day 6': [
     { time: '7:40–8:00', subject: 'DEAR time', teacher: '', venue: '' },
@@ -81,8 +81,8 @@ const TIMETABLE = {
     { time: '10:40–11:20', subject: 'Recess', teacher: '', venue: '' },
     { time: '11:20–12:40', subject: 'English', teacher: 'Su Mei', venue: '' },
     { time: '12:40–13:20', subject: 'Science', teacher: 'LeowSH', venue: '' },
-    { time: '13:20–14:00', subject: 'Geography', teacher: 'LokLM', venue: '' },
-    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' }
+    { time: '13:20–13:40', subject: 'Geography', teacher: 'LokLM', venue: '' },
+    { time: '13:40–14:20', subject: 'Lunch', teacher: '', venue: '' }
   ],
   'Day 7': [
     { time: '7:40–8:00', subject: 'DEAR time', teacher: '', venue: '' },
@@ -91,8 +91,8 @@ const TIMETABLE = {
     { time: '10:00–10:40', subject: 'Recess', teacher: '', venue: '' },
     { time: '10:40–11:20', subject: 'Mathematics', teacher: 'TohML', venue: '' },
     { time: '11:20–12:40', subject: 'Geography', teacher: 'LokLM', venue: '' },
-    { time: '12:40–14:00', subject: 'English', teacher: 'Su Mei', venue: '' },
-    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' },
+    { time: '12:40–13:40', subject: 'English', teacher: 'Su Mei', venue: '' },
+    { time: '13:40–14:20', subject: 'Lunch', teacher: '', venue: '' },
     { time: '15:00–17:20', subject: 'MSP', teacher: 'Maizurah', venue: '' }
   ],
   'Day 8': [
@@ -103,8 +103,8 @@ const TIMETABLE = {
     { time: '10:00–10:40', subject: 'MASSP', teacher: 'ChooSY / YarRM / Raffi / Andrew / CheanKX / TanYB', venue: 'ISH L1 / School Hall 1' },
     { time: '10:40–11:20', subject: 'Recess', teacher: '', venue: '' },
     { time: '11:20–12:40', subject: 'ALP1', teacher: 'LeowSH / ALP', venue: 'LAB1' },
-    { time: '12:40–14:00', subject: 'HCL', teacher: 'JiW', venue: '' },
-    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' }
+    { time: '12:40–13:40', subject: 'HCL', teacher: 'JiW', venue: '' },
+    { time: '13:40–14:20', subject: 'Lunch', teacher: '', venue: '' }
   ],
   'Day 9': [
     { time: '7:40–8:00', subject: 'DEAR time', teacher: '', venue: '' },
@@ -115,8 +115,8 @@ const TIMETABLE = {
     { time: '10:40–11:20', subject: 'Recess', teacher: '', venue: '' },
     { time: '11:20–12:40', subject: 'Art', teacher: 'Faizal / Insyirah', venue: 'ART2' },
     { time: '12:40–13:20', subject: 'Literature', teacher: 'Shahnaaz', venue: '' },
-    { time: '13:20–14:00', subject: 'HCL', teacher: 'JiW', venue: '' },
-    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' }
+    { time: '13:20–13:40', subject: 'HCL', teacher: 'JiW', venue: '' },
+    { time: '13:40–14:20', subject: 'Lunch', teacher: '', venue: '' }
   ],
   'Day 10': [
     { time: '7:40–8:00', subject: 'S/Love My Sch', teacher: '', venue: '' },
@@ -126,10 +126,33 @@ const TIMETABLE = {
     { time: '10:40–12:00', subject: 'Science', teacher: 'LeowSH', venue: 'BI2' },
     { time: '12:00–12:40', subject: 'HCL', teacher: 'JiW', venue: '' },
     { time: '12:40–13:20', subject: 'Mathematics', teacher: 'TohML', venue: '' },
-    { time: '13:20–14:00', subject: 'History', teacher: 'NeoCW', venue: '' },
-    { time: '14:00–15:00', subject: 'Lunch', teacher: '', venue: '' }
+    { time: '13:20–13:40', subject: 'History', teacher: 'NeoCW', venue: '' },
+    { time: '13:40–14:20', subject: 'Lunch', teacher: '', venue: '' }
   ]
 };
+
+const CCA_SCHEDULE = [
+  { id: 'cca-2026-06-29', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-06-29', day: 'Monday', time: '3:00–6:00 pm', teacher: 'Ms Ong', venue: 'Music Room', notes: '' },
+  { id: 'cca-2026-07-08', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-07-08', day: 'Wednesday', time: '3:00–6:00 pm', teacher: 'Mdm Tang / Mrs Tan', venue: 'Music Room', notes: 'No CCA for Week 3 due to O Level.' },
+  { id: 'cca-2026-07-10', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-07-10', day: 'Friday', time: '3:00–5:00 pm', teacher: 'Mr Chen', venue: 'Music Room', notes: 'TD Performers' },
+  { id: 'cca-2026-07-20', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-07-20', day: 'Monday', time: '3:00–6:00 pm', teacher: 'Ms Ong', venue: 'Sectional Rooms', notes: '' },
+  { id: 'cca-2026-07-22', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-07-22', day: 'Wednesday', time: '3:00–6:00 pm', teacher: 'ALL', venue: 'Music Room', notes: 'DSA audition: selected student helpers' },
+  { id: 'cca-2026-07-24', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-07-24', day: 'Friday', time: '3:00–5:00 pm', teacher: 'Mrs Tan', venue: 'Music Room', notes: 'TD Performers' },
+  { id: 'cca-2026-07-27', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-07-27', day: 'Monday', time: '3:00–6:00 pm', teacher: 'Mdm Tang', venue: 'Sectional Rooms', notes: '' },
+  { id: 'cca-2026-07-29', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-07-29', day: 'Wednesday', time: '3:00–6:00 pm', teacher: 'Mr Chen', venue: 'Music Room', notes: '' },
+  { id: 'cca-2026-08-03', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-08-03', day: 'Monday', time: '3:00–6:00 pm', teacher: 'Ms Ong', venue: 'Sectional Rooms', notes: '' },
+  { id: 'cca-2026-08-05', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-08-05', day: 'Wednesday', time: '3:00–6:00 pm', teacher: 'Mdm Tang', venue: 'Music Room', notes: '' },
+  { id: 'cca-2026-08-12', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-08-12', day: 'Wednesday', time: '3:00–6:00 pm', teacher: 'Mr Chen', venue: 'Music Room', notes: '' },
+  { id: 'cca-2026-08-14', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-08-14', day: 'Friday', time: '3:00–5:00 pm', teacher: 'Mdm Tang', venue: 'Music Room', notes: 'TD Performers' },
+  { id: 'cca-2026-08-17', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-08-17', day: 'Monday', time: '3:00–6:00 pm', teacher: 'Ms Ong', venue: 'Sectional Rooms', notes: '' },
+  { id: 'cca-2026-08-19', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-08-19', day: 'Wednesday', time: '3:00–6:00 pm', teacher: 'Mrs Tan', venue: 'Music Room', notes: '' },
+  { id: 'cca-2026-08-21', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-08-21', day: 'Friday', time: '3:00–5:00 pm', teacher: 'Ms Ong', venue: 'Music Room', notes: 'TD Performers' },
+  { id: 'cca-2026-08-24', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-08-24', day: 'Monday', time: '3:00–6:00 pm', teacher: 'Mrs Tan', venue: 'Sectional Rooms', notes: '' },
+  { id: 'cca-2026-08-26', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-08-26', day: 'Wednesday', time: '3:00–6:00 pm', teacher: 'Mr Chen', venue: 'Music Room', notes: '' },
+  { id: 'cca-2026-08-31', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-08-31', day: 'Monday', time: '3:00–6:00 pm', teacher: 'Mdm Tang', venue: 'Sectional Rooms', notes: '' },
+  { id: 'cca-2026-09-02', type: 'CCA', title: 'Chinese Orchestra Training', date: '2026-09-02', day: 'Wednesday', time: '3:00–6:00 pm', teacher: 'Mr Chen', venue: 'Music Room', notes: '' }
+];
+
 
 const PACK_ITEMS = {
   'DEAR time': ['reading book'],
@@ -1339,16 +1362,26 @@ function clearCompletedHomework() {
   toast('Completed homework cleared');
 }
 function activityDateKey(a) { return `${a.date || ''} ${a.time || ''}`; }
+function normaliseCcaItem(a) {
+  return { ...a, fixed: true, notes: [a.teacher, a.venue, a.notes].filter(Boolean).join(' · ') };
+}
+function getCcaActivities() {
+  return CCA_SCHEDULE.map(normaliseCcaItem);
+}
+function getAllActivities() {
+  return [...getActivities(), ...getCcaActivities()];
+}
 function getTodayActivities() {
   const today = inputDateString(todayDate());
-  return getActivities().filter(a => a.date === today).sort((a,b)=>activityDateKey(a).localeCompare(activityDateKey(b)));
+  return getAllActivities().filter(a => a.date === today).sort((a,b)=>activityDateKey(a).localeCompare(activityDateKey(b)));
 }
 function getUpcomingActivities(limit = 8) {
   const today = inputDateString(todayDate());
-  return getActivities().filter(a => !a.date || a.date >= today).sort((a,b)=>activityDateKey(a).localeCompare(activityDateKey(b))).slice(0, limit);
+  return getAllActivities().filter(a => !a.date || a.date >= today).sort((a,b)=>activityDateKey(a).localeCompare(activityDateKey(b))).slice(0, limit);
 }
 function renderActivityItem(a, compact = false) {
-  return `<div class="activity-item ${compact ? 'compact' : ''}"><span class="type-badge">${a.type}</span><div><strong>${a.title}</strong><span>${a.date ? dueLabel(a.date) : 'No date'}${a.time ? ` · ${a.time}` : ''}${a.notes ? ` · ${a.notes}` : ''}</span></div><button data-activity-delete="${a.id}">Delete</button></div>`;
+  const deleteBtn = a.fixed ? '<span class="locked-note">School schedule</span>' : `<button data-activity-delete="${a.id}">Delete</button>`;
+  return `<div class="activity-item ${compact ? 'compact' : ''} ${a.fixed ? 'fixed' : ''}"><span class="type-badge">${a.type}</span><div><strong>${a.title}</strong><span>${a.date ? dueLabel(a.date) : 'No date'}${a.time ? ` · ${a.time}` : ''}${a.notes ? ` · ${a.notes}` : ''}</span></div>${deleteBtn}</div>`;
 }
 function renderActivitiesDashboard() {
   const el = document.getElementById('dashboardActivitiesPreview');
@@ -1507,7 +1540,7 @@ function renderProgress() {
   const subjectCounts = history.reduce((acc, h) => { acc[h.subject] = (acc[h.subject] || 0) + 1; return acc; }, {});
   const subjectRows = Object.entries(subjectCounts).length ? Object.entries(subjectCounts).map(([s, n]) => `<div class="metric"><span>${s}</span><strong>${n} rounds</strong></div>`).join('') : `<p class="helper-text">Start one practice round to see subject history.</p>`;
   document.getElementById('progressDashboard').innerHTML = `
-    <article class="progress-panel"><h3>Daily Work</h3><div class="metric"><span>Homework completed</span><strong>${hwDone}/${hw.length}</strong></div><div class="metric"><span>Active homework</span><strong>${hw.filter(h=>!h.done).length}</strong></div><div class="metric"><span>Schedule items</span><strong>${getActivities().length}</strong></div></article>
+    <article class="progress-panel"><h3>Daily Work</h3><div class="metric"><span>Homework completed</span><strong>${hwDone}/${hw.length}</strong></div><div class="metric"><span>Active homework</span><strong>${hw.filter(h=>!h.done).length}</strong></div><div class="metric"><span>Custom schedule items</span><strong>${getActivities().length}</strong></div></article>
     <article class="progress-panel"><h3>Assessment & Plans</h3><div class="metric"><span>WA3 completed</span><strong>${wa3Done}/${WA3_TASKS.length}</strong></div><div class="metric"><span>Weekly plans done</span><strong>${plannerDone}/${plannerTasks.length}</strong></div><div class="metric"><span>Next deadline</span><strong>${getUpcomingIncomplete()[0] ? formatDate(getUpcomingIncomplete()[0].date) : 'Done'}</strong></div></article>
     <article class="progress-panel"><h3>Practice Progress</h3><div class="metric"><span>Practice rounds</span><strong>${history.length}</strong></div><div class="metric"><span>Last score</span><strong>${history.length ? `${history[history.length-1].score}/${history[history.length-1].total}` : '—'}</strong></div>${subjectRows}</article>
     <article class="progress-panel"><h3>Mistake Review</h3><div class="metric"><span>Active mistakes</span><strong>${mistakes.length}</strong></div><div class="metric"><span>Mastered mistakes</span><strong>${mastered.length}</strong></div><p class="helper-text">Finish homework, practise one round, then review mistakes.</p></article>
@@ -1721,7 +1754,7 @@ const ZH_TEXT = new Map(Object.entries({
   'Active Mistakes': '正在复习的错题', 'Start Review': '开始复习', 'Mastered': '已掌握', 'Evidence': '完成证明', 'Progress Dashboard': '进度看板', 'Audit trail': '记录轨迹', 'Recent Task Evidence': '最近完成证明',
   'Add a Weekly Plan': '添加周计划', 'Day': '日期', 'Task': '任务', 'Type': '类别', 'Study': '学习', 'Project': '项目', 'Tuition': '补习', 'Taekwondo': '跆拳道', 'Exam': '考试', 'Family': '家庭', 'Reminder': '提醒', 'Save plan': '保存计划',
   'Add Homework': '添加功课', 'Homework details': '功课内容', 'Due date': '截止日期', 'Save homework': '保存功课', 'Add Schedule Item': '添加日程', 'Title': '标题', 'Date': '日期', 'Time': '时间', 'Notes': '备注', 'Save schedule item': '保存日程',
-  'Mathematics': '数学', 'Science': '科学', 'English Language': '英文', 'English': '英文', 'Higher Chinese': '高级华文', 'History': '历史', 'Geography': '地理', 'English Literature': '英文文学', 'Literature': '文学', 'Food & Consumer Education': 'FCE家政', 'Art': '美术', 'Music': '音乐', 'PE (LS)': '体育', 'Recess': '课间休息', 'Lunch': '午餐', 'DEAR time': 'DEAR阅读时间',
+  'Mathematics': '数学', 'Science': '科学', 'English Language': '英文', 'English': '英文', 'Higher Chinese': '高级华文', 'History': '历史', 'Geography': '地理', 'English Literature': '英文文学', 'Literature': '文学', 'Food & Consumer Education': 'FCE家政', 'Art': '美术', 'Music': '音乐', 'Chinese Orchestra Training': '华乐团训练', 'CCA': 'CCA', 'PE (LS)': '体育', 'Recess': '课间休息', 'Lunch': '午餐', 'DEAR time': 'DEAR阅读时间',
   'Pack': '整理书包', 'Revision': '复习', 'Other': '其他', 'No homework due soon.': '近期没有要交的功课。', 'No activities added yet.': '还没有添加课后日程。', 'No proof yet': '暂无证明', 'First visit': '第一次打开',
   'Daily Streak': '每日连续打卡', 'Current streak': '当前连续天数', 'Best streak': '最高连续天数', 'Homework completed': '已完成功课', 'Active homework': '待完成功课', 'Schedule items': '日程项目', 'Assessment & Plans': '评估与计划',
   'WA3 completed': 'WA3已完成', 'Weekly plans done': '周计划已完成', 'Next deadline': '下一个截止日期', 'Practice Progress': '练习进度', 'Practice rounds': '练习轮数', 'Last score': '上次分数', 'Mistake Review': '错题复习', 'Active mistakes': '待复习错题', 'Mastered mistakes': '已掌握错题',

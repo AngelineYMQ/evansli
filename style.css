@@ -662,3 +662,17 @@ h3 { margin: 0; font-size: 17px; letter-spacing: -0.02em; }
     grid-template-columns: 1fr;
   }
 }
+
+/* v17: fixed CCA schedule items */
+.activity-item.fixed {
+  background: #f7fbf8;
+}
+.locked-note {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #2d6b5c;
+  background: #e7f1ed;
+  border-radius: 999px;
+  padding: 0.35rem 0.65rem;
+  white-space: nowrap;
+}
