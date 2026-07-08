@@ -154,6 +154,104 @@ const CCA_SCHEDULE = [
 ];
 
 
+
+const SCHOOL_NOTICES = [
+  {
+    id: 'hbl-bcd-2026-07-13',
+    type: 'HBL / BCD',
+    title: 'Home-Based Learning / Beyond Classroom Day',
+    date: '2026-07-13',
+    endDate: '2026-07-17',
+    priority: 'urgent',
+    audience: 'Sec 1–3 students',
+    detail: 'Sec 1–3 students do not report to school. Complete work assigned by subject teachers based on the class timetable. Prepare for SIL presentation on 19 Aug.'
+  },
+  {
+    id: 'national-day-celebration-2026-08-07',
+    type: 'School Event',
+    title: 'National Day Celebration',
+    date: '2026-08-07',
+    priority: 'normal',
+    audience: 'All students',
+    detail: 'School event from 7:30am to 11:00am.'
+  },
+  {
+    id: 'national-day-off-2026-08-10',
+    type: 'Holiday',
+    title: 'National Day off-in-lieu',
+    date: '2026-08-10',
+    priority: 'normal',
+    audience: 'All students',
+    detail: 'School holiday.'
+  },
+  {
+    id: 'teachers-day-celebration-2026-09-03',
+    type: 'School Event',
+    title: 'Teachers’ Day Celebration',
+    date: '2026-09-03',
+    priority: 'normal',
+    audience: 'All students',
+    detail: 'Celebration from 7:30am to 10:30am.'
+  },
+  {
+    id: 'teachers-day-holiday-2026-09-04',
+    type: 'Holiday',
+    title: 'Teachers’ Day school holiday',
+    date: '2026-09-04',
+    priority: 'normal',
+    audience: 'All students',
+    detail: 'School holiday.'
+  },
+  {
+    id: 'sec1-eoy-2026-09-30',
+    type: 'Exam Period',
+    title: 'Sec 1 & 2 End-of-Year Examination',
+    date: '2026-09-30',
+    endDate: '2026-10-08',
+    priority: 'urgent',
+    audience: 'Sec 1 & 2 students',
+    detail: 'EOY examination period. Assessment timetables will be uploaded on the school website. No re-test or re-examination for missed assessments unless valid medical certificate applies.'
+  },
+  {
+    id: 'shhk-learning-journey-1excellence-2026-10-16',
+    type: 'Learning Journey',
+    title: 'Sec 1 SHHK Learning Journey',
+    date: '2026-10-16',
+    priority: 'normal',
+    audience: '1 Innovation & 1 Excellence',
+    detail: 'Scheduled from 2:45pm to 5:45pm for 1 Innovation and 1 Excellence.'
+  },
+  {
+    id: 'mtp-registration-2026-09-28',
+    type: 'Parent Action',
+    title: 'MTP registration window',
+    date: '2026-09-28',
+    endDate: '2026-10-02',
+    priority: 'normal',
+    audience: 'Parents of Sec 1–3 students',
+    detail: 'Parents who wish to meet Form Teachers should register for one 15-minute slot via Parents Gateway invitation.'
+  },
+  {
+    id: 'mtp-session-2026-10-22',
+    type: 'Parent Event',
+    title: 'Meet-the-Parents Session',
+    date: '2026-10-22',
+    endDate: '2026-10-23',
+    priority: 'normal',
+    audience: 'Sec 1–3 parents',
+    detail: 'MTP is scheduled from 8:00am to 12:00 noon on both days. Mode will be shared by Form Teachers nearer the date.'
+  },
+  {
+    id: 'pld-dma-reminder',
+    type: 'Reminder',
+    title: 'Keep PLD DMA enabled',
+    date: '2026-07-08',
+    priority: 'normal',
+    audience: 'Students using PLD',
+    detail: 'Keep DMA enabled on the PLD. Contact school ICT support if there are issues. Do not disable or bypass DMA.'
+  }
+];
+
 const PACK_ITEMS = {
   'DEAR time': ['reading book'],
   'HCL': ['Higher Chinese textbook / file'],
@@ -3398,6 +3496,7 @@ function renderDashboard() {
   renderParentSummary();
   renderWeekPreview();
   renderTimetableDashboard();
+  renderSchoolNoticesDashboard();
   renderAuditStatus();
 }
 
@@ -3926,11 +4025,74 @@ function renderTimetable() {
   }).join('');
 }
 
+
+function noticeEndDate(notice) {
+  return notice.endDate || notice.date;
+}
+function isNoticeCurrentOrUpcoming(notice) {
+  const end = noticeEndDate(notice);
+  if (!end) return true;
+  const today = inputDateString(todayDate());
+  return end >= today;
+}
+function noticeSort(a, b) {
+  const da = parseDate(a.date)?.getTime() ?? Infinity;
+  const db = parseDate(b.date)?.getTime() ?? Infinity;
+  return da - db;
+}
+function getUpcomingNotices(limit = 5) {
+  return SCHOOL_NOTICES
+    .filter(isNoticeCurrentOrUpcoming)
+    .sort(noticeSort)
+    .slice(0, limit);
+}
+function noticeDateLabel(notice) {
+  if (!notice.date) return 'TBC';
+  const start = formatLongDate(notice.date);
+  if (notice.endDate && notice.endDate !== notice.date) return `${start} – ${formatLongDate(notice.endDate)}`;
+  return start;
+}
+function renderSchoolNoticeItem(notice, compact = false) {
+  const urgent = notice.priority === 'urgent';
+  const dateText = noticeDateLabel(notice);
+  const audience = notice.audience ? `<span class="notice-audience">${notice.audience}</span>` : '';
+  return `
+    <article class="notice-item ${urgent ? 'urgent' : ''} ${compact ? 'compact' : ''}">
+      <div class="notice-date">${dateText}</div>
+      <div class="notice-body">
+        <div class="notice-title-row"><span class="type-badge">${notice.type}</span>${urgent ? '<span class="urgency-badge danger">Important</span>' : ''}</div>
+        <strong>${notice.title}</strong>
+        <p>${notice.detail}</p>
+        ${audience}
+      </div>
+    </article>`;
+}
+function renderSchoolNoticesDashboard() {
+  const el = document.getElementById('dashboardSchoolNoticesPreview');
+  if (!el) return;
+  const items = getUpcomingNotices(5);
+  el.innerHTML = items.length
+    ? items.map(n => renderSchoolNoticeItem(n, true)).join('')
+    : '<div class="empty-small">No upcoming school notices.</div>';
+}
+function renderSchoolNotices() {
+  const el = document.getElementById('schoolNoticeList');
+  if (!el) return;
+  const upcoming = SCHOOL_NOTICES.filter(isNoticeCurrentOrUpcoming).sort(noticeSort);
+  const past = SCHOOL_NOTICES.filter(n => !isNoticeCurrentOrUpcoming(n)).sort(noticeSort).slice(-4);
+  el.innerHTML = `
+    <div class="notice-subheading">Upcoming / Still relevant</div>
+    ${upcoming.length ? upcoming.map(n => renderSchoolNoticeItem(n)).join('') : '<div class="empty-small">No upcoming notices.</div>'}
+    ${past.length ? `<div class="notice-subheading past">Recently passed</div>${past.map(n => renderSchoolNoticeItem(n, true)).join('')}` : ''}
+  `;
+}
+
 function renderAll() {
   renderDashboard();
   renderWa3Board();
   renderPlanner();
   renderTimetable();
+  renderSchoolNotices();
   renderRevisionControls();
   renderMistakeBook();
   renderProgress();
@@ -4447,6 +4609,7 @@ function renderDashboard() {
   renderParentSummary();
   renderWeekPreview();
   renderTimetableDashboard();
+  renderSchoolNoticesDashboard();
   renderAuditStatus();
 }
 function renderParentSummary() {
@@ -4524,6 +4687,68 @@ function renderProgress() {
     auditList.innerHTML = recent.length ? recent.map(a => `<div class="audit-row"><strong>${a.label || a.id}</strong><span>${a.checked ? 'Completed' : 'Reopened'} · ${shortTime(a.ts)}</span>${a.evidence ? `<em>${a.evidence}</em>` : ''}</div>`).join('') : '<div class="empty-small">No proof records yet. Complete one Homework, WA3 or Plan task to start.</div>';
   }
 }
+
+function noticeEndDate(notice) {
+  return notice.endDate || notice.date;
+}
+function isNoticeCurrentOrUpcoming(notice) {
+  const end = noticeEndDate(notice);
+  if (!end) return true;
+  const today = inputDateString(todayDate());
+  return end >= today;
+}
+function noticeSort(a, b) {
+  const da = parseDate(a.date)?.getTime() ?? Infinity;
+  const db = parseDate(b.date)?.getTime() ?? Infinity;
+  return da - db;
+}
+function getUpcomingNotices(limit = 5) {
+  return SCHOOL_NOTICES
+    .filter(isNoticeCurrentOrUpcoming)
+    .sort(noticeSort)
+    .slice(0, limit);
+}
+function noticeDateLabel(notice) {
+  if (!notice.date) return 'TBC';
+  const start = formatLongDate(notice.date);
+  if (notice.endDate && notice.endDate !== notice.date) return `${start} – ${formatLongDate(notice.endDate)}`;
+  return start;
+}
+function renderSchoolNoticeItem(notice, compact = false) {
+  const urgent = notice.priority === 'urgent';
+  const dateText = noticeDateLabel(notice);
+  const audience = notice.audience ? `<span class="notice-audience">${notice.audience}</span>` : '';
+  return `
+    <article class="notice-item ${urgent ? 'urgent' : ''} ${compact ? 'compact' : ''}">
+      <div class="notice-date">${dateText}</div>
+      <div class="notice-body">
+        <div class="notice-title-row"><span class="type-badge">${notice.type}</span>${urgent ? '<span class="urgency-badge danger">Important</span>' : ''}</div>
+        <strong>${notice.title}</strong>
+        <p>${notice.detail}</p>
+        ${audience}
+      </div>
+    </article>`;
+}
+function renderSchoolNoticesDashboard() {
+  const el = document.getElementById('dashboardSchoolNoticesPreview');
+  if (!el) return;
+  const items = getUpcomingNotices(5);
+  el.innerHTML = items.length
+    ? items.map(n => renderSchoolNoticeItem(n, true)).join('')
+    : '<div class="empty-small">No upcoming school notices.</div>';
+}
+function renderSchoolNotices() {
+  const el = document.getElementById('schoolNoticeList');
+  if (!el) return;
+  const upcoming = SCHOOL_NOTICES.filter(isNoticeCurrentOrUpcoming).sort(noticeSort);
+  const past = SCHOOL_NOTICES.filter(n => !isNoticeCurrentOrUpcoming(n)).sort(noticeSort).slice(-4);
+  el.innerHTML = `
+    <div class="notice-subheading">Upcoming / Still relevant</div>
+    ${upcoming.length ? upcoming.map(n => renderSchoolNoticeItem(n)).join('') : '<div class="empty-small">No upcoming notices.</div>'}
+    ${past.length ? `<div class="notice-subheading past">Recently passed</div>${past.map(n => renderSchoolNoticeItem(n, true)).join('')}` : ''}
+  `;
+}
+
 function renderAll() {
   renderDashboard();
   renderHomeworkBoard();
@@ -4531,6 +4756,7 @@ function renderAll() {
   renderPlanner();
   renderTimetable();
   renderActivities();
+  renderSchoolNotices();
   renderRevisionControls();
   renderMistakeBook();
   renderProgress();

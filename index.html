@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Evans Study HQ v19 · Restored Revision Lab</title>
+  <title>Evans Study HQ v22 · School Notices Clean</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20.0" />
+  <link rel="stylesheet" href="style.css?v=22.0" />
 </head>
 <body>
   <div class="app-shell">
@@ -171,6 +171,18 @@
         </div>
 
 
+        <section class="card school-notices-preview-card">
+          <div class="section-title-row">
+            <div>
+              <p class="eyebrow">NCHS Updates</p>
+              <h3>School Notices for Evans</h3>
+            </div>
+            <button class="text-btn" data-section="timetable">View schedule</button>
+          </div>
+          <div id="dashboardSchoolNoticesPreview" class="notice-list compact"></div>
+          <p class="helper-text">Filtered from the Semester 2 parent letter. Sec 3/4-only items and unrelated achievements are not shown.</p>
+        </section>
+
         <div class="dashboard-grid two-cols">
           <section class="card timetable-preview-card">
             <div class="section-title-row">
@@ -309,6 +321,17 @@
             <button id="addActivityBtn" class="primary-action small">+ Add activity</button>
           </div>
           <div id="activityList" class="activity-list"></div>
+        </section>
+
+        <section class="card school-notices-card">
+          <div class="section-title-row">
+            <div>
+              <p class="eyebrow">NCHS Semester 2</p>
+              <h3>School Notices & Important Dates</h3>
+            </div>
+          </div>
+          <div id="schoolNoticeList" class="notice-list"></div>
+          <p class="helper-text">Only items relevant to Evans / Sec 1 / 1 Excellence are included.</p>
         </section>
 
         <section class="card">
@@ -492,6 +515,6 @@
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="script.js?v=20.0"></script>
+  <script src="script.js?v=22.0"></script>
 </body>
 </html>

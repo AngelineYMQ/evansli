@@ -1,11 +1,16 @@
-# Evans Study HQ v20 - Pack List Sync Fix
+# Evans Study HQ v22 · School Notices Clean
 
-Fixes the bag check / pack list so checked items stay checked after Cloudflare refresh and sync across devices.
+Cleaned school notices based on parent feedback.
 
-## Included
-- Dashboard, homework, schedule, WA3, weekly plan, revision lab and progress
-- Cloudflare D1 sync
-- Restored original Revision Lab and Mistake Book logic
-- Persistent pack-list checkboxes saved under `eshq_v20_pack_done`
+Removed from notices:
+- Sec 1 Semester 2 subject change D&T → FCE because it has already passed / is not actionable.
+- 7 Jul early dismissal because it has already passed.
+- 6pm–7am school communication rule because it does not help Evans use the site at night for homework.
 
-Deploy to Cloudflare Pages with D1 binding `DB`.
+Kept relevant Evans/Sec 1 items:
+- 13–17 Jul HBL / BCD
+- Sec 1 & 2 EOY Exam period
+- National Day / Teachers’ Day dates
+- 1 Excellence SHHK Learning Journey
+- MTP registration and session dates
+- PLD / DMA reminder
