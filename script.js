@@ -4748,6 +4748,25 @@ function getUpcomingActivities(limit = 8) {
   const today = inputDateString(todayDate());
   return getAllActivities().filter(a => !a.date || a.date >= today).sort((a,b)=>activityDateKey(a).localeCompare(activityDateKey(b))).slice(0, limit);
 }
+function getActivitiesBetween(startDateStr, endDateStr) {
+  return getAllActivities()
+    .filter(a => a.date && a.date >= startDateStr && a.date <= endDateStr)
+    .sort((a,b)=>activityDateKey(a).localeCompare(activityDateKey(b)));
+}
+function getWeeklyRoutineRows() {
+  return RECURRING_ACTIVITIES.map(rule => ({
+    id: `routine-${rule.idPrefix}`,
+    type: rule.type,
+    title: rule.title,
+    date: '',
+    day: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][rule.weekday],
+    time: rule.time,
+    venue: rule.venue,
+    notes: rule.notes,
+    fixed: true,
+    routine: true
+  }));
+}
 function activityCategory(a) {
   const type = (a.type || '').toLowerCase();
   if (type.includes('cca')) return 'school';
@@ -4781,33 +4800,139 @@ function renderActivitiesDashboard() {
   const items = today.length ? today : upcoming;
   el.innerHTML = items.length ? items.map(a => renderActivityItem(a, true)).join('') : `<div class="empty-small"><strong>No after-school schedule added.</strong><br>Add tuition, taekwondo, CCA or reminders in Schedule.</div>`;
 }
+function renderActivityViewControls(activeView = 'list') {
+  return `<div class="activity-view-controls">
+    <button type="button" class="activity-view-btn ${activeView === 'list' ? 'active' : ''}" data-activity-view="list">List View</button>
+    <button type="button" class="activity-view-btn ${activeView === 'month' ? 'active' : ''}" data-activity-view="month">Month View</button>
+    <button type="button" class="activity-view-btn ${activeView === 'full' ? 'active' : ''}" data-activity-view="full">Full Schedule</button>
+  </div>`;
+}
+function getActivityView() {
+  return load('eshq_v31_activity_view', 'list');
+}
+function setActivityView(view) {
+  save('eshq_v31_activity_view', view);
+}
+function activityTypeClass(type = '') {
+  const t = type.toLowerCase();
+  if (t.includes('cca')) return 'school';
+  if (t.includes('exam') || t.includes('grading') || t.includes('deadline')) return 'important';
+  return 'external';
+}
+function getMonthActivityEvents(monthDate = todayDate()) {
+  const y = monthDate.getFullYear();
+  const m = monthDate.getMonth();
+  const first = new Date(y, m, 1);
+  const last = new Date(y, m + 1, 0);
+  const start = inputDateString(first);
+  const end = inputDateString(last);
+  const activities = getActivitiesBetween(start, end).map(a => ({
+    date: a.date,
+    label: a.type === 'CCA' ? 'CCA' : a.title.replace(' Training',''),
+    className: activityTypeClass(a.type),
+    title: a.title
+  }));
+  const notices = (typeof SCHOOL_NOTICES !== 'undefined' ? SCHOOL_NOTICES : [])
+    .filter(n => n.date && n.date >= start && n.date <= end)
+    .map(n => ({ date: n.date, label: n.title || 'Notice', className: 'important', title: n.title || 'Notice' }));
+  const wa3 = (typeof WA3_TASKS !== 'undefined' ? WA3_TASKS : [])
+    .filter(t => t.date && t.date >= start && t.date <= end)
+    .map(t => ({ date: t.date, label: t.subject || 'WA3', className: 'important', title: `${t.subject}: ${t.title}` }));
+  return [...activities, ...notices, ...wa3];
+}
+function renderMonthCalendar(monthDate = todayDate()) {
+  const y = monthDate.getFullYear();
+  const m = monthDate.getMonth();
+  const first = new Date(y, m, 1);
+  const last = new Date(y, m + 1, 0);
+  const startPad = first.getDay();
+  const totalCells = Math.ceil((startPad + last.getDate()) / 7) * 7;
+  const events = getMonthActivityEvents(monthDate);
+  const todayStr = inputDateString(todayDate());
+  let cells = '';
+  for (let i = 0; i < totalCells; i++) {
+    const dayNum = i - startPad + 1;
+    const inMonth = dayNum >= 1 && dayNum <= last.getDate();
+    if (!inMonth) {
+      cells += `<div class="calendar-cell muted-cell"></div>`;
+      continue;
+    }
+    const d = new Date(y, m, dayNum);
+    const dateStr = inputDateString(d);
+    const dayEvents = events.filter(e => e.date === dateStr).slice(0, 4);
+    const more = events.filter(e => e.date === dateStr).length - dayEvents.length;
+    cells += `<div class="calendar-cell ${dateStr === todayStr ? 'today-cell' : ''}">
+      <div class="calendar-day-number">${dayNum}</div>
+      <div class="calendar-events">${dayEvents.map(e => `<span class="cal-event ${e.className}" title="${e.title}">${e.label}</span>`).join('')}${more > 0 ? `<span class="cal-more">+${more}</span>` : ''}</div>
+    </div>`;
+  }
+  const title = monthDate.toLocaleDateString('en-SG', { month: 'long', year: 'numeric' });
+  return `<section class="month-calendar-wrap">
+    <div class="mini-legend"><span><i class="legend-school"></i>School / CCA</span><span><i class="legend-external"></i>Tuition / Taekwondo</span><span><i class="legend-important"></i>Important</span></div>
+    <h3>${title}</h3>
+    <div class="calendar-weekdays"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+    <div class="calendar-grid">${cells}</div>
+  </section>`;
+}
+function renderWeeklyRoutine() {
+  const rows = getWeeklyRoutineRows();
+  return `<section class="activity-routine-panel">
+    <div class="activity-day-head"><h3>Weekly Routine</h3><span>${rows.length} recurring</span></div>
+    <div class="activity-group-list compact-routine">${rows.map(a => renderActivityItem(a)).join('')}</div>
+  </section>`;
+}
+function renderSpecialDates() {
+  const today = inputDateString(todayDate());
+  const rows = [...getSpecialActivities(), ...(typeof SCHOOL_NOTICES !== 'undefined' ? SCHOOL_NOTICES.filter(n => n.date && n.date >= today).map(n => ({ id:`notice-${n.id}`, type:'Important', title:n.title, date:n.date, time:n.time || '', venue:'', notes:n.detail || n.description || '', fixed:true, special:true })) : [])]
+    .filter(a => a.date >= today)
+    .sort((a,b)=>activityDateKey(a).localeCompare(activityDateKey(b)))
+    .slice(0, 6);
+  if (!rows.length) return '';
+  return `<section class="activity-special-panel">
+    <div class="activity-day-head"><h3>Special Dates</h3><span>${rows.length} shown</span></div>
+    <div class="activity-group-list">${rows.map(a => renderActivityItem(a)).join('')}</div>
+  </section>`;
+}
 function renderActivities() {
   const el = document.getElementById('activityList');
   if (!el) return;
-  const items = getUpcomingActivities(28);
-  if (!items.length) {
-    el.innerHTML = `<div class="empty-state"><h3>No activities added yet.</h3><p>Add tuition, taekwondo grading, CCA, family reminders or exam prep sessions here.</p></div>`;
+  const view = getActivityView();
+  const today = todayDate();
+  const start = inputDateString(today);
+  const end = inputDateString(addDays(today, 7));
+  const fullEnd = inputDateString(addDays(today, 60));
+  const allItems = view === 'full' ? getActivitiesBetween(start, fullEnd) : getActivitiesBetween(start, end);
+  if (view === 'month') {
+    el.innerHTML = `${renderActivityViewControls(view)}${renderMonthCalendar(today)}${renderWeeklyRoutine()}${renderSpecialDates()}`;
+    return;
+  }
+  if (!allItems.length && view !== 'full') {
+    el.innerHTML = `${renderActivityViewControls(view)}<div class="empty-state"><h3>No activities in the next 7 days.</h3><p>Use Full Schedule or add tuition, taekwondo, CCA or reminders.</p></div>${renderWeeklyRoutine()}${renderSpecialDates()}`;
     return;
   }
   const byDate = new Map();
-  items.forEach(a => {
+  allItems.forEach(a => {
     const key = a.date || 'No date';
     if (!byDate.has(key)) byDate.set(key, []);
     byDate.get(key).push(a);
   });
-  const today = inputDateString(todayDate());
+  const todayStr = inputDateString(todayDate());
   const tomorrow = inputDateString(addDays(todayDate(), 1));
   const dateHeading = (key) => {
     if (key === 'No date') return 'No date set';
-    if (key === today) return `Today · ${formatShortDate(key)}`;
+    if (key === todayStr) return `Today · ${formatShortDate(key)}`;
     if (key === tomorrow) return `Tomorrow · ${formatShortDate(key)}`;
     return formatShortDate(key);
   };
-  el.innerHTML = [...byDate.entries()].map(([date, rows]) => `
+  const listHtml = [...byDate.entries()].map(([date, rows]) => `
     <section class="activity-day-group">
       <div class="activity-day-head"><h3>${dateHeading(date)}</h3><span>${rows.length} item${rows.length > 1 ? 's' : ''}</span></div>
       <div class="activity-group-list">${rows.map(a => renderActivityItem(a)).join('')}</div>
     </section>`).join('');
+  const intro = view === 'full'
+    ? `<p class="helper-text activity-view-note">Showing the next 60 days. Switch back to List View for the shorter daily view.</p>`
+    : `<p class="helper-text activity-view-note">Default view shows Today + the next 7 days, so Evans only sees what matters soon.</p>`;
+  el.innerHTML = `${renderActivityViewControls(view)}${intro}${listHtml}${view === 'list' ? `${renderWeeklyRoutine()}${renderSpecialDates()}` : ''}`;
 }
 function openActivityModal() {
   const modal = document.getElementById('activityModal');
@@ -5054,6 +5179,11 @@ function setupExtraEvents() {
     if (e.target.id === 'saveActivityBtn') saveActivity();
     const actDel = e.target.closest('[data-activity-delete]');
     if (actDel) deleteActivity(actDel.dataset.activityDelete);
+    const activityViewBtn = e.target.closest('[data-activity-view]');
+    if (activityViewBtn) {
+      setActivityView(activityViewBtn.dataset.activityView);
+      renderActivities();
+    }
   });
   document.addEventListener('change', e => {
     if (e.target.matches('[data-hw-id]')) {
