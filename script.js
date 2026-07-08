@@ -3216,7 +3216,7 @@ const LS = {
   mastered: 'eshq_v2_mastered',
   history: 'eshq_v2_history',
   streak: 'eshq_v2_streak',
-  cycleDay: 'eshq_v4_cycle_day',
+  cycleDay: 'eshq_v23_cycle_day_manual',
   audit: 'eshq_v5_audit',
   evidence: 'eshq_v5_evidence',
   lastOpen: 'eshq_v5_last_open',
@@ -3342,9 +3342,24 @@ function save(key, value) {
     cloudSave(key, value);
   }
 }
+function getSingaporeDateParts(date = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Singapore',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(date).reduce((acc, part) => {
+    if (part.type !== 'literal') acc[part.type] = Number(part.value);
+    return acc;
+  }, {});
+  return parts;
+}
 function todayDate() {
-  const now = new Date();
-  return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const { year, month, day } = getSingaporeDateParts();
+  return new Date(year, month - 1, day);
+}
+function singaporeNowLabel(options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) {
+  return new Date().toLocaleDateString('en-SG', { timeZone: 'Asia/Singapore', ...options });
 }
 function parseDate(dateStr) {
   if (!dateStr) return null;
@@ -3488,7 +3503,7 @@ function switchSection(id) {
 }
 
 function renderDashboard() {
-  document.getElementById('todayLabel').textContent = new Date().toLocaleDateString('en-SG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  document.getElementById('todayLabel').textContent = singaporeNowLabel();
   renderFocus();
   renderNextDeadline();
   renderWa3ProgressMini();
@@ -3920,13 +3935,16 @@ function getSelectedCycleDay() {
   return load(LS.cycleDay, getAutoCycleDay());
 }
 function localDateOnly(date = new Date()) {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const { year, month, day } = getSingaporeDateParts(date);
+  return new Date(year, month - 1, day);
 }
 function parseLocalDate(dateStr) {
   const [year, month, day] = dateStr.split('-').map(Number);
   return new Date(year, month - 1, day);
 }
 function isSchoolDay(date) {
+  // Use the computed Singapore calendar date. The returned Date object is created
+  // from that calendar date, so getDay() follows the correct SG school day.
   const day = date.getDay();
   return day >= 1 && day <= 5;
 }
@@ -4014,7 +4032,7 @@ function renderTimetable() {
   const nextDay = getNextCycleDay(selected);
   document.getElementById('selectedCycleTitle').textContent = `${selected} Classes`;
   const info = document.getElementById('cycleInfo');
-  if (info) info.textContent = isCycleManualOverride() ? `Manual override is on. Auto today would be ${getAutoCycleDay()}.` : `Auto today: ${getAutoCycleDay()} · Anchor: 7 Jul 2026 = Day 7.`;
+  if (info) info.textContent = isCycleManualOverride() ? `Manual override is on. Auto today would be ${getAutoCycleDay()} using Singapore time.` : `Auto today: ${getAutoCycleDay()} · Singapore time · Anchor: 7 Jul 2026 = Day 7.`;
   document.getElementById('selectedClassCount').textContent = `${classes.filter(c => !['Lunch', 'Recess'].includes(c.subject)).length} classes`;
   document.getElementById('selectedDayClasses').innerHTML = classes.map(classRow).join('');
   document.getElementById('packListTitle').textContent = `Pack for ${nextDay}`;
