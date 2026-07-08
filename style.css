@@ -1062,3 +1062,50 @@ h3 { margin: 0; font-size: 17px; letter-spacing: -0.02em; }
 .legend-hbl { background:#d96b91; }
 .cal-event.hbl, .cal-event.holiday { background:#fde8f0; color:#9c3f5f; }
 .cal-event.schoolday { background:#fff1cf; color:#7b5a10; border:1px solid #f1d99f; opacity:.98; }
+
+
+/* v34 month calendar navigation */
+.calendar-month-header {
+  display: grid;
+  grid-template-columns: 42px 1fr 42px;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0 12px;
+}
+.calendar-month-header h3 {
+  margin: 0;
+  text-align: center;
+}
+.calendar-nav-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid #cfe4dc;
+  background: #ffffff;
+  color: #2f7567;
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(28,76,67,.08);
+}
+.calendar-nav-btn:hover {
+  background: #e7f4ef;
+  border-color: #a8d4c5;
+}
+.calendar-today-btn {
+  display: block;
+  margin: 6px auto 0;
+  border: 0;
+  background: #edf7f3;
+  color: #2f7567;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 900;
+  cursor: pointer;
+}
+@media (max-width: 760px) {
+  .calendar-month-header { grid-template-columns: 34px 1fr 34px; }
+  .calendar-nav-btn { width: 32px; height: 32px; font-size: 22px; }
+}

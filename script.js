@@ -4977,6 +4977,21 @@ function getMonthActivityEvents(monthDate = todayDate()) {
   // Put school-day marker first, then events.
   return [...schoolDays, ...scheduled];
 }
+
+function getCalendarMonthOffset() {
+  return Number(load('eshq_v34_calendar_month_offset', 0)) || 0;
+}
+function setCalendarMonthOffset(offset) {
+  save('eshq_v34_calendar_month_offset', Number(offset) || 0);
+}
+function changeCalendarMonth(delta) {
+  setCalendarMonthOffset(getCalendarMonthOffset() + delta);
+  renderActivities();
+}
+function getVisibleCalendarMonth() {
+  const base = todayDate();
+  return new Date(base.getFullYear(), base.getMonth() + getCalendarMonthOffset(), 1);
+}
 function renderMonthCalendar(monthDate = todayDate()) {
   const y = monthDate.getFullYear();
   const m = monthDate.getMonth();
@@ -5004,9 +5019,17 @@ function renderMonthCalendar(monthDate = todayDate()) {
     </div>`;
   }
   const title = monthDate.toLocaleDateString('en-SG', { month: 'long', year: 'numeric' });
+  const offset = getCalendarMonthOffset();
   return `<section class="month-calendar-wrap">
     <div class="mini-legend"><span><i class="legend-schoolday"></i>School Day</span><span><i class="legend-school"></i>CCA / MSP</span><span><i class="legend-external"></i>Tuition / Taekwondo</span><span><i class="legend-hbl"></i>HBL / Holiday</span><span><i class="legend-important"></i>Important</span></div>
-    <h3>${title}</h3>
+    <div class="calendar-month-header">
+      <button type="button" class="calendar-nav-btn" data-month-nav="-1" aria-label="Previous month">‹</button>
+      <div>
+        <h3>${title}</h3>
+        ${offset !== 0 ? `<button type="button" class="calendar-today-btn" data-month-nav="today">Back to current month</button>` : ''}
+      </div>
+      <button type="button" class="calendar-nav-btn" data-month-nav="1" aria-label="Next month">›</button>
+    </div>
     <div class="calendar-weekdays"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
     <div class="calendar-grid">${cells}</div>
   </section>`;
@@ -5039,7 +5062,7 @@ function renderActivities() {
   const listEnd = inputDateString(addDays(today, 14));
   const fullEnd = inputDateString(addDays(today, 90));
   if (view === 'month') {
-    el.innerHTML = `${renderActivityViewControls(view)}${renderMonthCalendar(today)}`;
+    el.innerHTML = `${renderActivityViewControls(view)}${renderMonthCalendar(getVisibleCalendarMonth())}`;
     return;
   }
   const allItems = view === 'full' ? getScheduleTimelineItems(start, fullEnd) : getScheduleTimelineItems(start, listEnd);
@@ -5317,6 +5340,13 @@ function setupExtraEvents() {
     if (e.target.id === 'saveActivityBtn') saveActivity();
     const actDel = e.target.closest('[data-activity-delete]');
     if (actDel) deleteActivity(actDel.dataset.activityDelete);
+    const monthNavBtn = e.target.closest('[data-month-nav]');
+    if (monthNavBtn) {
+      const value = monthNavBtn.dataset.monthNav;
+      if (value === 'today') setCalendarMonthOffset(0);
+      else changeCalendarMonth(Number(value));
+      renderActivities();
+    }
     const activityViewBtn = e.target.closest('[data-activity-view]');
     if (activityViewBtn) {
       setActivityView(activityViewBtn.dataset.activityView);
