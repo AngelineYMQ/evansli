@@ -974,6 +974,7 @@ h3 { margin: 0; font-size: 17px; letter-spacing: -0.02em; }
 }
 .mini-legend span { display:inline-flex; align-items:center; gap:6px; }
 .mini-legend i { width:10px; height:10px; border-radius:999px; display:inline-block; }
+.legend-schoolday { background:#f6d99a; }
 .legend-school { background:#2f7567; }
 .legend-external { background:#8bc7e8; }
 .legend-important { background:#e46a6a; }
@@ -1016,8 +1017,8 @@ h3 { margin: 0; font-size: 17px; letter-spacing: -0.02em; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.cal-event.school { background:#e6f2ee; color:#23675a; }
-.cal-event.external { background:#e7f5ff; color:#2373a5; }
+.cal-event.school { background:#dcefe9; color:#23675a; border:1px solid #c4e0d6; }
+.cal-event.external { background:#e6f4ff; color:#236b9b; border:1px solid #c7e3f7; }
 .cal-event.important { background:#ffe8e8; color:#b14b4b; }
 .cal-more { color: var(--muted); font-size: 10px; font-weight: 800; }
 @media (max-width: 760px) {
@@ -1060,4 +1061,4 @@ h3 { margin: 0; font-size: 17px; letter-spacing: -0.02em; }
 }
 .legend-hbl { background:#d96b91; }
 .cal-event.hbl, .cal-event.holiday { background:#fde8f0; color:#9c3f5f; }
-.cal-event.schoolday { background:#eef6f2; color:#2f7567; opacity:.88; }
+.cal-event.schoolday { background:#fff1cf; color:#7b5a10; border:1px solid #f1d99f; opacity:.98; }

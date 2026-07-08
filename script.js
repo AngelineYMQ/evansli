@@ -264,8 +264,8 @@ const SCHOOL_NOTICES = [
   },
   {
     id: 'pld-dma-reminder',
-    type: 'Reminder',
-    title: 'Keep PLD DMA enabled',
+    type: 'Important',
+    title: 'PLD DMA reminder',
     date: '2026-07-08',
     priority: 'normal',
     audience: 'Students using PLD',
@@ -4832,7 +4832,8 @@ function setActivityView(view) {
 }
 function activityTypeClass(type = '') {
   const t = type.toLowerCase();
-  if (t.includes('cca') || t.includes('school day') || t.includes('school event') || t.includes('learning journey')) return 'school';
+  if (t.includes('school day')) return 'schoolday';
+  if (t.includes('cca') || t.includes('msp') || t.includes('school event') || t.includes('learning journey')) return 'school';
   if (t.includes('tuition') || t.includes('taekwondo')) return 'external';
   if (t.includes('hbl') || t.includes('bcd')) return 'hbl';
   if (t.includes('holiday')) return 'holiday';
@@ -4903,6 +4904,53 @@ function getScheduleTimelineItems(start, end) {
     ...getWaEventsBetween(start, end)
   ].sort((a, b) => activityDateKey(a).localeCompare(activityDateKey(b)));
 }
+
+function getMspEventsBetween(start, end) {
+  const out = [];
+  const d = parseLocalDate(start);
+  const finish = parseLocalDate(end);
+  while (d <= finish) {
+    const dateStr = inputDateString(d);
+    if (isTermSchoolDate(dateStr)) {
+      const dayLabel = `Day ${getAutoCycleDay(d)}`;
+      const msp = (TIMETABLE[dayLabel] || []).find(item => String(item.subject || '').toUpperCase() === 'MSP');
+      if (msp) {
+        out.push({
+          id: `msp-${dateStr}`,
+          type: 'MSP',
+          title: 'MSP after-school lesson',
+          date: dateStr,
+          time: msp.time || '15:00–17:20',
+          venue: msp.venue || '',
+          notes: msp.teacher || '',
+          fixed: true
+        });
+      }
+    }
+    d.setDate(d.getDate() + 1);
+  }
+  return out;
+}
+function monthEventLabel(a) {
+  const type = String(a.type || '').toLowerCase();
+  const title = String(a.title || '').toLowerCase();
+  if (type.includes('school day')) return a.label || 'School Day';
+  if (type.includes('cca')) return 'CCA';
+  if (type.includes('msp') || title.includes('msp')) return 'MSP';
+  if (type.includes('tuition')) return 'Tuition';
+  if (type.includes('taekwondo') && title.includes('grading')) return 'TKD Grading';
+  if (type.includes('taekwondo')) return 'Taekwondo';
+  if (type.includes('hbl') || type.includes('bcd')) return 'HBL / BCD';
+  if (type.includes('holiday')) return 'Holiday';
+  if (type.includes('wa') || type.includes('deadline')) return 'WA';
+  if (title.includes('pld') || title.includes('dma')) return 'PLD DMA';
+  if (type.includes('school event')) return 'School Event';
+  if (type.includes('learning journey')) return 'Learning Journey';
+  if (type.includes('parent')) return 'Parent';
+  if (type.includes('important')) return 'Important';
+  return a.type || a.title || 'Event';
+}
+
 function getMonthActivityEvents(monthDate = todayDate()) {
   const y = monthDate.getFullYear();
   const m = monthDate.getMonth();
@@ -4910,11 +4958,11 @@ function getMonthActivityEvents(monthDate = todayDate()) {
   const last = new Date(y, m + 1, 0);
   const start = inputDateString(first);
   const end = inputDateString(last);
-  const scheduled = getScheduleTimelineItems(start, end).map(a => ({
+  const scheduled = [...getScheduleTimelineItems(start, end), ...getMspEventsBetween(start, end)].map(a => ({
     date: a.date,
-    label: a.type === 'CCA' ? 'CCA' : (a.type === 'WA / Deadline' ? 'WA' : (a.type || a.title).replace(' Training','')),
+    label: monthEventLabel(a),
     className: activityTypeClass(a.type),
-    title: a.title
+    title: [a.title, a.time].filter(Boolean).join(' · ')
   }));
   const schoolDays = [];
   let d = new Date(first);
@@ -4957,7 +5005,7 @@ function renderMonthCalendar(monthDate = todayDate()) {
   }
   const title = monthDate.toLocaleDateString('en-SG', { month: 'long', year: 'numeric' });
   return `<section class="month-calendar-wrap">
-    <div class="mini-legend"><span><i class="legend-school"></i>School / CCA</span><span><i class="legend-external"></i>Tuition / Taekwondo</span><span><i class="legend-hbl"></i>HBL / Holiday</span><span><i class="legend-important"></i>Important</span></div>
+    <div class="mini-legend"><span><i class="legend-schoolday"></i>School Day</span><span><i class="legend-school"></i>CCA / MSP</span><span><i class="legend-external"></i>Tuition / Taekwondo</span><span><i class="legend-hbl"></i>HBL / Holiday</span><span><i class="legend-important"></i>Important</span></div>
     <h3>${title}</h3>
     <div class="calendar-weekdays"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
     <div class="calendar-grid">${cells}</div>
