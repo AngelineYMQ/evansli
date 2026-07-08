@@ -273,6 +273,16 @@ const SCHOOL_NOTICES = [
   }
 ];
 
+// MOE / school-calendar holidays relevant to Evans' 2026 Semester 2 planning.
+// These are shown in Schedule timeline and Month View as non-school / special days.
+const MOE_SCHOOL_HOLIDAYS = [
+  { id: 'moe-national-day-off-2026-08-10', type: 'Holiday', title: 'National Day off-in-lieu', date: '2026-08-10', detail: 'MOE school holiday / public holiday.' },
+  { id: 'moe-teachers-day-2026-09-04', type: 'Holiday', title: "Teachers’ Day school holiday", date: '2026-09-04', detail: 'MOE scheduled school holiday.' },
+  { id: 'moe-sept-holiday-2026', type: 'School Holiday', title: 'September School Holiday', date: '2026-09-05', endDate: '2026-09-13', detail: 'Between Terms III and IV.' },
+  { id: 'moe-year-end-holiday-2026', type: 'School Holiday', title: 'Year-end School Holiday', date: '2026-11-21', endDate: '2026-12-31', detail: 'End-of-year school vacation.' }
+];
+
+
 const PACK_ITEMS = {
   'DEAR time': ['reading book'],
   'HCL': ['Higher Chinese textbook / file'],
@@ -4769,22 +4779,29 @@ function getWeeklyRoutineRows() {
 }
 function activityCategory(a) {
   const type = (a.type || '').toLowerCase();
-  if (type.includes('cca')) return 'school';
-  return 'external';
+  if (type.includes('cca') || type.includes('school event') || type.includes('learning journey')) return 'school';
+  if (type.includes('tuition') || type.includes('taekwondo')) return 'external';
+  if (type.includes('holiday')) return 'holiday';
+  if (type.includes('hbl') || type.includes('bcd')) return 'hbl';
+  if (type.includes('exam') || type.includes('wa') || type.includes('deadline') || type.includes('important') || type.includes('parent')) return 'important';
+  return 'school';
 }
 function activityCategoryLabel(a) {
-  return activityCategory(a) === 'school' ? 'School / CCA' : 'Outside school';
+  const cat = activityCategory(a);
+  if (cat === 'external') return 'External schedule';
+  if (cat === 'holiday') return 'Holiday';
+  if (cat === 'hbl') return 'HBL';
+  if (cat === 'important') return 'Important';
+  return 'School schedule';
 }
 function renderActivityItem(a, compact = false) {
   const category = activityCategory(a);
-  const sourceLabel = a.fixed
-    ? (category === 'school' ? 'School schedule' : 'External schedule')
-    : 'Custom';
+  const sourceLabel = a.fixed ? activityCategoryLabel(a) : 'Custom';
   const deleteBtn = a.fixed
     ? `<span class="locked-note ${category}">${sourceLabel}</span>`
     : `<button data-activity-delete="${a.id}">Delete</button>`;
   const dateText = a.date ? dueLabel(a.date) : 'No date';
-  const detailBits = [a.time, a.venue, a.notes].filter(Boolean);
+  const detailBits = [a.time, a.venue, a.notes || a.detail].filter(Boolean);
   return `<div class="activity-item ${compact ? 'compact' : ''} ${a.fixed ? 'fixed' : ''} activity-${category}">
     <span class="type-badge ${category}">${a.type}</span>
     <div class="activity-date">${dateText}</div>
@@ -4815,9 +4832,76 @@ function setActivityView(view) {
 }
 function activityTypeClass(type = '') {
   const t = type.toLowerCase();
-  if (t.includes('cca')) return 'school';
-  if (t.includes('exam') || t.includes('grading') || t.includes('deadline')) return 'important';
-  return 'external';
+  if (t.includes('cca') || t.includes('school day') || t.includes('school event') || t.includes('learning journey')) return 'school';
+  if (t.includes('tuition') || t.includes('taekwondo')) return 'external';
+  if (t.includes('hbl') || t.includes('bcd')) return 'hbl';
+  if (t.includes('holiday')) return 'holiday';
+  if (t.includes('exam') || t.includes('grading') || t.includes('deadline') || t.includes('wa') || t.includes('important') || t.includes('parent')) return 'important';
+  return 'school';
+}
+function daysBetweenInclusive(startStr, endStr) {
+  const out = [];
+  const d = parseLocalDate(startStr);
+  const end = parseLocalDate(endStr || startStr);
+  while (d <= end) {
+    out.push(inputDateString(d));
+    d.setDate(d.getDate() + 1);
+  }
+  return out;
+}
+function expandDatedItems(items) {
+  return (items || []).flatMap(item => {
+    if (!item.date) return [];
+    return daysBetweenInclusive(item.date, item.endDate || item.date).map(date => ({
+      ...item,
+      id: `${item.id || item.title}-${date}`,
+      date,
+      fixed: true,
+      expandedFromRange: Boolean(item.endDate && item.endDate !== item.date)
+    }));
+  });
+}
+function getNoticeEventsBetween(start, end) {
+  const notices = expandDatedItems(typeof SCHOOL_NOTICES !== 'undefined' ? SCHOOL_NOTICES : [])
+    .map(n => ({ ...n, type: n.type || 'Important', notes: n.detail || n.description || n.notes || '', fixed: true }));
+  const holidays = expandDatedItems(typeof MOE_SCHOOL_HOLIDAYS !== 'undefined' ? MOE_SCHOOL_HOLIDAYS : [])
+    .map(n => ({ ...n, type: n.type || 'Holiday', notes: n.detail || n.notes || '', fixed: true }));
+  return [...notices, ...holidays].filter(n => n.date >= start && n.date <= end);
+}
+function getWaEventsBetween(start, end) {
+  return (typeof WA3_TASKS !== 'undefined' ? WA3_TASKS : [])
+    .filter(t => t.date && t.date >= start && t.date <= end)
+    .map(t => ({
+      id: `wa-${t.id || t.subject}-${t.date}`,
+      type: 'WA / Deadline',
+      title: `${t.subject}: ${t.title}`,
+      date: t.date,
+      time: t.time || '',
+      venue: '',
+      notes: [t.taskType || t.type, t.marks, t.duration].filter(Boolean).join(' · '),
+      fixed: true
+    }));
+}
+function isHolidayDate(dateStr) {
+  return getNoticeEventsBetween(dateStr, dateStr).some(e => activityCategory(e) === 'holiday');
+}
+function isHblDate(dateStr) {
+  return getNoticeEventsBetween(dateStr, dateStr).some(e => activityCategory(e) === 'hbl');
+}
+function isTermSchoolDate(dateStr) {
+  const d = parseLocalDate(dateStr);
+  const day = d.getDay();
+  if (day === 0 || day === 6) return false;
+  const inTerm3 = dateStr >= '2026-06-29' && dateStr <= '2026-09-04';
+  const inTerm4 = dateStr >= '2026-09-14' && dateStr <= '2026-11-20';
+  return (inTerm3 || inTerm4) && !isHolidayDate(dateStr) && !isHblDate(dateStr);
+}
+function getScheduleTimelineItems(start, end) {
+  return [
+    ...getActivitiesBetween(start, end),
+    ...getNoticeEventsBetween(start, end),
+    ...getWaEventsBetween(start, end)
+  ].sort((a, b) => activityDateKey(a).localeCompare(activityDateKey(b)));
 }
 function getMonthActivityEvents(monthDate = todayDate()) {
   const y = monthDate.getFullYear();
@@ -4826,19 +4910,24 @@ function getMonthActivityEvents(monthDate = todayDate()) {
   const last = new Date(y, m + 1, 0);
   const start = inputDateString(first);
   const end = inputDateString(last);
-  const activities = getActivitiesBetween(start, end).map(a => ({
+  const scheduled = getScheduleTimelineItems(start, end).map(a => ({
     date: a.date,
-    label: a.type === 'CCA' ? 'CCA' : a.title.replace(' Training',''),
+    label: a.type === 'CCA' ? 'CCA' : (a.type === 'WA / Deadline' ? 'WA' : (a.type || a.title).replace(' Training','')),
     className: activityTypeClass(a.type),
     title: a.title
   }));
-  const notices = (typeof SCHOOL_NOTICES !== 'undefined' ? SCHOOL_NOTICES : [])
-    .filter(n => n.date && n.date >= start && n.date <= end)
-    .map(n => ({ date: n.date, label: n.title || 'Notice', className: 'important', title: n.title || 'Notice' }));
-  const wa3 = (typeof WA3_TASKS !== 'undefined' ? WA3_TASKS : [])
-    .filter(t => t.date && t.date >= start && t.date <= end)
-    .map(t => ({ date: t.date, label: t.subject || 'WA3', className: 'important', title: `${t.subject}: ${t.title}` }));
-  return [...activities, ...notices, ...wa3];
+  const schoolDays = [];
+  let d = new Date(first);
+  while (d <= last) {
+    const dateStr = inputDateString(d);
+    if (isTermSchoolDate(dateStr)) {
+      const dayNum = getAutoCycleDay(d);
+      schoolDays.push({ date: dateStr, label: `School Day ${dayNum}`, className: 'schoolday', title: `School Day ${dayNum}` });
+    }
+    d.setDate(d.getDate() + 1);
+  }
+  // Put school-day marker first, then events.
+  return [...schoolDays, ...scheduled];
 }
 function renderMonthCalendar(monthDate = todayDate()) {
   const y = monthDate.getFullYear();
@@ -4859,7 +4948,7 @@ function renderMonthCalendar(monthDate = todayDate()) {
     }
     const d = new Date(y, m, dayNum);
     const dateStr = inputDateString(d);
-    const dayEvents = events.filter(e => e.date === dateStr).slice(0, 4);
+    const dayEvents = events.filter(e => e.date === dateStr).slice(0, 5);
     const more = events.filter(e => e.date === dateStr).length - dayEvents.length;
     cells += `<div class="calendar-cell ${dateStr === todayStr ? 'today-cell' : ''}">
       <div class="calendar-day-number">${dayNum}</div>
@@ -4868,7 +4957,7 @@ function renderMonthCalendar(monthDate = todayDate()) {
   }
   const title = monthDate.toLocaleDateString('en-SG', { month: 'long', year: 'numeric' });
   return `<section class="month-calendar-wrap">
-    <div class="mini-legend"><span><i class="legend-school"></i>School / CCA</span><span><i class="legend-external"></i>Tuition / Taekwondo</span><span><i class="legend-important"></i>Important</span></div>
+    <div class="mini-legend"><span><i class="legend-school"></i>School / CCA</span><span><i class="legend-external"></i>Tuition / Taekwondo</span><span><i class="legend-hbl"></i>HBL / Holiday</span><span><i class="legend-important"></i>Important</span></div>
     <h3>${title}</h3>
     <div class="calendar-weekdays"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
     <div class="calendar-grid">${cells}</div>
@@ -4899,15 +4988,16 @@ function renderActivities() {
   const view = getActivityView();
   const today = todayDate();
   const start = inputDateString(today);
-  const end = inputDateString(addDays(today, 7));
-  const fullEnd = inputDateString(addDays(today, 60));
-  const allItems = view === 'full' ? getActivitiesBetween(start, fullEnd) : getActivitiesBetween(start, end);
+  const listEnd = inputDateString(addDays(today, 14));
+  const fullEnd = inputDateString(addDays(today, 90));
   if (view === 'month') {
-    el.innerHTML = `${renderActivityViewControls(view)}${renderMonthCalendar(today)}${renderWeeklyRoutine()}${renderSpecialDates()}`;
+    el.innerHTML = `${renderActivityViewControls(view)}${renderMonthCalendar(today)}`;
     return;
   }
-  if (!allItems.length && view !== 'full') {
-    el.innerHTML = `${renderActivityViewControls(view)}<div class="empty-state"><h3>No activities in the next 7 days.</h3><p>Use Full Schedule or add tuition, taekwondo, CCA or reminders.</p></div>${renderWeeklyRoutine()}${renderSpecialDates()}`;
+  const allItems = view === 'full' ? getScheduleTimelineItems(start, fullEnd) : getScheduleTimelineItems(start, listEnd);
+  if (!allItems.length) {
+    const text = view === 'full' ? 'No future schedule items found.' : 'No schedule items in the next two weeks.';
+    el.innerHTML = `${renderActivityViewControls(view)}<div class="empty-state"><h3>${text}</h3><p>Add tuition, taekwondo, CCA or reminders if needed.</p></div>`;
     return;
   }
   const byDate = new Map();
@@ -4930,9 +5020,9 @@ function renderActivities() {
       <div class="activity-group-list">${rows.map(a => renderActivityItem(a)).join('')}</div>
     </section>`).join('');
   const intro = view === 'full'
-    ? `<p class="helper-text activity-view-note">Showing the next 60 days. Switch back to List View for the shorter daily view.</p>`
-    : `<p class="helper-text activity-view-note">Default view shows Today + the next 7 days, so Evans only sees what matters soon.</p>`;
-  el.innerHTML = `${renderActivityViewControls(view)}${intro}${listHtml}${view === 'list' ? `${renderWeeklyRoutine()}${renderSpecialDates()}` : ''}`;
+    ? `<p class="helper-text activity-view-note">Showing the next 90 days in date order. Switch to List View for the shorter two-week view.</p>`
+    : `<p class="helper-text activity-view-note">Showing the next two weeks in date order so Evans can follow the timeline without missing anything.</p>`;
+  el.innerHTML = `${renderActivityViewControls(view)}${intro}${listHtml}`;
 }
 function openActivityModal() {
   const modal = document.getElementById('activityModal');

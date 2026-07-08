@@ -1025,3 +1025,39 @@ h3 { margin: 0; font-size: 17px; letter-spacing: -0.02em; }
   .calendar-cell { min-height: 72px; padding: 5px; border-radius: 10px; }
   .cal-event { font-size: 9px; padding: 2px 4px; }
 }
+
+/* v32 schedule timeline refinements */
+.activity-item.activity-external {
+  border-color: #cfe6f6;
+  background: #f5fbff;
+}
+.activity-item .type-badge.external,
+.locked-note.external {
+  color: #286f9b;
+  background: #e6f4ff;
+  border-color: #c6e4f7;
+}
+.activity-item.activity-hbl,
+.activity-item.activity-holiday {
+  background: #fff7fa;
+  border-color: #f3ccd8;
+}
+.activity-item .type-badge.hbl,
+.activity-item .type-badge.holiday,
+.locked-note.hbl,
+.locked-note.holiday {
+  color: #9c3f5f;
+  background: #fde8f0;
+  border-color: #f3c8d7;
+}
+.activity-item.activity-important {
+  background: #fff6f6;
+  border-color: #f4cece;
+}
+.locked-note.important {
+  background: #fde4e4;
+  color: #b44646;
+}
+.legend-hbl { background:#d96b91; }
+.cal-event.hbl, .cal-event.holiday { background:#fde8f0; color:#9c3f5f; }
+.cal-event.schoolday { background:#eef6f2; color:#2f7567; opacity:.88; }
