@@ -3981,11 +3981,57 @@ function getNextCycleDay(day) {
   const idx = TIMETABLE_DAYS.indexOf(day);
   return TIMETABLE_DAYS[(idx + 1) % TIMETABLE_DAYS.length];
 }
-function getPackItemsForDay(day) {
-  const classes = TIMETABLE[day] || [];
+function nextSchoolDate(date = todayDate()) {
+  const d = new Date(date);
+  do {
+    d.setDate(d.getDate() + 1);
+  } while (!isSchoolDay(d));
+  return d;
+}
+function timeTo24Hour(timeText = '') {
+  const cleaned = String(timeText).trim().toLowerCase();
+  const match = cleaned.match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/);
+  if (!match) return timeText;
+  let hour = Number(match[1]);
+  const minute = match[2] || '00';
+  const meridiem = match[3];
+  if (meridiem === 'pm' && hour < 12) hour += 12;
+  if (meridiem === 'am' && hour === 12) hour = 0;
+  return `${String(hour).padStart(2, '0')}:${minute}`;
+}
+function activityTimeToSchoolTime(timeText = '') {
+  const parts = String(timeText).split(/[–-]/).map(p => p.trim()).filter(Boolean);
+  if (parts.length < 2) return timeText;
+  const endMeridiem = (parts[1].match(/\b(am|pm)\b/i) || [''])[0];
+  const start = /\b(am|pm)\b/i.test(parts[0]) ? parts[0] : `${parts[0]} ${endMeridiem}`;
+  return `${timeTo24Hour(start)}–${timeTo24Hour(parts[1])}`;
+}
+function ccaActivitiesForDate(dateStr) {
+  return getCcaActivities().filter(a => a.date === dateStr);
+}
+function ccaClassRowsForDate(dateStr) {
+  return ccaActivitiesForDate(dateStr).map(a => ({
+    time: activityTimeToSchoolTime(a.time),
+    subject: a.title,
+    teacher: a.teacher || '',
+    venue: [a.venue, a.notes].filter(Boolean).join(' · '),
+    isActivity: true
+  }));
+}
+function classesForDayWithDate(day, dateStr = '') {
+  const base = [...(TIMETABLE[day] || [])];
+  const ccaRows = dateStr ? ccaClassRowsForDate(dateStr) : [];
+  return [...base, ...ccaRows].sort((a, b) => String(a.time).localeCompare(String(b.time)));
+}
+function getPackItemsForDay(day, dateStr = '') {
+  const classes = classesForDayWithDate(day, dateStr);
   const items = new Set(['school diary', 'pencil case', 'water bottle']);
   classes.forEach(c => {
     (PACK_ITEMS[c.subject] || []).forEach(item => items.add(item));
+    if (c.subject === 'Chinese Orchestra Training') {
+      items.add('Chinese Orchestra file / scores');
+      items.add('instrument / CCA materials if needed');
+    }
   });
   return [...items];
 }
@@ -4005,12 +4051,16 @@ function renderPackItem(day, item) {
 }
 function classRow(c) {
   const extra = [c.teacher, c.venue].filter(Boolean).join(' · ');
-  return `<div class="class-row"><span class="class-time">${c.time}</span><div><strong>${c.subject}</strong>${extra ? `<span>${extra}</span>` : ''}</div></div>`;
+  return `<div class="class-row ${c.isActivity ? 'activity-class-row' : ''}"><span class="class-time">${c.time}</span><div><strong>${c.subject}</strong>${extra ? `<span>${extra}</span>` : ''}</div></div>`;
 }
 function renderTimetableDashboard() {
   const day = getSelectedCycleDay();
-  const classes = (TIMETABLE[day] || []).filter(c => !['Lunch', 'Recess'].includes(c.subject));
-  const nextDay = getNextCycleDay(day);
+  const todayStr = inputDateString(todayDate());
+  const dateForSelected = day === getAutoCycleDay() ? todayStr : '';
+  const classes = classesForDayWithDate(day, dateForSelected).filter(c => !['Lunch', 'Recess'].includes(c.subject));
+  const nextDate = nextSchoolDate(todayDate());
+  const nextDay = getAutoCycleDay(nextDate);
+  const nextDateStr = inputDateString(nextDate);
   const preview = document.getElementById('dashboardTimetablePreview');
   const pack = document.getElementById('dashboardPackPreview');
   const badge = document.getElementById('tomorrowCycleBadge');
@@ -4019,7 +4069,7 @@ function renderTimetableDashboard() {
     preview.innerHTML = `<div class="cycle-chip">${day}</div>` + classes.slice(0, 6).map(classRow).join('') + (classes.length > 6 ? `<button class="text-btn" data-section="timetable">View ${classes.length - 6} more</button>` : '');
   }
   if (pack) {
-    pack.innerHTML = getPackItemsForDay(nextDay).slice(0, 7).map(item => renderPackItem(nextDay, item)).join('');
+    pack.innerHTML = getPackItemsForDay(nextDay, nextDateStr).slice(0, 7).map(item => renderPackItem(nextDay, item)).join('');
   }
 }
 function renderTimetable() {
@@ -4028,15 +4078,19 @@ function renderTimetable() {
   const selected = getSelectedCycleDay();
   selector.innerHTML = TIMETABLE_DAYS.map(day => `<option value="${day}">${day}</option>`).join('');
   selector.value = selected;
-  const classes = TIMETABLE[selected] || [];
-  const nextDay = getNextCycleDay(selected);
+  const todayStr = inputDateString(todayDate());
+  const dateForSelected = selected === getAutoCycleDay() ? todayStr : '';
+  const classes = classesForDayWithDate(selected, dateForSelected);
+  const nextDate = nextSchoolDate(todayDate());
+  const nextDay = getAutoCycleDay(nextDate);
+  const nextDateStr = inputDateString(nextDate);
   document.getElementById('selectedCycleTitle').textContent = `${selected} Classes`;
   const info = document.getElementById('cycleInfo');
   if (info) info.textContent = isCycleManualOverride() ? `Manual override is on. Auto today would be ${getAutoCycleDay()} using Singapore time.` : `Auto today: ${getAutoCycleDay()} · Singapore time · Anchor: 7 Jul 2026 = Day 7.`;
   document.getElementById('selectedClassCount').textContent = `${classes.filter(c => !['Lunch', 'Recess'].includes(c.subject)).length} classes`;
   document.getElementById('selectedDayClasses').innerHTML = classes.map(classRow).join('');
   document.getElementById('packListTitle').textContent = `Pack for ${nextDay}`;
-  document.getElementById('tomorrowPackList').innerHTML = getPackItemsForDay(nextDay).map(item => renderPackItem(nextDay, item)).join('');
+  document.getElementById('tomorrowPackList').innerHTML = getPackItemsForDay(nextDay, nextDateStr).map(item => renderPackItem(nextDay, item)).join('');
   document.getElementById('fullTimetableGrid').innerHTML = TIMETABLE_DAYS.map(day => {
     const dayClasses = (TIMETABLE[day] || []).filter(c => !['Lunch', 'Recess'].includes(c.subject));
     return `<article class="timetable-day ${day === selected ? 'active' : ''}"><h3>${day}</h3>${dayClasses.map(c => `<p><strong>${c.time}</strong> ${c.subject}${c.venue ? ` · ${c.venue}` : ''}</p>`).join('')}</article>`;

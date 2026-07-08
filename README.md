@@ -1,3 +1,3 @@
-# Evans Study HQ v23
+# Evans Study HQ v24
 
-Fixes timetable cycle calculation to use Singapore time and resets the old manual Day override key. Anchor remains 7 Jul 2026 = Day 7, so 8 Jul 2026 = Day 8.
+Adds same-day CCA into the daily timetable and pack list. Uses Singapore cycle day logic.

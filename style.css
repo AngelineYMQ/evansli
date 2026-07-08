@@ -726,3 +726,11 @@ h3 { margin: 0; font-size: 17px; letter-spacing: -0.02em; }
 @media (max-width: 720px) {
   .notice-item, .notice-item.compact { grid-template-columns: 1fr; }
 }
+
+.class-row.activity-class-row {
+  background: #f4fbf7;
+  border-color: #b9dcd2;
+}
+.class-row.activity-class-row .class-time {
+  color: #2f7668;
+}
