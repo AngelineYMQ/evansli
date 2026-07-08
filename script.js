@@ -3521,12 +3521,74 @@ function toast(message) {
   window.toastTimer = setTimeout(() => el.classList.remove('show'), 1800);
 }
 
-function switchSection(id) {
+const SECTION_ROUTES = {
+  dashboard: '/dashboard',
+  homework: '/homework',
+  timetable: '/schedule',
+  wa3: '/wa3-board',
+  planner: '/weekly-plan',
+  revision: '/revision-lab',
+  progress: '/progress'
+};
+const ROUTE_SECTIONS = {
+  '/': 'dashboard',
+  '/dashboard': 'dashboard',
+  '/homework': 'homework',
+  '/schedule': 'timetable',
+  '/timetable': 'timetable',
+  '/wa3': 'wa3',
+  '/wa3-board': 'wa3',
+  '/weekly-plan': 'planner',
+  '/planner': 'planner',
+  '/revision-lab': 'revision',
+  '/revision': 'revision',
+  '/mistake-book': 'revision',
+  '/mistakes': 'revision',
+  '/progress': 'progress'
+};
+const SECTION_TITLES = {
+  dashboard: 'Dashboard',
+  homework: 'Homework',
+  timetable: 'Schedule',
+  wa3: 'WA3 Board',
+  planner: 'Weekly Plan',
+  revision: 'Revision Lab',
+  progress: 'Progress'
+};
+function normalisePath(pathname) {
+  let path = pathname || '/';
+  path = path.replace(/\/+$/, '') || '/';
+  return path.toLowerCase();
+}
+function getSectionFromRoute() {
+  const hash = (window.location.hash || '').replace('#', '').replace(/^\/+/, '');
+  if (hash && ROUTE_SECTIONS['/' + hash]) return ROUTE_SECTIONS['/' + hash];
+  return ROUTE_SECTIONS[normalisePath(window.location.pathname)] || 'dashboard';
+}
+function updateUrlForSection(id, replace = false) {
+  const route = SECTION_ROUTES[id] || '/dashboard';
+  const current = normalisePath(window.location.pathname);
+  if (current === route && !window.location.hash) return;
+  const nextUrl = route + window.location.search;
+  if (replace) history.replaceState({ section: id }, '', nextUrl);
+  else history.pushState({ section: id }, '', nextUrl);
+}
+function updateDocumentTitle(id) {
+  const title = SECTION_TITLES[id] || 'Dashboard';
+  document.title = `Evans Study HQ · ${title}`;
+}
+function switchSection(id, options = {}) {
   if (id === 'mistakes') id = 'revision';
+  if (!SECTION_ROUTES[id]) id = 'dashboard';
   document.querySelectorAll('.section').forEach(s => s.classList.toggle('active-section', s.id === id));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.section === id));
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (!options.skipUrl) updateUrlForSection(id, !!options.replaceUrl);
+  updateDocumentTitle(id);
+  if (!options.noScroll) window.scrollTo({ top: 0, behavior: options.instant ? 'auto' : 'smooth' });
   renderAll();
+}
+function routeToCurrentUrl(options = {}) {
+  switchSection(getSectionFromRoute(), { skipUrl: true, instant: true, noScroll: !!options.noScroll });
 }
 
 function renderDashboard() {
@@ -5003,9 +5065,10 @@ function setupExtraEvents() {
 async function init() {
   setupEvents();
   setupExtraEvents();
+  window.addEventListener('popstate', () => routeToCurrentUrl());
   await initCloudSync();
   markVisit();
-  renderAll();
+  routeToCurrentUrl({ noScroll: true });
   // Keep Mum's computer / Evans's phone in sync without needing a manual refresh.
   setInterval(() => refreshFromCloud(true), 12000);
   window.addEventListener('focus', () => refreshFromCloud(true));
