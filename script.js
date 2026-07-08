@@ -4012,23 +4012,29 @@ function ccaActivitiesForDate(dateStr) {
 function ccaClassRowsForDate(dateStr) {
   return ccaActivitiesForDate(dateStr).map(a => ({
     time: activityTimeToSchoolTime(a.time),
-    subject: a.title,
+    subject: `CCA: ${a.title}`,
     teacher: a.teacher || '',
     venue: [a.venue, a.notes].filter(Boolean).join(' · '),
     isActivity: true
   }));
 }
+function timeStartMinutes(timeText = '') {
+  const start = String(timeText).split(/[–-]/)[0].trim();
+  const match = start.match(/(\d{1,2})(?::(\d{2}))?/);
+  if (!match) return 9999;
+  return Number(match[1]) * 60 + Number(match[2] || '00');
+}
 function classesForDayWithDate(day, dateStr = '') {
   const base = [...(TIMETABLE[day] || [])];
   const ccaRows = dateStr ? ccaClassRowsForDate(dateStr) : [];
-  return [...base, ...ccaRows].sort((a, b) => String(a.time).localeCompare(String(b.time)));
+  return [...base, ...ccaRows].sort((a, b) => timeStartMinutes(a.time) - timeStartMinutes(b.time));
 }
 function getPackItemsForDay(day, dateStr = '') {
   const classes = classesForDayWithDate(day, dateStr);
   const items = new Set(['school diary', 'pencil case', 'water bottle']);
   classes.forEach(c => {
     (PACK_ITEMS[c.subject] || []).forEach(item => items.add(item));
-    if (c.subject === 'Chinese Orchestra Training') {
+    if (c.subject === 'Chinese Orchestra Training' || c.subject === 'CCA: Chinese Orchestra Training') {
       items.add('Chinese Orchestra file / scores');
       items.add('instrument / CCA materials if needed');
     }
@@ -5025,7 +5031,7 @@ const ZH_TEXT = new Map(Object.entries({
   'Active Mistakes': '正在复习的错题', 'Start Review': '开始复习', 'Mastered': '已掌握', 'Evidence': '完成证明', 'Progress Dashboard': '进度看板', 'Audit trail': '记录轨迹', 'Recent Task Evidence': '最近完成证明',
   'Add a Weekly Plan': '添加周计划', 'Day': '日期', 'Task': '任务', 'Type': '类别', 'Study': '学习', 'Project': '项目', 'Tuition': '补习', 'Taekwondo': '跆拳道', 'Exam': '考试', 'Family': '家庭', 'Reminder': '提醒', 'Save plan': '保存计划',
   'Add Homework': '添加功课', 'Homework details': '功课内容', 'Due date': '截止日期', 'Save homework': '保存功课', 'Add Schedule Item': '添加日程', 'Title': '标题', 'Date': '日期', 'Time': '时间', 'Notes': '备注', 'Save schedule item': '保存日程',
-  'Mathematics': '数学', 'Science': '科学', 'English Language': '英文', 'English': '英文', 'Higher Chinese': '高级华文', 'History': '历史', 'Geography': '地理', 'English Literature': '英文文学', 'Literature': '文学', 'Food & Consumer Education': 'FCE家政', 'Art': '美术', 'Music': '音乐', 'Chinese Orchestra Training': '华乐团训练', 'CCA': 'CCA', 'PE (LS)': '体育', 'Recess': '课间休息', 'Lunch': '午餐', 'DEAR time': 'DEAR阅读时间',
+  'Mathematics': '数学', 'Science': '科学', 'English Language': '英文', 'English': '英文', 'Higher Chinese': '高级华文', 'History': '历史', 'Geography': '地理', 'English Literature': '英文文学', 'Literature': '文学', 'Food & Consumer Education': 'FCE家政', 'Art': '美术', 'Music': '音乐', 'Chinese Orchestra Training': '华乐团训练', 'CCA: Chinese Orchestra Training': 'CCA：华乐团训练', 'CCA': 'CCA', 'PE (LS)': '体育', 'Recess': '课间休息', 'Lunch': '午餐', 'DEAR time': 'DEAR阅读时间',
   'Pack': '整理书包', 'Revision': '复习', 'Other': '其他', 'No homework due soon.': '近期没有要交的功课。', 'No activities added yet.': '还没有添加课后日程。', 'No proof yet': '暂无证明', 'First visit': '第一次打开',
   'Daily Streak': '每日连续打卡', 'Current streak': '当前连续天数', 'Best streak': '最高连续天数', 'Homework completed': '已完成功课', 'Active homework': '待完成功课', 'Schedule items': '日程项目', 'Assessment & Plans': '评估与计划',
   'WA3 completed': 'WA3已完成', 'Weekly plans done': '周计划已完成', 'Next deadline': '下一个截止日期', 'Practice Progress': '练习进度', 'Practice rounds': '练习轮数', 'Last score': '上次分数', 'Mistake Review': '错题复习', 'Active mistakes': '待复习错题', 'Mastered mistakes': '已掌握错题',

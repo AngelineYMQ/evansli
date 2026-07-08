@@ -1,3 +1,3 @@
-# Evans Study HQ v24
+# Evans Study HQ v25
 
-Adds same-day CCA into the daily timetable and pack list. Uses Singapore cycle day logic.
+Fixes daily timetable sorting when CCA is added, and labels Chinese Orchestra as CCA in the day schedule.
