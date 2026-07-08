@@ -3403,6 +3403,12 @@ function formatLongDate(dateStr) {
   return d.toLocaleDateString('en-SG', { weekday: 'short', day: 'numeric', month: 'short' });
 }
 
+function formatShortDate(dateStr) {
+  if (!dateStr) return 'TBC';
+  const d = parseDate(dateStr);
+  return d.toLocaleDateString('en-SG', { weekday: 'short', day: 'numeric', month: 'short' });
+}
+
 function formatDateTime(iso) {
   if (!iso) return '—';
   const d = new Date(iso);

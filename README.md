@@ -1,13 +1,3 @@
-# Evans Study HQ v28
+# Evans Study HQ v29
 
-Improves the Schedule activity list layout.
-
-- Separates School / CCA and Outside school activities.
-- Adds different colours for school-based vs external activities.
-- Makes each activity row aligned and easier to scan.
-- Keeps CCA, tuition, taekwondo and grading schedules intact.
-
-
-## v28
-- Activities are displayed chronologically by date instead of separated into school/outside sections.
-- School/CCA uses green; outside activities use light blue.
+Fixes the activity timeline so CCA, tuition, taekwondo and grading activities render by date with colour-coded source styles.
