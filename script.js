@@ -4716,22 +4716,30 @@ function renderActivitiesDashboard() {
 function renderActivities() {
   const el = document.getElementById('activityList');
   if (!el) return;
-  const items = getUpcomingActivities(24);
+  const items = getUpcomingActivities(28);
   if (!items.length) {
     el.innerHTML = `<div class="empty-state"><h3>No activities added yet.</h3><p>Add tuition, taekwondo grading, CCA, family reminders or exam prep sessions here.</p></div>`;
     return;
   }
-  const school = items.filter(a => activityCategory(a) === 'school');
-  const external = items.filter(a => activityCategory(a) === 'external');
-  const group = (title, hint, rows, cls) => rows.length ? `
-    <section class="activity-group ${cls}">
-      <div class="activity-group-head"><h3>${title}</h3><span>${hint}</span></div>
+  const byDate = new Map();
+  items.forEach(a => {
+    const key = a.date || 'No date';
+    if (!byDate.has(key)) byDate.set(key, []);
+    byDate.get(key).push(a);
+  });
+  const today = inputDateString(todayDate());
+  const tomorrow = inputDateString(addDays(todayDate(), 1));
+  const dateHeading = (key) => {
+    if (key === 'No date') return 'No date set';
+    if (key === today) return `Today · ${formatShortDate(key)}`;
+    if (key === tomorrow) return `Tomorrow · ${formatShortDate(key)}`;
+    return formatShortDate(key);
+  };
+  el.innerHTML = [...byDate.entries()].map(([date, rows]) => `
+    <section class="activity-day-group">
+      <div class="activity-day-head"><h3>${dateHeading(date)}</h3><span>${rows.length} item${rows.length > 1 ? 's' : ''}</span></div>
       <div class="activity-group-list">${rows.map(a => renderActivityItem(a)).join('')}</div>
-    </section>` : '';
-  el.innerHTML = [
-    group('School / CCA', 'School-based commitments such as Chinese Orchestra.', school, 'school'),
-    group('Outside school', 'Tuition, taekwondo and weekend activities.', external, 'external')
-  ].join('');
+    </section>`).join('');
 }
 function openActivityModal() {
   const modal = document.getElementById('activityModal');

@@ -857,3 +857,58 @@ h3 { margin: 0; font-size: 17px; letter-spacing: -0.02em; }
   }
   .activity-date { white-space: normal; }
 }
+
+/* v28: activity timeline by date; external activities use light blue */
+.activity-list {
+  display: grid;
+  gap: 12px;
+}
+.activity-day-group {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 14px;
+  background: rgba(255,255,255,.82);
+  box-shadow: 0 12px 30px rgba(40,70,62,.045);
+}
+.activity-day-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.activity-day-head h3 {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.15;
+}
+.activity-day-head span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  background: #eef6f2;
+  border-radius: 999px;
+  padding: 5px 9px;
+}
+.activity-item.activity-school {
+  border-color: #c7e1d6;
+  background: #f7fcfa;
+}
+.activity-item.activity-external {
+  border-color: #c8def5;
+  background: #f5faff;
+}
+.activity-item .type-badge.external {
+  color: #27639a;
+  background: #e7f2ff;
+  border-color: #bfd8f2;
+}
+.locked-note.external {
+  background: #e7f2ff;
+  color: #27639a;
+}
+.activity-item.activity-external .activity-date,
+.activity-item.activity-external .activity-main strong {
+  color: #1f4f7a;
+}
+.activity-group { box-shadow: none; }
