@@ -154,6 +154,27 @@ const CCA_SCHEDULE = [
 ];
 
 
+// Recurring weekend and tuition activities for Evans. These are fixed personal schedule items
+// and are shown alongside school CCA in Schedule and Dashboard.
+const RECURRING_ACTIVITIES = [
+  { idPrefix: 'tuition-math-sat', type: 'Tuition', title: 'Math Tuition', weekday: 6, time: '11:30 am–1:00 pm', venue: 'KINEX', notes: 'Weekly Saturday Math tuition' },
+  { idPrefix: 'taekwondo-sun', type: 'Taekwondo', title: 'Taekwondo Training', weekday: 0, time: '11:00 am–1:00 pm', venue: 'Beauty World Centre', notes: 'Weekly Sunday taekwondo' },
+  { idPrefix: 'tuition-english-sun', type: 'Tuition', title: 'English Tuition', weekday: 0, time: '3:00–5:00 pm', venue: 'Clementi', notes: 'Weekly Sunday English tuition' }
+];
+const SPECIAL_ACTIVITIES = [
+  {
+    id: 'taekwondo-grading-2026-07-18',
+    type: 'Taekwondo',
+    title: 'Taekwondo Grading — Black Tip / 1st Poom',
+    date: '2026-07-18',
+    day: 'Saturday',
+    time: '1:00–2:00 pm',
+    venue: 'Beauty World Centre',
+    notes: 'External & internal grading day. Wear full uniform. No T-shirt under uniform. Arrive before 1pm. Bring/wear arm gear, shin gear and groin gear.'
+  }
+];
+
+
 
 const SCHOOL_NOTICES = [
   {
@@ -4006,17 +4027,27 @@ function activityTimeToSchoolTime(timeText = '') {
   const start = /\b(am|pm)\b/i.test(parts[0]) ? parts[0] : `${parts[0]} ${endMeridiem}`;
   return `${timeTo24Hour(start)}–${timeTo24Hour(parts[1])}`;
 }
-function ccaActivitiesForDate(dateStr) {
-  return getCcaActivities().filter(a => a.date === dateStr);
+function fixedCcaForDate(dateStr) {
+  return CCA_SCHEDULE.filter(a => a.date === dateStr);
 }
-function ccaClassRowsForDate(dateStr) {
-  return ccaActivitiesForDate(dateStr).map(a => ({
+function activityRowsForDate(dateStr) {
+  const fixedCcaRows = fixedCcaForDate(dateStr).map(a => ({
     time: activityTimeToSchoolTime(a.time),
     subject: `CCA: ${a.title}`,
     teacher: a.teacher || '',
     venue: [a.venue, a.notes].filter(Boolean).join(' · '),
     isActivity: true
   }));
+  const otherRows = getAllActivities()
+    .filter(a => a.date === dateStr && !String(a.id || '').startsWith('cca-'))
+    .map(a => ({
+      time: activityTimeToSchoolTime(a.time || ''),
+      subject: `${a.type}: ${a.title}`,
+      teacher: '',
+      venue: [a.venue, a.notes].filter(Boolean).join(' · '),
+      isActivity: true
+    }));
+  return [...fixedCcaRows, ...otherRows];
 }
 function timeStartMinutes(timeText = '') {
   const start = String(timeText).split(/[–-]/)[0].trim();
@@ -4026,8 +4057,33 @@ function timeStartMinutes(timeText = '') {
 }
 function classesForDayWithDate(day, dateStr = '') {
   const base = [...(TIMETABLE[day] || [])];
-  const ccaRows = dateStr ? ccaClassRowsForDate(dateStr) : [];
-  return [...base, ...ccaRows].sort((a, b) => timeStartMinutes(a.time) - timeStartMinutes(b.time));
+  const activityRows = dateStr ? activityRowsForDate(dateStr) : [];
+  // Weekends have no school cycle classes. Show only tuition, CCA, grading or activities.
+  if (dateStr && !isSchoolDay(parseLocalDate(dateStr))) {
+    return activityRows.sort((a, b) => timeStartMinutes(a.time) - timeStartMinutes(b.time));
+  }
+  return [...base, ...activityRows].sort((a, b) => timeStartMinutes(a.time) - timeStartMinutes(b.time));
+}
+function addActivityPackItems(items, activity) {
+  const text = `${activity.type || ''} ${activity.title || ''}`.toLowerCase();
+  if (text.includes('math tuition')) {
+    items.add('Math tuition worksheet / file');
+    items.add('calculator');
+  }
+  if (text.includes('english tuition')) {
+    items.add('English tuition worksheet / file');
+    items.add('reading book');
+  }
+  if (text.includes('taekwondo')) {
+    items.add('taekwondo uniform');
+    items.add('belt');
+    items.add('water bottle');
+  }
+  if (text.includes('grading')) {
+    items.add('arm gear');
+    items.add('shin gear');
+    items.add('groin gear');
+  }
 }
 function getPackItemsForDay(day, dateStr = '') {
   const classes = classesForDayWithDate(day, dateStr);
@@ -4039,6 +4095,7 @@ function getPackItemsForDay(day, dateStr = '') {
       items.add('instrument / CCA materials if needed');
     }
   });
+  if (dateStr) getAllActivities().filter(a => a.date === dateStr).forEach(a => addActivityPackItems(items, a));
   return [...items];
 }
 function getPackDone() {
@@ -4090,10 +4147,11 @@ function renderTimetable() {
   const nextDate = nextSchoolDate(todayDate());
   const nextDay = getAutoCycleDay(nextDate);
   const nextDateStr = inputDateString(nextDate);
-  document.getElementById('selectedCycleTitle').textContent = `${selected} Classes`;
+  const isWeekendView = dateForSelected && !isSchoolDay(parseLocalDate(dateForSelected));
+  document.getElementById('selectedCycleTitle').textContent = isWeekendView ? 'Weekend Schedule' : `${selected} Classes`;
   const info = document.getElementById('cycleInfo');
   if (info) info.textContent = isCycleManualOverride() ? `Manual override is on. Auto today would be ${getAutoCycleDay()} using Singapore time.` : `Auto today: ${getAutoCycleDay()} · Singapore time · Anchor: 7 Jul 2026 = Day 7.`;
-  document.getElementById('selectedClassCount').textContent = `${classes.filter(c => !['Lunch', 'Recess'].includes(c.subject)).length} classes`;
+  document.getElementById('selectedClassCount').textContent = isWeekendView ? `${classes.length} activities` : `${classes.filter(c => !['Lunch', 'Recess'].includes(c.subject)).length} classes`;
   document.getElementById('selectedDayClasses').innerHTML = classes.map(classRow).join('');
   document.getElementById('packListTitle').textContent = `Pack for ${nextDay}`;
   document.getElementById('tomorrowPackList').innerHTML = getPackItemsForDay(nextDay, nextDateStr).map(item => renderPackItem(nextDay, item)).join('');
@@ -4581,8 +4639,38 @@ function normaliseCcaItem(a) {
 function getCcaActivities() {
   return CCA_SCHEDULE.map(normaliseCcaItem);
 }
+function recurringDatesForRule(rule, startDate = '2026-07-11', endDate = '2026-12-31') {
+  const out = [];
+  let d = parseLocalDate(startDate);
+  const end = parseLocalDate(endDate);
+  while (d <= end) {
+    if (d.getDay() === rule.weekday) {
+      const dateStr = inputDateString(d);
+      out.push({
+        id: `${rule.idPrefix}-${dateStr}`,
+        type: rule.type,
+        title: rule.title,
+        date: dateStr,
+        day: d.toLocaleDateString('en-SG', { weekday: 'long' }),
+        time: rule.time,
+        venue: rule.venue,
+        notes: rule.notes,
+        fixed: true,
+        recurring: true
+      });
+    }
+    d.setDate(d.getDate() + 1);
+  }
+  return out;
+}
+function getRecurringActivities() {
+  return RECURRING_ACTIVITIES.flatMap(rule => recurringDatesForRule(rule));
+}
+function getSpecialActivities() {
+  return SPECIAL_ACTIVITIES.map(a => ({ ...a, fixed: true, special: true }));
+}
 function getAllActivities() {
-  return [...getActivities(), ...getCcaActivities()];
+  return [...getActivities(), ...getCcaActivities(), ...getRecurringActivities(), ...getSpecialActivities()];
 }
 function getTodayActivities() {
   const today = inputDateString(todayDate());
@@ -5023,7 +5111,7 @@ const ZH_TEXT = new Map(Object.entries({
   'School day': '学校日', "Today’s Classes": '今天课程', "Today's Classes": '今天课程', 'Open timetable': '打开课表', 'Pack List': '书包检查清单', 'Tomorrow Pack List': '明日书包清单',
   'Timeline': '时间线', 'This Week Timeline': '本周时间线', 'Edit week': '编辑本周', 'Daily homework': '每日功课', 'Homework Log': '功课记录', 'Clear completed': '清除已完成',
   'NCHS Sec 1 · Term 3': '南侨中一 · 第三学期', 'WA3 Mission Board': 'WA3任务板', 'completed': '已完成', 'Completed': '已完成',
-  'All': '全部', 'Tests': '考试', 'Submissions': '提交', 'Projects': '项目', 'Presentation': '演讲', 'Longer plan': '长期计划', 'School + after-school': '学校 + 课后',
+  'All': '全部', 'Tests': '考试', 'Submissions': '提交', 'Projects': '项目', 'Presentation': '演讲', 'Longer plan': '长期计划', 'School + after-school': '学校 + 课后', 'Tuition': '补习', 'Taekwondo': '跆拳道',
   'Today is': '今天是', 'Use auto': '自动计算', 'Auto cycle is on.': '已开启自动循环计算。', 'Selected day': '选中的日子', 'Bag check': '书包检查', 'Pack for Tomorrow': '准备明天书包',
   'After school': '课后', 'Tuition, CCA & Activities': '补习、CCA和活动', '10-day cycle': '10天循环', 'School Timetable': '学校课表', 'My Timetable': '我的课表',
   'Practice': '练习', 'last score': '上次分数', 'Subject': '科目', 'Topic': '知识点', 'Number of questions': '题目数量', '5 questions': '5题', '10 questions': '10题', 'Start Practice Round': '开始一轮练习',
@@ -5031,7 +5119,7 @@ const ZH_TEXT = new Map(Object.entries({
   'Active Mistakes': '正在复习的错题', 'Start Review': '开始复习', 'Mastered': '已掌握', 'Evidence': '完成证明', 'Progress Dashboard': '进度看板', 'Audit trail': '记录轨迹', 'Recent Task Evidence': '最近完成证明',
   'Add a Weekly Plan': '添加周计划', 'Day': '日期', 'Task': '任务', 'Type': '类别', 'Study': '学习', 'Project': '项目', 'Tuition': '补习', 'Taekwondo': '跆拳道', 'Exam': '考试', 'Family': '家庭', 'Reminder': '提醒', 'Save plan': '保存计划',
   'Add Homework': '添加功课', 'Homework details': '功课内容', 'Due date': '截止日期', 'Save homework': '保存功课', 'Add Schedule Item': '添加日程', 'Title': '标题', 'Date': '日期', 'Time': '时间', 'Notes': '备注', 'Save schedule item': '保存日程',
-  'Mathematics': '数学', 'Science': '科学', 'English Language': '英文', 'English': '英文', 'Higher Chinese': '高级华文', 'History': '历史', 'Geography': '地理', 'English Literature': '英文文学', 'Literature': '文学', 'Food & Consumer Education': 'FCE家政', 'Art': '美术', 'Music': '音乐', 'Chinese Orchestra Training': '华乐团训练', 'CCA: Chinese Orchestra Training': 'CCA：华乐团训练', 'CCA': 'CCA', 'PE (LS)': '体育', 'Recess': '课间休息', 'Lunch': '午餐', 'DEAR time': 'DEAR阅读时间',
+  'Mathematics': '数学', 'Science': '科学', 'English Language': '英文', 'English': '英文', 'Higher Chinese': '高级华文', 'History': '历史', 'Geography': '地理', 'English Literature': '英文文学', 'Literature': '文学', 'Food & Consumer Education': 'FCE家政', 'Art': '美术', 'Music': '音乐', 'Chinese Orchestra Training': '华乐团训练', 'CCA: Chinese Orchestra Training': 'CCA：华乐团训练', 'CCA': 'CCA', 'Taekwondo Training': '跆拳道训练', 'Taekwondo Grading — Black Tip / 1st Poom': '跆拳道考级 — Black Tip / 1st Poom', 'Math Tuition': '数学补习', 'English Tuition': '英文补习', 'PE (LS)': '体育', 'Recess': '课间休息', 'Lunch': '午餐', 'DEAR time': 'DEAR阅读时间',
   'Pack': '整理书包', 'Revision': '复习', 'Other': '其他', 'No homework due soon.': '近期没有要交的功课。', 'No activities added yet.': '还没有添加课后日程。', 'No proof yet': '暂无证明', 'First visit': '第一次打开',
   'Daily Streak': '每日连续打卡', 'Current streak': '当前连续天数', 'Best streak': '最高连续天数', 'Homework completed': '已完成功课', 'Active homework': '待完成功课', 'Schedule items': '日程项目', 'Assessment & Plans': '评估与计划',
   'WA3 completed': 'WA3已完成', 'Weekly plans done': '周计划已完成', 'Next deadline': '下一个截止日期', 'Practice Progress': '练习进度', 'Practice rounds': '练习轮数', 'Last score': '上次分数', 'Mistake Review': '错题复习', 'Active mistakes': '待复习错题', 'Mastered mistakes': '已掌握错题',

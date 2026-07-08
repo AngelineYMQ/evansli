@@ -1,3 +1,4 @@
-# Evans Study HQ v25
+# Evans Study HQ v26
 
-Fixes daily timetable sorting when CCA is added, and labels Chinese Orchestra as CCA in the day schedule.
+Adds recurring weekend tuition and taekwondo activities, plus the 18 Jul taekwondo grading.
+Also keeps CCA and after-school activities in the daily schedule and pack list.
