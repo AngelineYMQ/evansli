@@ -1,4 +1,8 @@
-# Evans Study HQ v26
+# Evans Study HQ v27
 
-Adds recurring weekend tuition and taekwondo activities, plus the 18 Jul taekwondo grading.
-Also keeps CCA and after-school activities in the daily schedule and pack list.
+Improves the Schedule activity list layout.
+
+- Separates School / CCA and Outside school activities.
+- Adds different colours for school-based vs external activities.
+- Makes each activity row aligned and easier to scan.
+- Keeps CCA, tuition, taekwondo and grading schedules intact.

@@ -4680,9 +4680,30 @@ function getUpcomingActivities(limit = 8) {
   const today = inputDateString(todayDate());
   return getAllActivities().filter(a => !a.date || a.date >= today).sort((a,b)=>activityDateKey(a).localeCompare(activityDateKey(b))).slice(0, limit);
 }
+function activityCategory(a) {
+  const type = (a.type || '').toLowerCase();
+  if (type.includes('cca')) return 'school';
+  return 'external';
+}
+function activityCategoryLabel(a) {
+  return activityCategory(a) === 'school' ? 'School / CCA' : 'Outside school';
+}
 function renderActivityItem(a, compact = false) {
-  const deleteBtn = a.fixed ? '<span class="locked-note">School schedule</span>' : `<button data-activity-delete="${a.id}">Delete</button>`;
-  return `<div class="activity-item ${compact ? 'compact' : ''} ${a.fixed ? 'fixed' : ''}"><span class="type-badge">${a.type}</span><div><strong>${a.title}</strong><span>${a.date ? dueLabel(a.date) : 'No date'}${a.time ? ` · ${a.time}` : ''}${a.notes ? ` · ${a.notes}` : ''}</span></div>${deleteBtn}</div>`;
+  const category = activityCategory(a);
+  const sourceLabel = a.fixed
+    ? (category === 'school' ? 'School schedule' : 'External schedule')
+    : 'Custom';
+  const deleteBtn = a.fixed
+    ? `<span class="locked-note ${category}">${sourceLabel}</span>`
+    : `<button data-activity-delete="${a.id}">Delete</button>`;
+  const dateText = a.date ? dueLabel(a.date) : 'No date';
+  const detailBits = [a.time, a.venue, a.notes].filter(Boolean);
+  return `<div class="activity-item ${compact ? 'compact' : ''} ${a.fixed ? 'fixed' : ''} activity-${category}">
+    <span class="type-badge ${category}">${a.type}</span>
+    <div class="activity-date">${dateText}</div>
+    <div class="activity-main"><strong>${a.title}</strong><span>${detailBits.join(' · ')}</span></div>
+    ${deleteBtn}
+  </div>`;
 }
 function renderActivitiesDashboard() {
   const el = document.getElementById('dashboardActivitiesPreview');
@@ -4695,8 +4716,22 @@ function renderActivitiesDashboard() {
 function renderActivities() {
   const el = document.getElementById('activityList');
   if (!el) return;
-  const items = getUpcomingActivities(20);
-  el.innerHTML = items.length ? items.map(a => renderActivityItem(a)).join('') : `<div class="empty-state"><h3>No activities added yet.</h3><p>Add tuition, taekwondo grading, CCA, family reminders or exam prep sessions here.</p></div>`;
+  const items = getUpcomingActivities(24);
+  if (!items.length) {
+    el.innerHTML = `<div class="empty-state"><h3>No activities added yet.</h3><p>Add tuition, taekwondo grading, CCA, family reminders or exam prep sessions here.</p></div>`;
+    return;
+  }
+  const school = items.filter(a => activityCategory(a) === 'school');
+  const external = items.filter(a => activityCategory(a) === 'external');
+  const group = (title, hint, rows, cls) => rows.length ? `
+    <section class="activity-group ${cls}">
+      <div class="activity-group-head"><h3>${title}</h3><span>${hint}</span></div>
+      <div class="activity-group-list">${rows.map(a => renderActivityItem(a)).join('')}</div>
+    </section>` : '';
+  el.innerHTML = [
+    group('School / CCA', 'School-based commitments such as Chinese Orchestra.', school, 'school'),
+    group('Outside school', 'Tuition, taekwondo and weekend activities.', external, 'external')
+  ].join('');
 }
 function openActivityModal() {
   const modal = document.getElementById('activityModal');
