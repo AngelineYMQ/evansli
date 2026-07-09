@@ -1,3 +1,3 @@
-# Evans Study HQ v35
+# Evans Study HQ v36
 
-Fixes daily streak cloud sync across devices.
+Streak recovery for confirmed 7 and 8 July check-ins plus cloud sync.

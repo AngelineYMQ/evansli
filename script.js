@@ -5464,7 +5464,29 @@ function recordDailyCheckin(reason = 'manual') {
   pushStreakToCloudSoon();
   return stats;
 }
+
+
+/* v36 Streak recovery for the Cloud Sync transition.
+   Evans checked in before streak cloud sync was stable, so seed the confirmed
+   historical check-ins once. Future streaks are saved normally to D1. */
+const STREAK_RECOVERY_KEY = 'eshq_v36_streak_recovery_done_2026_07_09';
+const CONFIRMED_STREAK_DATES = ['2026-07-07', '2026-07-08'];
+function recoverConfirmedStreakDates() {
+  if (load(STREAK_RECOVERY_KEY, false)) return false;
+  const list = getDailyCheckins();
+  const merged = mergeArrayUnique(list, CONFIRMED_STREAK_DATES);
+  if (merged.length !== list.length) {
+    setDailyCheckins(merged);
+    const stats = streakStats();
+    save(LS.bestStreak, Math.max(Number(load(LS.bestStreak, 0)) || 0, stats.best || stats.current || 0));
+    pushStreakToCloudSoon();
+  }
+  save(STREAK_RECOVERY_KEY, true);
+  return true;
+}
+
 function renderStreakCard() {
+  recoverConfirmedStreakDates();
   const card = document.querySelector('.streak-card');
   if (!card) return;
   const stats = streakStats();
