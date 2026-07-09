@@ -3247,6 +3247,9 @@ const LS = {
   mastered: 'eshq_v2_mastered',
   history: 'eshq_v2_history',
   streak: 'eshq_v2_streak',
+  dailyCheckins: 'eshq_v8_daily_checkins',
+  bestStreak: 'eshq_v8_best_streak',
+  lastCheckinReason: 'eshq_v8_last_checkin_reason',
   cycleDay: 'eshq_v23_cycle_day_manual',
   audit: 'eshq_v5_audit',
   evidence: 'eshq_v5_evidence',
@@ -3282,8 +3285,27 @@ function setSyncStatus(text, mode = 'neutral') {
   el.dataset.mode = mode;
 }
 
+function mergeArrayUnique(a, b) {
+  return Array.from(new Set([...(Array.isArray(a) ? a : []), ...(Array.isArray(b) ? b : [])])).sort();
+}
+
 function applyCloudState(state) {
-  CLOUD_SYNC.state = state || {};
+  const incoming = state || {};
+
+  // Streak check-ins can happen before the first cloud pull finishes.
+  // Merge, rather than overwrite, so a phone check-in is not lost by a later refresh.
+  if (LS.dailyCheckins && Object.prototype.hasOwnProperty.call(incoming, LS.dailyCheckins)) {
+    let localList = [];
+    try { localList = JSON.parse(localStorage.getItem(LS.dailyCheckins)) || []; } catch {}
+    incoming[LS.dailyCheckins] = mergeArrayUnique(localList, incoming[LS.dailyCheckins]);
+  }
+  if (LS.bestStreak && Object.prototype.hasOwnProperty.call(incoming, LS.bestStreak)) {
+    let localBest = 0;
+    try { localBest = Number(JSON.parse(localStorage.getItem(LS.bestStreak)) || 0); } catch {}
+    incoming[LS.bestStreak] = Math.max(localBest, Number(incoming[LS.bestStreak] || 0));
+  }
+
+  CLOUD_SYNC.state = incoming;
   Object.entries(CLOUD_SYNC.state).forEach(([key, value]) => {
     try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
   });
@@ -5378,8 +5400,7 @@ document.addEventListener('DOMContentLoaded', init);
 
 
 /* v8 Daily streak - Duolingo-style habit check */
-LS.dailyCheckins = 'eshq_v8_daily_checkins';
-LS.bestStreak = 'eshq_v8_best_streak';
+// Streak storage keys are declared in LS above so cloudKeys() includes them from startup.
 
 function localDateKey(date = new Date()) {
   const y = date.getFullYear();
@@ -5416,15 +5437,32 @@ function streakStats() {
   }
   return { current, best, checkedToday, todayKey };
 }
+function pushStreakToCloudSoon(attempt = 0) {
+  window.setTimeout(() => {
+    const checkins = getDailyCheckins();
+    const best = Number(load(LS.bestStreak, 0)) || 0;
+    if (CLOUD_SYNC.ready && CLOUD_SYNC.enabled) {
+      CLOUD_SYNC.state[LS.dailyCheckins] = checkins;
+      CLOUD_SYNC.state[LS.bestStreak] = best;
+      cloudSave(LS.dailyCheckins, checkins);
+      cloudSave(LS.bestStreak, best);
+      return;
+    }
+    if (attempt < 8) pushStreakToCloudSoon(attempt + 1);
+  }, 500);
+}
+
 function recordDailyCheckin(reason = 'manual') {
   const list = getDailyCheckins();
-  const key = localDateKey();
+  const key = localDateKey(todayDate());
   if (!list.includes(key)) {
     list.push(key);
     setDailyCheckins(list);
   }
-  save('eshq_v8_last_checkin_reason', reason);
-  return streakStats();
+  save(LS.lastCheckinReason, reason);
+  const stats = streakStats();
+  pushStreakToCloudSoon();
+  return stats;
 }
 function renderStreakCard() {
   const card = document.querySelector('.streak-card');

@@ -1,3 +1,3 @@
-# Evans Study HQ v34
+# Evans Study HQ v35
 
-Adds previous/next month navigation arrows to Month View.
+Fixes daily streak cloud sync across devices.
