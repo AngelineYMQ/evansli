@@ -3242,6 +3242,7 @@ const LS = {
   wa3Done: 'eshq_v2_wa3_done',
   wa3Notes: 'eshq_v2_wa3_notes',
   focusDone: 'eshq_v2_focus_done',
+  focusDoneByDate: 'eshq_v38_focus_done_by_date',
   planner: 'eshq_v2_planner',
   mistakes: 'eshq_v2_mistakes',
   mastered: 'eshq_v2_mastered',
@@ -3535,6 +3536,23 @@ function getFocusTasks() {
     { id: 'focus-pack', text: 'Pack files for tomorrow', sub: `Use Timetable: ${getNextCycleDay(getSelectedCycleDay())}` }
   ];
 }
+
+function getTodayFocusDone() {
+  // v38: Store Today’s Top 3 completion by Singapore date in a date map.
+  // Do NOT read the old single-day key (eshq_v2_focus_done), because it can be
+  // carried over by cloud sync and make every new day appear already completed.
+  const byDate = load(LS.focusDoneByDate, {});
+  const today = localDateKey(todayDate());
+  const done = byDate && byDate[today];
+  return (done && typeof done === 'object' && !Array.isArray(done)) ? done : {};
+}
+function setTodayFocusDone(done) {
+  const byDate = load(LS.focusDoneByDate, {});
+  const today = localDateKey(todayDate());
+  byDate[today] = done || {};
+  save(LS.focusDoneByDate, byDate);
+}
+
 function getUpcomingIncomplete() {
   const done = getWa3Done();
   return WA3_TASKS
@@ -3637,7 +3655,7 @@ function renderDashboard() {
 }
 
 function renderFocus() {
-  const focusDone = load(LS.focusDone, {});
+  const focusDone = getTodayFocusDone();
   const tasks = getFocusTasks();
   const list = document.getElementById('todayFocusList');
   list.innerHTML = tasks.map(t => `
@@ -4379,7 +4397,7 @@ function setupEvents() {
 
   document.addEventListener('change', e => {
     if (e.target.matches('[data-focus-id]')) {
-      const done = load(LS.focusDone, {});
+      const done = getTodayFocusDone();
       const task = getFocusTasks().find(t => t.id === e.target.dataset.focusId);
       let proof = '';
 
@@ -4405,7 +4423,7 @@ function setupEvents() {
       }
 
       done[e.target.dataset.focusId] = e.target.checked;
-      save(LS.focusDone, done);
+      setTodayFocusDone(done);
       recordAudit({ type: 'focus', id: e.target.dataset.focusId, label: task?.text || 'Focus task', checked: e.target.checked, evidence: proof });
       toast(e.target.checked ? 'Focus task done' : 'Focus task reopened');
       renderAll();
@@ -5569,7 +5587,7 @@ const ZH_TEXT = new Map(Object.entries({
   'Evans Study HQ': 'Evans 学习总部', 'Daily Study Dashboard': '每日学习看板', 'Last opened:': '上次打开：', 'Open this first': '先看这里', 'Hi Evans 👋': 'Hi Evans 👋',
   'Check today’s mission, finish one task, then practise or review mistakes.': '先看今天任务，完成一件事，再做练习或复习错题。',
   "Today's Mission": '今天任务', "Start Today’s Mission": '开始今天任务', 'Focus': '今日重点', "Today’s Top 3": '今天最重要的3件事', "Today's Top 3": '今天最重要的3件事',
-  'Tick one small task at a time. Progress is saved on this device.': '一次完成一个小任务，进度会保存在这台设备上。',
+  'These three tasks reset every day. Progress is saved to cloud.': '一次完成一个小任务，进度会保存在这台设备上。',
   'Deadline': '截止日期', 'Next Deadline': '下一个截止日期', 'WA3': 'WA3', 'Daily habit': '每日习惯', 'Study Streak': '学习连续打卡', 'Ready': '准备好', 'days': '天', 'day': '天',
   'Check in once a day after doing one real action.': '每天完成一个真实动作后打卡一次。', 'Do one real action, then check in to keep the streak alive.': '完成一个真实动作后再打卡，保持连续记录。',
   'Check in today': '今天打卡', 'Checked in today ✓': '今天已打卡 ✓', 'Done today': '今天已打卡', 'Not yet': '还没打卡', 'Checked in': '已打卡',

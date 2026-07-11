@@ -1,3 +1,3 @@
-# Evans Study HQ v36
+# Evans Study HQ v38
 
-Streak recovery for confirmed 7 and 8 July check-ins plus cloud sync.
+Fixes Today's Top 3 daily reset by saving focus completion per Singapore date and ignoring old carried-over focus state.
